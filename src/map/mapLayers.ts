@@ -124,8 +124,8 @@ export function initMapLayers(
         'interpolate',
         ['linear'],
         ['feature-state', 'bikes'],
-        0, 6,
-        30, 18,
+        0, 12,
+        30, 22,
       ],
       'circle-stroke-width': 2.5,
       'circle-stroke-color': '#ffffff',
@@ -145,7 +145,9 @@ export function initMapLayers(
       'text-size': 12,
     },
     paint: {
-      'text-color': '#ffffff',
+      'text-color': '#1f2937',
+      'text-halo-color': 'rgba(255,255,255,0.7)',
+      'text-halo-width': 1,
     },
   });
 }
