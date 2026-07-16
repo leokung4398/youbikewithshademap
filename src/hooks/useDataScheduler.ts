@@ -25,7 +25,7 @@ export function useDataScheduler(
 
   // ── 車輛資料抓取 ──
   const fetchBikes = useCallback(
-    async (bounds?: [number, number, number, number]) => {
+    async (_bounds?: [number, number, number, number]) => {
       try {
         const url = BIKE_API_BASE;
         const res = await fetch(url);
