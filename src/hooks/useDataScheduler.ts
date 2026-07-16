@@ -14,7 +14,7 @@ const BIKE_INTERVAL = 60_000;      // 60 秒
 const SHADE_INTERVAL = 900_000;    // 15 分鐘
 
 /** YouBike API 端點 (可由環境變數覆蓋) */
-const BIKE_API_BASE = '/mock_stations.json';
+const BIKE_API_BASE = import.meta.env.BASE_URL + 'mock_stations.json';
 
 export function useDataScheduler(
   store: AppStore,
