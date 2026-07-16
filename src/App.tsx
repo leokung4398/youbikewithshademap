@@ -39,7 +39,7 @@ export function App() {
 
     map.on('load', () => {
       // 初始化圖層（此時 stations 可能還是空的，排程器會很快填充）
-      initMapLayers(map, store.getState().stations, store.getState().viewModels);
+      initMapLayers(map, store.getState().stations, store.getState().viewModels,store.getState().activeShade);
     });
 
     mapRef.current = map;
