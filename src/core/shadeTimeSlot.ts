@@ -17,7 +17,7 @@ export function timestampToSlotKey(timestamp: number): ShadeSlotKey {
 
 /** 將 slot key 轉換為 CDN URL */
 export function slotKeyToCdnUrl(key: ShadeSlotKey): string {
-  return `/cdn/shade/shade_${key}.geojson`;
+  return import.meta.env.BASE_URL + `cdn/shade/shade_${key}.geojson`;
 }
 
 /** 取得前後相鄰的 slot key */
