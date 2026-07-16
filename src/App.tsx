@@ -17,7 +17,7 @@ import { useMapSync } from './hooks/useMapSync';
 import { initMapLayers } from './map/mapLayers';
 
 /** 地圖樣式 — 使用免費的 MapTiler 或自訂 style */
-const MAP_STYLE = 'https://demotiles.maplibre.org/style.json';
+const MAP_STYLE = 'https://basemaps.cartocdn.com/gl/positron-gl-style/style.json';
 
 export function App() {
   const mapContainerRef = useRef<HTMLDivElement>(null);
