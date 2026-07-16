@@ -13,13 +13,14 @@ export function initMapLayers(
   map: MaplibreMap,
   stations: ReadonlyMap<string, Station>,
   viewModels: ReadonlyMap<string, any>,
+  activeShade: any | null,
 ): void {
   // ══════════════════════════════
   //  A. 陰影填充圖層 (底層)
   // ══════════════════════════════
   map.addSource('shade-grid', {
     type: 'geojson',
-    data: { type: 'FeatureCollection', features: [] },
+    data: activeShade ? activeShade.grid : { type: 'FeatureCollection', features: [] },
   });
 
   map.addLayer({
