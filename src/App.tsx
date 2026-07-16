@@ -35,7 +35,6 @@ export function App() {
       style: MAP_STYLE,
       center: [121.5654, 25.0330],   // 台北市中心
       zoom: 13,
-      attributionControl: true,
     });
 
     map.on('load', () => {
