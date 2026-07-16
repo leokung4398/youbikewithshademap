@@ -1,0 +1,36 @@
+name: Data Pipeline
+
+on:
+  schedule:
+    - cron: '*/15 * * * *' # Run every 15 minutes
+  workflow_dispatch: # Allow manual trigger
+
+jobs:
+  generate-data:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write # Important: allows the bot to push changes
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.10'
+          cache: 'pip'
+
+      - name: Install dependencies
+        run: pip install -r backend/requirements.txt
+
+      - name: Run Data Generator
+        run: python backend/generate_data.py
+
+      - name: Commit and Push changes
+        run: |
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+          git add public/cdn/shade/*.geojson public/mock_stations.json
+          git commit -m "Auto-update shade and stations data" || exit 0
+          git push
