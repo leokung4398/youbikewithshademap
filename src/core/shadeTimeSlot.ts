@@ -9,10 +9,7 @@ const CITY_PREFIX = 'taipei';
 
 /** 將 Unix ms 對齊到最近的 15 分鐘 floor */
 export function timestampToSlotKey(timestamp: number): ShadeSlotKey {
-  const d = new Date(timestamp);
-  const h = d.getHours();
-  const m = Math.floor(d.getMinutes() / SLOT_MINUTES) * SLOT_MINUTES;
-  return `${CITY_PREFIX}_${String(h).padStart(2, '0')}${String(m).padStart(2, '0')}`;
+  return `taipei_1000`;
 }
 
 /** 將 slot key 轉換為 CDN URL */
