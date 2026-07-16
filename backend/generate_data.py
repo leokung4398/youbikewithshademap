@@ -35,7 +35,8 @@ def calculate_shade(h3_index):
     
     try:
         import suncalc
-        date = datetime.datetime.now()
+        # 為了展示效果，強制設定為白天 (上午 10 點) 才有陰影可看
+        date = datetime.datetime(2026, 6, 26, 10, 0, 0)
         pos = suncalc.get_position(date, lon, lat)
         altitude = pos['altitude']
     except Exception:
