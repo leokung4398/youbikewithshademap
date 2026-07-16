@@ -9,14 +9,10 @@
 import type { Map as MaplibreMap } from 'maplibre-gl';
 import type { Station } from '../types/station';
 
-/**
- * 初始化所有地圖圖層
- *
- * 調用時機：map 'load' 事件觸發後
- */
 export function initMapLayers(
   map: MaplibreMap,
   stations: ReadonlyMap<string, Station>,
+  viewModels: ReadonlyMap<string, any>,
 ): void {
   // ══════════════════════════════
   //  A. 陰影填充圖層 (底層)
@@ -44,20 +40,19 @@ export function initMapLayers(
   // ══════════════════════════════
   //  B. 站點 Source — Clustering
   // ══════════════════════════════
-  const stationGeoJSON = stationsToFeatureCollection(stations);
+  const stationGeoJSON = stationsToFeatureCollection(stations, viewModels);
 
   map.addSource('stations', {
     type: 'geojson',
     data: stationGeoJSON,
-    cluster: true,                     // ⚡ ADR #2
+    cluster: true,
     clusterRadius: 60,
-    clusterMaxZoom: 14,                // Zoom > 14 停止聚合
+    clusterMaxZoom: 14,
     clusterProperties: {
-      // 聚合時累加：區域總可借車輛數
       totalBikes: ['+', ['get', 'availableBikes']],
       totalEmpty: ['+', ['get', 'emptySlots']],
     },
-    promoteId: 'stationId',            // 啟用 setFeatureState
+    promoteId: 'stationId',
   });
 
   // ── B1. 聚合泡泡 (Zoom ≤ 14) ──
@@ -114,16 +109,16 @@ export function initMapLayers(
     paint: {
       'circle-color': [
         'case',
-        ['==', ['feature-state', 'shadeStatus'], 'shade'],
+        ['==', ['coalesce', ['feature-state', 'shadeStatus'], ['get', 'shadeStatus']], 'shade'],
         '#22c55e',        // 🌲 綠色
-        ['==', ['feature-state', 'shadeStatus'], 'sun'],
+        ['==', ['coalesce', ['feature-state', 'shadeStatus'], ['get', 'shadeStatus']], 'sun'],
         '#f59e0b',        // 🌞 橘黃
         '#9ca3af',        // unknown 灰色
       ],
       'circle-radius': [
         'interpolate',
         ['linear'],
-        ['feature-state', 'bikes'],
+        ['coalesce', ['feature-state', 'bikes'], ['get', 'availableBikes']],
         0, 12,
         30, 22,
       ],
@@ -131,7 +126,8 @@ export function initMapLayers(
       'circle-stroke-color': '#ffffff',
     },
   });
-    // ── B4. 獨立站點數字標籤 ──
+
+  // ── B4. 獨立站點數字標籤 ──
   map.addLayer({
     id: 'station-points-count',
     type: 'symbol',
@@ -155,6 +151,7 @@ export function initMapLayers(
 /** Station Map → GeoJSON FeatureCollection */
 function stationsToFeatureCollection(
   stations: ReadonlyMap<string, Station>,
+  viewModels: ReadonlyMap<string, any>,
 ): GeoJSON.FeatureCollection {
   return {
     type: 'FeatureCollection',
@@ -172,6 +169,7 @@ function stationsToFeatureCollection(
         emptySlots: s.emptySlots,
         totalSlots: s.totalSlots,
         district: s.district,
+        shadeStatus: viewModels.get(s.id)?.shadeStatus ?? 'unknown',
       },
     })),
   };
