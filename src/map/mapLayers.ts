@@ -95,7 +95,7 @@ export function initMapLayers(
     layout: {
       'text-field': [
         'concat',
-        ['get', 'totalBikes'],
+        ['to-string', ['get', 'totalBikes']],
         ' 🚲',
       ],
       'text-size': 13,
