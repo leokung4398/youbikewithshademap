@@ -33,7 +33,7 @@ export function App() {
     const map = new maplibregl.Map({
       container: mapContainerRef.current,
       style: MAP_STYLE,
-      center: [121.5654, 25.0330],   // 台北市中心
+      center: [120.635, 24.16],   // 台中市西屯區
       zoom: 13,
     });
 
