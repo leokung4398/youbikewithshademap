@@ -5,10 +5,9 @@
 import type { ShadeSlotKey } from '../types/shadow';
 
 const SLOT_MINUTES = 15;
-const CITY_PREFIX = 'taipei';
 
 /** 將 Unix ms 對齊到最近的 15 分鐘 floor */
-export function timestampToSlotKey(timestamp: number): ShadeSlotKey {
+export function timestampToSlotKey(_timestamp: number): ShadeSlotKey {
   return `taipei_1000`;
 }
 
