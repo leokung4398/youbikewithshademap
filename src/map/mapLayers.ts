@@ -131,6 +131,23 @@ export function initMapLayers(
       'circle-stroke-color': '#ffffff',
     },
   });
+    // ── B4. 獨立站點數字標籤 ──
+  map.addLayer({
+    id: 'station-points-count',
+    type: 'symbol',
+    source: 'stations',
+    filter: ['!', ['has', 'point_count']],
+    layout: {
+      'text-field': [
+        'to-string',
+        ['get', 'availableBikes'],
+      ],
+      'text-size': 12,
+    },
+    paint: {
+      'text-color': '#ffffff',
+    },
+  });
 }
 
 /** Station Map → GeoJSON FeatureCollection */
