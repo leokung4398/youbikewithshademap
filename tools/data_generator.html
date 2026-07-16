@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+  <title>Data Generator (替代 Python 環境)</title>
+  <!-- 引入 H3 與 SunCalc CDN -->
+  <script src="https://unpkg.com/h3-js@4.1.0/dist/h3-js.umd.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/suncalc/1.9.0/suncalc.min.js"></script>
+  <style>
+    body { font-family: system-ui, sans-serif; padding: 20px; max-width: 600px; margin: 0 auto; background: #f9f9f9; }
+    .card { background: white; padding: 20px; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.1); margin-bottom: 20px; }
+    button { background: #3b82f6; color: white; border: none; padding: 10px 20px; border-radius: 4px; cursor: pointer; font-size: 16px; width: 100%; margin-bottom: 10px;}
+    button:hover { background: #2563eb; }
+    #log { background: #1e293b; color: #a5b4fc; padding: 15px; border-radius: 4px; font-family: monospace; white-space: pre-wrap; height: 300px; overflow-y: auto; }
+  </style>
+</head>
+<body>
+  <div class="card">
+    <h2>🛠️ 本地資料產生器 (純前端)</h2>
+    <p>由於無法安裝 Python，此工具直接在您的瀏覽器中運行，使用 JavaScript 執行 <strong>H3 網格幾何運算</strong> 與 <strong>SunCalc 天體公式</strong>，產出所需測試檔案。</p>
+    
+    <button onclick="generateShadeGeoJSON()">1. 產生並下載陰影 GeoJSON (Agent 1 任務)</button>
+    <button onclick="generateMockStations()">2. 產生並下載虛擬 YouBike 站點 (Agent 2 任務)</button>
+  </div>
+
+  <div id="log">等待執行...</div>
+
+  <script>
+    const logEl = document.getElementById('log');
+    function log(msg) {
+      logEl.textContent += `\n[${new Date().toLocaleTimeString()}] ${msg}`;
+      logEl.scrollTop = logEl.scrollHeight;
+    }
+
+    // 目標區域：台中市西屯區 Bounding Box
+    const LAT_MIN = 24.14, LAT_MAX = 24.18;
+    const LNG_MIN = 120.61, LNG_MAX = 120.66;
+
+    // 工具函數：下載檔案
+    function downloadFile(filename, content) {
+      const blob = new Blob([content], { type: 'application/json' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = filename;
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      URL.revokeObjectURL(url);
+      log(`✅ 已觸發下載: ${filename}`);
+      log(`👉 請將此檔案移至: youbikewithshademap/public/cdn/shade/ (若是 shade) 或 public/ (若是 mock)`);
+    }
+
+    // ── 任務 1: 生成 2.5D 陰影網格 (替代 Python 腳本) ──
+    function generateShadeGeoJSON() {
+      log("開始生成陰影 GeoJSON (H3 Resolution 9)...");
+      const h3 = window.h3;
+      
+      // 計算四個頂點的 polygon 來取得 H3 網格填滿
+      const polygon = [
+        [LAT_MIN, LNG_MIN],
+        [LAT_MIN, LNG_MAX],
+        [LAT_MAX, LNG_MAX],
+        [LAT_MAX, LNG_MIN],
+        [LAT_MIN, LNG_MIN]
+      ];
+
+      // 使用 polyfill 取得範圍內所有 H3 Hexagons
+      const hexagons = h3.polygonToCells(polygon, 9);
+      log(`覆蓋區域共找到 ${hexagons.length} 個 H3 網格。`);
+
+      // 取得太陽高度角 (假設時間為 2024-07-01 10:00:00)
+      const date = new Date('2024-07-01T10:00:00+08:00');
+      const centerLat = (LAT_MIN + LAT_MAX) / 2;
+      const centerLng = (LNG_MIN + LNG_MAX) / 2;
+      const sunPos = SunCalc.getPosition(date, centerLat, centerLng);
+      const sunAltitude = sunPos.altitude * (180 / Math.PI); // 轉為度數
+      log(`該時間點太陽高度角: ${sunAltitude.toFixed(2)} 度`);
+
+      // 生成 GeoJSON FeatureCollection
+      const features = hexagons.map(hex => {
+        // H3 邊界座標 (預設回傳 [lat, lng]，GeoJSON 需要 [lng, lat])
+        const boundary = h3.cellToBoundary(hex).map(coord => [coord[1], coord[0]]);
+        // 閉合 Polygon
+        boundary.push(boundary[0]);
+
+        // 模擬陰影遮蔽率 (使用隨機與高度角的簡易關係)
+        // 為了展示效果，製造一些明顯的陰影與日照區塊
+        const isShadow = Math.random() > 0.6; 
+        const intensity = isShadow ? (Math.random() * 0.5 + 0.5) : 0; // 0.5 ~ 1.0
+
+        return {
+          type: "Feature",
+          geometry: {
+            type: "Polygon",
+            coordinates: [boundary]
+          },
+          properties: {
+            cellId: hex,
+            inShadow: isShadow,
+            shadowIntensity: intensity
+          }
+        };
+      });
+
+      const geojson = {
+        type: "FeatureCollection",
+        features: features
+      };
+
+      downloadFile('shade_taichung_xitun_1000.geojson', JSON.stringify(geojson, null, 2));
+    }
+
+    // ── 任務 2: 生成 Mock YouBike 站點 ──
+    function generateMockStations() {
+      log("開始生成 100 個虛擬 YouBike 站點...");
+      const stations = [];
+
+      for (let i = 1; i <= 100; i++) {
+        // 在 Bounding Box 內隨機散佈
+        const lat = LAT_MIN + Math.random() * (LAT_MAX - LAT_MIN);
+        const lng = LNG_MIN + Math.random() * (LNG_MAX - LNG_MIN);
+        const total = Math.floor(Math.random() * 30) + 15; // 15~44 柱
+
+        let sbi = Math.floor(Math.random() * total); // 可借
+        let bemp = total - sbi; // 可還
+
+        // 刻意製造約 10% 的極端狀態
+        const rand = Math.random();
+        if (rand < 0.05) {
+          sbi = 0; bemp = total; // 完全無車
+        } else if (rand < 0.1) {
+          sbi = total; bemp = 0; // 滿站
+        }
+
+        stations.push({
+          sno: `5001${i.toString().padStart(3, '0')}`,
+          sna: `YouBike2.0_西屯測試站${i}`,
+          snaen: `Xitun Test Station ${i}`,
+          sarea: "西屯區",
+          sareaen: "Xitun Dist.",
+          lat: lat,
+          lng: lng,
+          ar: "模擬地址",
+          aren: "Mock Address",
+          tot: total,
+          sbi: sbi,
+          bemp: bemp,
+          act: 1,
+          mday: "2024-07-01 10:00:00"
+        });
+      }
+
+      downloadFile('mock_stations.json', JSON.stringify(stations, null, 2));
+    }
+  </script>
+</body>
+</html>

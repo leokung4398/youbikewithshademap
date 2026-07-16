@@ -1,0 +1,4 @@
+suncalc
+geopandas
+h3
+shapely
