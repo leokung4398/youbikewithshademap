@@ -105,13 +105,13 @@ export function App() {
         <div style={{ borderTop: '1px solid #ddd', margin: '12px 0' }} />
         
         <div style={{ display: 'flex', alignItems: 'center', marginBottom: '8px' }}>
-          <div style={{ width: 16, height: 16, backgroundColor: 'rgba(34, 139, 34, 0.3)', border: '1px solid rgba(34, 139, 34, 0.5)', marginRight: 10 }} />
-          <span><b>綠色網格：</b>高樓大廈陰影區</span>
+          <div style={{ width: 16, height: 16, backgroundColor: 'rgba(0, 0, 0, 0.4)', border: '1px solid rgba(0, 0, 0, 0.6)', marginRight: 10 }} />
+          <span><b>深灰色網格：</b>高樓大廈陰影區</span>
         </div>
         
         <div style={{ display: 'flex', alignItems: 'center' }}>
-          <div style={{ width: 16, height: 16, backgroundColor: '#e5e7eb', border: '1px solid #ccc', marginRight: 10 }} />
-          <span><b>灰色區域：</b>陽光直射區 (無遮蔽)</span>
+          <div style={{ width: 16, height: 16, backgroundColor: 'rgba(255, 255, 255, 0)', border: '1px solid #ccc', marginRight: 10 }} />
+          <span><b>透明網格 (透出底圖)：</b>陽光直射區</span>
         </div>
       </div>
     </div>
