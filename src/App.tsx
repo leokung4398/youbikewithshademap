@@ -54,18 +54,20 @@ export function App() {
 
   // 根據滑桿數值去抓取對應的 GeoJSON
   const fetchShadeByHour = (hour: number) => {
+    const slotKey = `taipei_${hour.toString().padStart(2, '0')}00`;
     const url = `cdn/shade/shade_taipei_${hour.toString().padStart(2, '0')}00.geojson`;
     fetch(import.meta.env.BASE_URL + url)
       .then(res => res.json())
       .then(grid => {
         store.updateShadeLayer({
+          slotKey,
           timestamp: Date.now(), // 給予一個新的時間戳強制更新
           grid
         });
       })
-      .catch(err => console.log("等待 GitHub Action 產出資料中..."));
+      .catch(() => console.log("等待 GitHub Action 產出資料中..."));
   };
-
+  
   const handleTimeChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const newHour = parseInt(e.target.value, 10);
     setSliderHour(newHour);
