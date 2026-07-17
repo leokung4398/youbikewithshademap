@@ -68,4 +68,24 @@ export function useMapSync(
 
     return unsub;
   }, [store, mapRef]);
+
+  // ── 站點座標整批替換 (每 60 秒，因為 DEMO 資料會隨機飄移座標) ──
+  useEffect(() => {
+    const unsub = store.subscribe('stations', () => {
+      const map = mapRef.current;
+      if (!map) return;
+
+      const { stations, viewModels } = store.getState();
+      const source = map.getSource('stations');
+      if (source && 'setData' in source) {
+        // 從 mapLayers.ts 引入的 helper
+        import('../map/mapLayers').then(({ stationsToFeatureCollection }) => {
+          const geojson = stationsToFeatureCollection(stations, viewModels);
+          (source as maplibregl.GeoJSONSource).setData(geojson);
+        });
+      }
+    });
+
+    return unsub;
+  }, [store, mapRef]);
 }
