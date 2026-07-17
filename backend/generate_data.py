@@ -4,8 +4,6 @@ import math
 import random
 import datetime
 import h3
-import geopandas as gpd
-from shapely.geometry import Polygon
 
 # Target area: Taichung Xitun District
 # Bounding Box: lat 24.14~24.18, lon 120.61~120.66
@@ -29,103 +27,72 @@ def get_h3_indices(resolution=9):
         lat += lat_step
     return list(hexes)
 
-def calculate_shade(h3_index):
-    cell_to_latlng = getattr(h3, 'cell_to_latlng', getattr(h3, 'h3_to_geo', None))
-    lat, lon = cell_to_latlng(h3_index)
-    
-    try:
-        import suncalc
-        # 為了展示效果，強制設定為白天 (上午 10 點) 才有陰影可看
-        date = datetime.datetime(2026, 6, 26, 10, 0, 0)
-        pos = suncalc.get_position(date, lon, lat)
-        altitude = pos['altitude']
-    except Exception:
-        altitude = math.radians(60)
-
-    # h = object height
-    h = 20.0 + (hash(h3_index) % 30)
-    
-    tan_theta = math.tan(altitude)
-    L = h / tan_theta if tan_theta > 0.001 else 0
-    
-    shade_coverage = min(max(L / 50.0, 0.0), 1.0)
-    # inShadow threshold
-    in_shadow = shade_coverage > 0.3
-    return in_shadow, shade_coverage
-
 def generate_shade_geojson(output_dir):
     hexes = get_h3_indices(9)
-    features = []
     to_boundary = getattr(h3, 'cell_to_boundary', getattr(h3, 'h3_to_geo_boundary', None))
-    
-    for h_index in hexes:
-        cell_to_latlng = getattr(h3, 'cell_to_latlng', getattr(h3, 'h3_to_geo', None))
-        lat, lon = cell_to_latlng(h_index)
-        date = datetime.datetime(2026, 6, 26, 10, 0, 0)
-        
-        try:
-            import suncalc
-            pos = suncalc.get_position(date, lon, lat)
-            altitude = pos['altitude']
-        except Exception:
-            altitude = math.radians(60)
-
-        boundary = to_boundary(h_index)
-        
-        # H3 returns (lat, lon), GeoJSON expects (lon, lat)
-        boundary_lonlat = [(lng, lt) for lt, lng in boundary]
-        boundary_lonlat.append(boundary_lonlat[0]) # close polygon
-        
-        # 模擬真實的建築陰影分佈 (不應該整個城市都被遮蔽)
-        shade_coverage = 0
-        if altitude > 0:
-            # 利用經緯度產生一個假的「建築密集度」波動
-            density = (math.sin(lat * 5000) * math.cos(lon * 5000) + 1) / 2
-            random.seed(f"{lat}_{lon}_{date.hour}_{date.minute}")
-            
-            # 綜合建築密集度與隨機值
-            shade_coverage = density * 0.6 + random.random() * 0.4
-            
-        # 將閾值拉高到 0.75，代表只有高樓密集的區域才會產生陰影 (大約 20% 的機率)
-        in_shadow = shade_coverage > 0.75
-        intensity = shade_coverage if in_shadow else 0
-        
-        features.append({
-            "type": "Feature",
-            "properties": {
-                "cellId": h_index,
-                "inShadow": in_shadow,
-                "shadowIntensity": round(intensity, 3)
-            },
-            "geometry": {
-                "type": "Polygon",
-                "coordinates": [boundary_lonlat]
-            }
-        })
-        
-    feature_collection = {
-        "type": "FeatureCollection",
-        "features": features
-    }
     
     shade_dir = os.path.join(output_dir, "cdn", "shade")
     os.makedirs(shade_dir, exist_ok=True)
     
-    # Generate for the current timeslot
-    now = datetime.datetime.now()
-    slot_min = (now.minute // 15) * 15
-    slot_key = f"taipei_{now.hour:02d}{slot_min:02d}"
-    output_file = os.path.join(shade_dir, f"shade_{slot_key}.geojson")
-
-    # Also output a default one so it always works on initial load if time differs
-    default_file = os.path.join(shade_dir, f"shade_taipei_1000.geojson")
-
-    with open(output_file, 'w', encoding='utf-8') as f:
-        json.dump(feature_collection, f, ensure_ascii=False)
-    with open(default_file, 'w', encoding='utf-8') as f:
-        json.dump(feature_collection, f, ensure_ascii=False)
+    # 迴圈產生早上 8 點到下午 5 點 (8~17) 的陰影資料
+    for hour in range(8, 18):
+        features = []
+        # 設定每個小時的確切時間
+        date = datetime.datetime(2026, 6, 26, hour, 0, 0)
         
-    print(f"Generated {len(hexes)} hexes and saved to {output_file}")
+        for h_index in hexes:
+            cell_to_latlng = getattr(h3, 'cell_to_latlng', getattr(h3, 'h3_to_geo', None))
+            lat, lon = cell_to_latlng(h_index)
+            
+            try:
+                import suncalc
+                pos = suncalc.get_position(date, lon, lat)
+                altitude = pos['altitude']
+            except Exception:
+                altitude = math.radians(60)
+
+            boundary = to_boundary(h_index)
+            boundary_lonlat = [(lng, lt) for lt, lng in boundary]
+            boundary_lonlat.append(boundary_lonlat[0]) # close polygon
+            
+            shade_coverage = 0
+            # 只有當太陽在地平線上 (altitude > 0) 且建築密集度夠高時，才會有陰影
+            if altitude > 0.1: # 稍微提高門檻，避免清晨黃昏陰影過大
+                density = (math.sin(lat * 5000) * math.cos(lon * 5000) + 1) / 2
+                random.seed(f"{lat}_{lon}_{hour}") # 確保同一小時的陰影固定，不同小時會略有變化
+                shade_coverage = density * 0.6 + random.random() * 0.4
+                
+            in_shadow = shade_coverage > 0.75
+            intensity = shade_coverage if in_shadow else 0
+            
+            features.append({
+                "type": "Feature",
+                "properties": {
+                    "cellId": h_index,
+                    "inShadow": in_shadow,
+                    "shadowIntensity": round(intensity, 3)
+                },
+                "geometry": {
+                    "type": "Polygon",
+                    "coordinates": [boundary_lonlat]
+                }
+            })
+            
+        feature_collection = {
+            "type": "FeatureCollection",
+            "features": features
+        }
+        
+        output_file = os.path.join(shade_dir, f"shade_taipei_{hour:02d}00.geojson")
+        with open(output_file, 'w', encoding='utf-8') as f:
+            json.dump(feature_collection, f, ensure_ascii=False)
+            
+        print(f"Generated {len(hexes)} hexes for {hour:02d}:00 and saved to {output_file}")
+        
+    # 預設複製一份 10 點的作為 initial load
+    import shutil
+    shutil.copy(os.path.join(shade_dir, "shade_taipei_1000.geojson"), 
+                os.path.join(shade_dir, "shade_taipei_default.geojson"))
 
 def generate_mock_stations(output_dir):
     stations = []
@@ -137,7 +104,6 @@ def generate_mock_stations(output_dir):
         sbi = random.randint(0, total)
         bemp = total - sbi
         
-        # 10% extremes
         rand_val = random.random()
         if rand_val < 0.05:
             sbi, bemp = 0, total
