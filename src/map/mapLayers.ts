@@ -32,7 +32,7 @@ export function initMapLayers(
         'case',
         ['boolean', ['get', 'inShadow'], false],
         'rgba(34, 139, 34, 0.3)',    // 🌲 半透明綠
-        'rgba(0, 0, 0, 0)',          // 日照：完全透明
+        'rgba(0, 0, 0, 0.4)',          // 日照：完全透明
       ],
       'fill-opacity': 0.6,
     },
