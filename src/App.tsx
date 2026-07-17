@@ -34,7 +34,9 @@ export function App() {
       container: mapContainerRef.current,
       style: MAP_STYLE,
       center: [120.635, 24.16],   // 台中市西屯區
-      zoom: 13,
+      zoom: 14,                   // 稍微拉近一點
+      pitch: 45,                  // 傾斜角度 (給它 3D 感！)
+      bearing: -17.6,             // 稍微旋轉一點點
     });
 
     map.on('load', () => {
