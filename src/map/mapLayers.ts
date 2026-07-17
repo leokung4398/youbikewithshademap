@@ -150,7 +150,7 @@ export function initMapLayers(
 }
 
 /** Station Map → GeoJSON FeatureCollection */
-function stationsToFeatureCollection(
+export function stationsToFeatureCollection(
   stations: ReadonlyMap<string, Station>,
   viewModels: ReadonlyMap<string, any>,
 ): GeoJSON.FeatureCollection {
