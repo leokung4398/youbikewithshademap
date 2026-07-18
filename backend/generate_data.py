@@ -4,40 +4,49 @@ import math
 import random
 import datetime
 import h3
+import urllib.request
 
-# Target area: Taichung Xitun District
-# Bounding Box: lat 24.14~24.18, lon 120.61~120.66
-LAT_MIN, LAT_MAX = 24.14, 24.18
-LON_MIN, LON_MAX = 120.61, 120.66
+# 1. 抓取台北市真實 YouBike 2.0 API 資料
+def fetch_real_stations():
+    url = 'https://tcgbusfs.blob.core.windows.net/dotapp/youbike/v2/youbike_immediate.json'
+    try:
+        req = urllib.request.Request(url)
+        with urllib.request.urlopen(req) as response:
+            data = json.loads(response.read().decode('utf-8'))
+            # 嚴格過濾出「松山區」的站點
+            songshan_stations = [s for s in data if s.get('sarea') == '松山區']
+            return songshan_stations
+    except Exception as e:
+        print(f"Failed to fetch real data: {e}")
+        return []
 
-def get_h3_indices(resolution=9):
+# 2. 根據自動計算出的 Bounding Box 產生 H3 網格
+def get_h3_indices(lat_min, lat_max, lon_min, lon_max, resolution=9):
     hexes = set()
     lat_step = 0.002
     lon_step = 0.002
     
     to_cell = getattr(h3, 'latlng_to_cell', getattr(h3, 'geo_to_h3', None))
     
-    lat = LAT_MIN
-    while lat <= LAT_MAX:
-        lon = LON_MIN
-        while lon <= LON_MAX:
+    lat = lat_min
+    while lat <= lat_max:
+        lon = lon_min
+        while lon <= lon_max:
             if to_cell:
                 hexes.add(to_cell(lat, lon, resolution))
             lon += lon_step
         lat += lat_step
     return list(hexes)
 
-def generate_shade_geojson(output_dir):
-    hexes = get_h3_indices(9)
+# 3. 產生 08:00 ~ 17:00 的陰影資料
+def generate_shade_geojson(output_dir, hexes):
     to_boundary = getattr(h3, 'cell_to_boundary', getattr(h3, 'h3_to_geo_boundary', None))
-    
     shade_dir = os.path.join(output_dir, "cdn", "shade")
     os.makedirs(shade_dir, exist_ok=True)
     
-    # 迴圈產生早上 8 點到下午 5 點 (8~17) 的陰影資料
     for hour in range(8, 18):
         features = []
-        # 設定每個小時的確切時間，並且加上「台灣時區 (UTC+8)」！
+        # 設定台灣時區
         tz = datetime.timezone(datetime.timedelta(hours=8))
         date = datetime.datetime(2026, 6, 26, hour, 0, 0, tzinfo=tz)
         
@@ -54,13 +63,12 @@ def generate_shade_geojson(output_dir):
 
             boundary = to_boundary(h_index)
             boundary_lonlat = [(lng, lt) for lt, lng in boundary]
-            boundary_lonlat.append(boundary_lonlat[0]) # close polygon
+            boundary_lonlat.append(boundary_lonlat[0])
             
             shade_coverage = 0
-            # 只有當太陽在地平線上 (altitude > 0) 且建築密集度夠高時，才會有陰影
-            if altitude > 0.1: # 稍微提高門檻，避免清晨黃昏陰影過大
+            if altitude > 0.1:
                 density = (math.sin(lat * 5000) * math.cos(lon * 5000) + 1) / 2
-                random.seed(f"{lat}_{lon}_{hour}") # 確保同一小時的陰影固定，不同小時會略有變化
+                random.seed(f"{lat}_{lon}_{hour}")
                 shade_coverage = density * 0.6 + random.random() * 0.4
                 
             in_shadow = shade_coverage > 0.75
@@ -90,55 +98,38 @@ def generate_shade_geojson(output_dir):
             
         print(f"Generated {len(hexes)} hexes for {hour:02d}:00 and saved to {output_file}")
         
-    # 預設複製一份 10 點的作為 initial load
     import shutil
     shutil.copy(os.path.join(shade_dir, "shade_taipei_1000.geojson"), 
                 os.path.join(shade_dir, "shade_taipei_default.geojson"))
-
-def generate_mock_stations(output_dir):
-    stations = []
-    for i in range(1, 101):
-        lat = LAT_MIN + random.random() * (LAT_MAX - LAT_MIN)
-        lng = LON_MIN + random.random() * (LON_MAX - LON_MIN)
-        total = random.randint(15, 44)
-        
-        sbi = random.randint(0, total)
-        bemp = total - sbi
-        
-        rand_val = random.random()
-        if rand_val < 0.05:
-            sbi, bemp = 0, total
-        elif rand_val < 0.1:
-            sbi, bemp = total, 0
-
-        stations.append({
-            "sno": f"5001{i:03d}",
-            "sna": f"YouBike2.0_西屯測試站{i}",
-            "snaen": f"Xitun Test Station {i}",
-            "sarea": "西屯區",
-            "sareaen": "Xitun Dist.",
-            "lat": lat,
-            "lng": lng,
-            "ar": "模擬地址",
-            "aren": "Mock Address",
-            "tot": total,
-            "sbi": sbi,
-            "bemp": bemp,
-            "act": 1,
-            "mday": datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-        })
-
-    output_file = os.path.join(output_dir, "mock_stations.json")
-    with open(output_file, 'w', encoding='utf-8') as f:
-        json.dump(stations, f, ensure_ascii=False, indent=2)
-    print(f"Generated 100 mock stations to {output_file}")
 
 def main():
     output_dir = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "public"))
     os.makedirs(output_dir, exist_ok=True)
     
-    generate_shade_geojson(output_dir)
-    generate_mock_stations(output_dir)
+    # 執行流程：抓資料 -> 算範圍 -> 產生陰影 -> 存檔
+    stations = fetch_real_stations()
+    if not stations:
+        print("No stations found or API failed.")
+        return
+        
+    # 計算松山區站點的邊界 (Bounding Box)，並往外擴充一點點 (0.005) 讓地圖的陰影網格更完整
+    lats = [s['lat'] for s in stations]
+    lngs = [s['lng'] for s in stations]
+    lat_min, lat_max = min(lats) - 0.005, max(lats) + 0.005
+    lon_min, lon_max = min(lngs) - 0.005, max(lngs) + 0.005
+    
+    print("Songshan District Bounding Box:")
+    print(f"Lat: {lat_min} ~ {lat_max}")
+    print(f"Lon: {lon_min} ~ {lon_max}")
+    
+    hexes = get_h3_indices(lat_min, lat_max, lon_min, lon_max, resolution=9)
+    generate_shade_geojson(output_dir, hexes)
+    
+    # 將真實資料寫入 mock_stations.json (因為前端是讀取這個檔名，我們不改檔名可以省下修改前端的麻煩)
+    output_file = os.path.join(output_dir, "mock_stations.json")
+    with open(output_file, 'w', encoding='utf-8') as f:
+        json.dump(stations, f, ensure_ascii=False, indent=2)
+    print(f"Generated {len(stations)} real stations to {output_file}")
 
 if __name__ == "__main__":
     main()
