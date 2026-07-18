@@ -207,7 +207,7 @@ export function App() {
           </div>
           <div style={{ display: 'flex', alignItems: 'center' }}>
             <div style={{ width: 16, height: 16, backgroundColor: 'rgba(255, 255, 255, 0)', border: '1px solid #ccc', marginRight: 10 }} />
-            <span><b>透明網格：</b>陽光直射區</span>
+            <span><b>灰色網格：</b>陽光直射區</span>
           </div>
         </div>
       )}
