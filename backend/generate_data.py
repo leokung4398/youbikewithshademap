@@ -9,19 +9,38 @@ import urllib.request
 # 1. 抓取台北市真實 YouBike 2.0 API 資料
 def fetch_real_stations():
     url = 'https://tcgbusfs.blob.core.windows.net/dotapp/youbike/v2/youbike_immediate.json'
-    # 加上 User-Agent 偽裝成一般瀏覽器，避免被政府 API 當成惡意爬蟲擋掉！
     req = urllib.request.Request(url, headers={'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64)'})
     try:
         with urllib.request.urlopen(req) as response:
             data = json.loads(response.read().decode('utf-8'))
-            # 嚴格過濾出「松山區」的站點
-            songshan_stations = [s for s in data if s.get('sarea') == '松山區']
-            if not songshan_stations:
+            
+            formatted_stations = []
+            for s in data:
+                if s.get('sarea') == '松山區':
+                    # 【關鍵修復】將政府 API 的欄位名稱，轉換成我們前端預期的短名稱！
+                    formatted_stations.append({
+                        "sno": s.get("sno"),
+                        "sna": s.get("sna"),
+                        "snaen": s.get("snaen"),
+                        "sarea": s.get("sarea"),
+                        "sareaen": s.get("sareaen"),
+                        "lat": s.get("latitude"),    # 政府的是 latitude，我們轉換為 lat
+                        "lng": s.get("longitude"),   # 政府的是 longitude，我們轉換為 lng
+                        "ar": s.get("ar"),
+                        "aren": s.get("aren"),
+                        "tot": s.get("Quantity", 0),                 # 總車位
+                        "sbi": s.get("available_rent_bikes", 0),     # 可借車數
+                        "bemp": s.get("available_return_bikes", 0),  # 可還空位
+                        "act": s.get("act", "1"),
+                        "mday": s.get("mday")
+                    })
+            
+            if not formatted_stations:
                 raise Exception("API 成功讀取，但找不到任何松山區的站點！")
-            return songshan_stations
+                
+            return formatted_stations
     except Exception as e:
         print(f"Failed to fetch real data: {e}")
-        # 如果失敗，強制引發錯誤讓 GitHub Action 亮紅燈，我們才會知道出問題了！
         raise e
 
 # 2. 根據自動計算出的 Bounding Box 產生 H3 網格
