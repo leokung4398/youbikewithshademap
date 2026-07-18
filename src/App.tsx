@@ -1,5 +1,5 @@
 // ═══════════════════════════════════════════════════════
-//  App.tsx — 行動裝置友善旗艦版 (串接真實松山區資料)
+//  App.tsx — 行動裝置友善旗艦版 (點擊彈窗 + 松山區圖例)
 // ═══════════════════════════════════════════════════════
 
 import { useEffect, useRef, useMemo, useState } from 'react';
@@ -17,17 +17,15 @@ export function App() {
   const mapContainerRef = useRef<HTMLDivElement>(null);
   const mapRef = useRef<maplibregl.Map | null>(null);
 
-  // ── 狀態管理 ──
   const [sliderHour, setSliderHour] = useState<number>(10);
   const [isMobile, setIsMobile] = useState(window.innerWidth <= 768);
   const [showLegend, setShowLegend] = useState(window.innerWidth > 768);
 
-  // ── 響應式螢幕監聽 ──
   useEffect(() => {
     const handleResize = () => {
       const mobile = window.innerWidth <= 768;
       setIsMobile(mobile);
-      if (!mobile) setShowLegend(true); // 桌機永遠顯示圖例
+      if (!mobile) setShowLegend(true);
     };
     window.addEventListener('resize', handleResize);
     return () => window.removeEventListener('resize', handleResize);
@@ -41,18 +39,64 @@ export function App() {
     const map = new maplibregl.Map({
       container: mapContainerRef.current,
       style: MAP_STYLE,
-      // ✨ 焦點轉移到台北市松山區！
       center: [121.558, 25.055],
-      // ✨ 松山區範圍比較小且密集，我們把鏡頭拉近一點
       zoom: isMobile ? 13.5 : 14.5, 
       pitch: 45,
       bearing: -17.6,
-      attributionControl: false, // 隱藏版權資訊讓畫面更乾淨
+      attributionControl: false,
     });
 
     map.on('load', () => {
       initMapLayers(map, store.getState().stations, store.getState().viewModels, store.getState().activeShade);
       fetchShadeByHour(10);
+      
+      // ✨ 新增：點擊站點顯示超美彈出視窗 (Popup)
+      map.on('click', 'station-points', (e) => {
+        if (!e.features || e.features.length === 0) return;
+        const feature = e.features[0];
+        const coords = (feature.geometry as any).coordinates.slice();
+        const props = feature.properties;
+
+        // 確保地圖縮放或平移時，彈窗位置指得準確
+        while (Math.abs(e.lngLat.lng - coords[0]) > 180) {
+          coords[0] += e.lngLat.lng > coords[0] ? 360 : -360;
+        }
+
+        // 高質感 HTML UI 彈出視窗設計
+        const stationName = props.name.replace('YouBike2.0_', ''); // 把落落長的前綴拿掉，畫面更乾淨
+        const html = `
+          <div style="padding: 2px; font-family: sans-serif; min-width: 170px;">
+            <div style="font-size: 15px; font-weight: bold; color: #1f2937; margin-bottom: 10px; border-bottom: 1px solid #f3f4f6; padding-bottom: 8px;">
+              🚲 ${stationName}
+            </div>
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
+              <span style="font-size: 13px; color: #6b7280;">2.0 可借數量</span>
+              <span style="font-size: 15px; font-weight: 800; color: #f59e0b;">${props.availableBikes}</span>
+            </div>
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
+              <span style="font-size: 13px; color: #6b7280;">2.0E 可借數量</span>
+              <span style="font-size: 15px; font-weight: 800; color: #f59e0b;">0</span>
+            </div>
+            <div style="display: flex; justify-content: space-between; align-items: center;">
+              <span style="font-size: 13px; color: #6b7280;">可停車柱數量</span>
+              <span style="font-size: 15px; font-weight: 800; color: #22c55e;">${props.emptySlots}</span>
+            </div>
+          </div>
+        `;
+
+        new maplibregl.Popup({ offset: 15, closeButton: false })
+          .setLngLat(coords as [number, number])
+          .setHTML(html)
+          .addTo(map);
+      });
+
+      // 滑鼠懸停在站點上時，游標變成手指
+      map.on('mouseenter', 'station-points', () => {
+        map.getCanvas().style.cursor = 'pointer';
+      });
+      map.on('mouseleave', 'station-points', () => {
+        map.getCanvas().style.cursor = '';
+      });
     });
 
     mapRef.current = map;
@@ -94,7 +138,7 @@ export function App() {
         style={{ width: '100%', height: '100%' }}
       />
       
-      {/* 🌞 頂部高質感時間拉桿 (支援響應式) */}
+      {/* 🌞 頂部高質感時間拉桿 */}
       <div
         style={{
           position: 'absolute',
@@ -175,8 +219,9 @@ export function App() {
           }}
         >
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '12px' }}>
+            {/* ✨ 更改為松山區 */}
             <h4 style={{ margin: 0, fontSize: isMobile ? '14px' : '15px', fontWeight: 'bold', color: '#111' }}>
-              圖例說明 (DEMO 時間軸)
+              圖例說明 (DEMO地區：松山區)
             </h4>
             {isMobile && (
               <button 
@@ -206,7 +251,8 @@ export function App() {
             <span><b>綠色網格：</b>高樓大廈陰影避暑區</span>
           </div>
           <div style={{ display: 'flex', alignItems: 'center' }}>
-            <div style={{ width: 16, height: 16, backgroundColor: 'rgba(255, 255, 255, 0)', border: '1px solid #ccc', marginRight: 10 }} />
+            {/* ✨ 更改為灰色網格 */}
+            <div style={{ width: 16, height: 16, backgroundColor: 'rgba(156, 163, 175, 0.3)', border: '1px solid rgba(156, 163, 175, 0.6)', marginRight: 10 }} />
             <span><b>灰色網格：</b>陽光直射區</span>
           </div>
         </div>
