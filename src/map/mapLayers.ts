@@ -1,9 +1,5 @@
 // ═══════════════════════════════════════════════════════
 //  map/mapLayers.ts — MapLibre 圖層初始化
-//
-//  ADR #2: Day 1 啟用 cluster: true
-//  - Zoom ≤ 14: 顯示聚合泡泡 (區域總車輛數)
-//  - Zoom > 14: 渲染獨立站點 (🌞 / 🌲 顏色)
 // ═══════════════════════════════════════════════════════
 
 import type { Map as MaplibreMap } from 'maplibre-gl';
@@ -31,8 +27,8 @@ export function initMapLayers(
       'fill-color': [
         'case',
         ['boolean', ['get', 'inShadow'], false],
-        'rgba(34, 139, 34, 0.3)',    // 🌲 半透明綠
-        'rgba(0, 0, 0, 0.4)',          // 日照：完全透明
+        'rgba(34, 139, 34, 0.3)',    // 🌲 陰影區：綠色網格
+        'rgba(156, 163, 175, 0.3)',  // 🌞 陽光直射：灰色網格
       ],
       'fill-opacity': 0.6,
     },
@@ -56,7 +52,7 @@ export function initMapLayers(
     promoteId: 'stationId',
   });
 
-  // ── B1. 聚合泡泡 (Zoom ≤ 14) ──
+  // ── B1. 聚合泡泡 ──
   map.addLayer({
     id: 'clusters',
     type: 'circle',
@@ -66,9 +62,9 @@ export function initMapLayers(
       'circle-color': [
         'step',
         ['get', 'point_count'],
-        '#51bbd6',       // < 20 站
-        20, '#f1f075',   // 20~50 站
-        50, '#f28cb1',   // > 50 站
+        '#51bbd6',       
+        20, '#f1f075',   
+        50, '#f28cb1',   
       ],
       'circle-radius': [
         'step',
@@ -101,7 +97,7 @@ export function initMapLayers(
     },
   });
 
-  // ── B3. 獨立站點 (Zoom > 14) ──
+  // ── B3. 獨立站點 ──
   map.addLayer({
     id: 'station-points',
     type: 'circle',
@@ -149,7 +145,6 @@ export function initMapLayers(
   });
 }
 
-/** Station Map → GeoJSON FeatureCollection */
 export function stationsToFeatureCollection(
   stations: ReadonlyMap<string, Station>,
   viewModels: ReadonlyMap<string, any>,
