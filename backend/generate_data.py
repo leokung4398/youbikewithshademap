@@ -37,8 +37,9 @@ def generate_shade_geojson(output_dir):
     # 迴圈產生早上 8 點到下午 5 點 (8~17) 的陰影資料
     for hour in range(8, 18):
         features = []
-        # 設定每個小時的確切時間
-        date = datetime.datetime(2026, 6, 26, hour, 0, 0)
+        # 設定每個小時的確切時間，並且加上「台灣時區 (UTC+8)」！
+        tz = datetime.timezone(datetime.timedelta(hours=8))
+        date = datetime.datetime(2026, 6, 26, hour, 0, 0, tzinfo=tz)
         
         for h_index in hexes:
             cell_to_latlng = getattr(h3, 'cell_to_latlng', getattr(h3, 'h3_to_geo', None))
