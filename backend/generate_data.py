@@ -9,16 +9,20 @@ import urllib.request
 # 1. 抓取台北市真實 YouBike 2.0 API 資料
 def fetch_real_stations():
     url = 'https://tcgbusfs.blob.core.windows.net/dotapp/youbike/v2/youbike_immediate.json'
+    # 加上 User-Agent 偽裝成一般瀏覽器，避免被政府 API 當成惡意爬蟲擋掉！
+    req = urllib.request.Request(url, headers={'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64)'})
     try:
-        req = urllib.request.Request(url)
         with urllib.request.urlopen(req) as response:
             data = json.loads(response.read().decode('utf-8'))
             # 嚴格過濾出「松山區」的站點
             songshan_stations = [s for s in data if s.get('sarea') == '松山區']
+            if not songshan_stations:
+                raise Exception("API 成功讀取，但找不到任何松山區的站點！")
             return songshan_stations
     except Exception as e:
         print(f"Failed to fetch real data: {e}")
-        return []
+        # 如果失敗，強制引發錯誤讓 GitHub Action 亮紅燈，我們才會知道出問題了！
+        raise e
 
 # 2. 根據自動計算出的 Bounding Box 產生 H3 網格
 def get_h3_indices(lat_min, lat_max, lon_min, lon_max, resolution=9):
@@ -108,10 +112,7 @@ def main():
     
     # 執行流程：抓資料 -> 算範圍 -> 產生陰影 -> 存檔
     stations = fetch_real_stations()
-    if not stations:
-        print("No stations found or API failed.")
-        return
-        
+    
     # 計算松山區站點的邊界 (Bounding Box)，並往外擴充一點點 (0.005) 讓地圖的陰影網格更完整
     lats = [s['lat'] for s in stations]
     lngs = [s['lng'] for s in stations]
@@ -125,7 +126,7 @@ def main():
     hexes = get_h3_indices(lat_min, lat_max, lon_min, lon_max, resolution=9)
     generate_shade_geojson(output_dir, hexes)
     
-    # 將真實資料寫入 mock_stations.json (因為前端是讀取這個檔名，我們不改檔名可以省下修改前端的麻煩)
+    # 將真實資料寫入 mock_stations.json
     output_file = os.path.join(output_dir, "mock_stations.json")
     with open(output_file, 'w', encoding='utf-8') as f:
         json.dump(stations, f, ensure_ascii=False, indent=2)
