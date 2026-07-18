@@ -1,5 +1,5 @@
 // ═══════════════════════════════════════════════════════
-//  App.tsx — 行動裝置友善旗艦版
+//  App.tsx — 行動裝置友善旗艦版 (串接真實松山區資料)
 // ═══════════════════════════════════════════════════════
 
 import { useEffect, useRef, useMemo, useState } from 'react';
@@ -41,8 +41,10 @@ export function App() {
     const map = new maplibregl.Map({
       container: mapContainerRef.current,
       style: MAP_STYLE,
-      center: [120.635, 24.16],
-      zoom: isMobile ? 13 : 14, // 手機預設稍微退遠一點
+      // ✨ 焦點轉移到台北市松山區！
+      center: [121.558, 25.055],
+      // ✨ 松山區範圍比較小且密集，我們把鏡頭拉近一點
+      zoom: isMobile ? 13.5 : 14.5, 
       pitch: 45,
       bearing: -17.6,
       attributionControl: false, // 隱藏版權資訊讓畫面更乾淨
@@ -196,7 +198,7 @@ export function App() {
           </div>
           <div style={{ display: 'flex', alignItems: 'center', marginBottom: '12px' }}>
             <div style={{ width: 14, height: 14, borderRadius: '50%', backgroundColor: '#22c55e', border: '2px solid white', marginRight: 10, boxShadow: '0 1px 3px rgba(0,0,0,0.2)' }} />
-            <span><b>綠色圈圈：</b>隱藏在綠洲下 (可借車數)</span>
+            <span><b>綠色圈圈：</b>隱藏在陰影下 (可借車數)</span>
           </div>
           <div style={{ borderTop: '1px solid rgba(0,0,0,0.1)', margin: '12px 0' }} />
           <div style={{ display: 'flex', alignItems: 'center', marginBottom: '8px' }}>
@@ -205,7 +207,7 @@ export function App() {
           </div>
           <div style={{ display: 'flex', alignItems: 'center' }}>
             <div style={{ width: 16, height: 16, backgroundColor: 'rgba(255, 255, 255, 0)', border: '1px solid #ccc', marginRight: 10 }} />
-            <span><b>灰色網格：</b>陽光直射區</span>
+            <span><b>透明網格：</b>陽光直射區</span>
           </div>
         </div>
       )}
