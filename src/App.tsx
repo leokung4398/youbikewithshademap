@@ -30,6 +30,7 @@ export function App() {
 
   const store = useMemo(() => new AppStore(), []);
   const [routingState, setRoutingState] = useState(store.getState().routing);
+  const [isRoutingPanelMinimized, setIsRoutingPanelMinimized] = useState(false);
 
   useEffect(() => {
     (window as any).setRoutePoint = (type: 'start'|'end', id: string, lng: number, lat: number, name: string) => {
@@ -49,6 +50,13 @@ export function App() {
       const newRouting = store.getState().routing;
       setRoutingState(newRouting);
       updateRouteLayer(mapRef.current, newRouting.routes, newRouting.bestRouteId);
+      
+      // 如果成功找到路線，自動縮小面板；如果被清空，自動展開
+      if (newRouting.bestRouteId) {
+        setIsRoutingPanelMinimized(true);
+      } else if (!newRouting.startLocation && !newRouting.endLocation) {
+        setIsRoutingPanelMinimized(false);
+      }
     });
   }, [store]);
 
@@ -203,63 +211,76 @@ export function App() {
           zIndex: 20, width: isMobile ? '90%' : '400px', border: '1px solid rgba(255,255,255,0.6)',
           fontFamily: 'sans-serif'
         }}>
-          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '12px' }}>
+          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: isRoutingPanelMinimized ? 0 : '12px' }}>
             <h4 style={{ margin: 0, color: '#1f2937', fontWeight: 'bold' }}>🧭 智慧避暑導航</h4>
-            {routingState.isLoading && <span style={{ fontSize: '12px', color: '#0ea5e9', fontWeight: 'bold' }}>🔄 規劃中...</span>}
-          </div>
-          
-          <div style={{ display: 'flex', flexDirection: 'column', gap: '8px', fontSize: '14px', marginBottom: '12px' }}>
-            <div style={{ display: 'flex', justifyContent: 'space-between', borderBottom: '1px solid #f3f4f6', paddingBottom: '6px' }}>
-              <span style={{ color: '#6b7280' }}>起點：</span>
-              <span style={{ fontWeight: 'bold', color: routingState.startLocation ? '#111' : '#9ca3af' }}>
-                {routingState.startLocation?.name || '請點擊地圖站點'}
-              </span>
-            </div>
-            <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-              <span style={{ color: '#6b7280' }}>終點：</span>
-              <span style={{ fontWeight: 'bold', color: routingState.endLocation ? '#111' : '#9ca3af' }}>
-                {routingState.endLocation?.name || '請點擊地圖站點'}
-              </span>
+            <div style={{ display: 'flex', gap: '8px', alignItems: 'center' }}>
+              {routingState.isLoading && <span style={{ fontSize: '12px', color: '#0ea5e9', fontWeight: 'bold' }}>🔄 規劃中...</span>}
+              <button 
+                onClick={() => setIsRoutingPanelMinimized(!isRoutingPanelMinimized)} 
+                style={{ background: '#f3f4f6', border: '1px solid #e5e7eb', borderRadius: '4px', cursor: 'pointer', fontSize: '12px', padding: '4px 8px', color: '#4b5563', fontWeight: 'bold' }}
+              >
+                {isRoutingPanelMinimized ? '展開 🔽' : '收合 🔼'}
+              </button>
             </div>
           </div>
           
-          {!routingState.startLocation && (
-            <button 
-              onClick={() => {
-                // 模擬抓取 GPS (松山區附近，民生社區)
-                const mockGps = { type: 'gps' as const, coord: [121.565, 25.058] as [number, number], name: '📍 目前位置 (GPS)' };
-                store.setRoutingStart(mockGps);
-                setTimeout(() => fetchShadeRoutes(store), 50);
-              }}
-              style={{ width: '100%', padding: '10px', background: '#f3f4f6', border: '1px solid #d1d5db', borderRadius: '8px', marginBottom: '12px', cursor: 'pointer', fontWeight: 'bold', color: '#4b5563' }}
-            >
-              從目前位置 (GPS) 出發
-            </button>
-          )}
-
-          {!routingState.isLoading && routingState.bestRouteId && (() => {
-            const bestRoute = routingState.routes.find(r => r.id === routingState.bestRouteId);
-            return (
-              <div style={{ background: 'rgba(2, 132, 199, 0.08)', border: '1px solid rgba(2, 132, 199, 0.3)', borderRadius: '8px', padding: '12px', marginBottom: '12px' }}>
-                <div style={{ color: '#0369a1', fontWeight: 'bold', marginBottom: '6px', fontSize: '15px' }}>❄️ 冰藍色特效路線已就緒！</div>
-                <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '13px', color: '#0c4a6e', marginBottom: '4px' }}>
-                  <span>陰影覆蓋率：</span>
-                  <span style={{ fontWeight: '900', fontSize: '15px' }}>{Math.round((bestRoute?.shadeScore || 0) * 100)}%</span>
+          {!isRoutingPanelMinimized && (
+            <>
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '8px', fontSize: '14px', marginBottom: '12px' }}>
+                <div style={{ display: 'flex', justifyContent: 'space-between', borderBottom: '1px solid #f3f4f6', paddingBottom: '6px' }}>
+                  <span style={{ color: '#6b7280' }}>起點：</span>
+                  <span style={{ fontWeight: 'bold', color: routingState.startLocation ? '#111' : '#9ca3af' }}>
+                    {routingState.startLocation?.name || '請點擊地圖站點'}
+                  </span>
                 </div>
-                <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '13px', color: '#0c4a6e' }}>
-                  <span>預估騎乘時間：</span>
-                  <span style={{ fontWeight: 'bold' }}>{Math.round((bestRoute?.duration || 0) / 60)} 分鐘</span>
+                <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+                  <span style={{ color: '#6b7280' }}>終點：</span>
+                  <span style={{ fontWeight: 'bold', color: routingState.endLocation ? '#111' : '#9ca3af' }}>
+                    {routingState.endLocation?.name || '請點擊地圖站點'}
+                  </span>
                 </div>
               </div>
-            );
-          })()}
+              
+              {!routingState.startLocation && (
+                <button 
+                  onClick={() => {
+                    const mockGps = { type: 'gps' as const, coord: [121.565, 25.058] as [number, number], name: '📍 目前位置 (GPS)' };
+                    store.setRoutingStart(mockGps);
+                    setTimeout(() => fetchShadeRoutes(store), 50);
+                  }}
+                  style={{ width: '100%', padding: '10px', background: '#f3f4f6', border: '1px solid #d1d5db', borderRadius: '8px', marginBottom: '12px', cursor: 'pointer', fontWeight: 'bold', color: '#4b5563' }}
+                >
+                  從目前位置 (GPS) 出發
+                </button>
+              )}
 
-          <button 
-            onClick={() => store.clearRouting()}
-            style={{ width: '100%', padding: '10px', background: '#fee2e2', color: '#ef4444', fontWeight: 'bold', border: 'none', borderRadius: '8px', cursor: 'pointer' }}
-          >
-            結束導航
-          </button>
+              {!routingState.isLoading && routingState.bestRouteId && (() => {
+                const bestRoute = routingState.routes.find(r => r.id === routingState.bestRouteId);
+                return (
+                  <div style={{ background: 'rgba(2, 132, 199, 0.08)', border: '1px solid rgba(2, 132, 199, 0.3)', borderRadius: '8px', padding: '12px', marginBottom: '12px' }}>
+                    <div style={{ color: '#0369a1', fontWeight: 'bold', marginBottom: '6px', fontSize: '15px' }}>❄️ 冰藍色特效路線已就緒！</div>
+                    <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '13px', color: '#0c4a6e', marginBottom: '4px' }}>
+                      <span>陰影覆蓋率：</span>
+                      <span style={{ fontWeight: '900', fontSize: '15px' }}>{Math.round((bestRoute?.shadeScore || 0) * 100)}%</span>
+                    </div>
+                    <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '13px', color: '#0c4a6e' }}>
+                      <span>預估騎乘時間：</span>
+                      <span style={{ fontWeight: 'bold' }}>{Math.round((bestRoute?.duration || 0) / 60)} 分鐘</span>
+                    </div>
+                  </div>
+                );
+              })()}
+
+              <button 
+                onClick={() => {
+                  store.clearRouting();
+                }}
+                style={{ width: '100%', padding: '10px', background: '#fee2e2', color: '#ef4444', fontWeight: 'bold', border: 'none', borderRadius: '8px', cursor: 'pointer' }}
+              >
+                結束導航
+              </button>
+            </>
+          )}
         </div>
       )}
 
