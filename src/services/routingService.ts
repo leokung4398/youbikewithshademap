@@ -46,7 +46,7 @@ export async function fetchShadeRoutes(store: AppStore): Promise<void> {
     // 依陰影覆蓋率排序，最高的 (最涼爽) 排第一
     routes.sort((a, b) => b.shadeScore - a.shadeScore);
 
-    const bestRouteId = routes.length > 0 ? routes[0].id : null;
+    const bestRouteId = routes[0]?.id ?? null;
     store.setRoutingResult(routes, bestRouteId);
 
   } catch (err) {
