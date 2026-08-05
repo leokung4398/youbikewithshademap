@@ -13,6 +13,7 @@ const MAP_STYLE = 'https://basemaps.cartocdn.com/gl/positron-gl-style/style.json
 export function App() {
   const mapContainerRef = useRef<HTMLDivElement>(null);
   const mapRef = useRef<maplibregl.Map | null>(null);
+  const popupRef = useRef<maplibregl.Popup | null>(null);
 
   const [sliderHour, setSliderHour] = useState<number>(10);
   const [isMobile, setIsMobile] = useState(window.innerWidth <= 768);
@@ -51,9 +52,13 @@ export function App() {
       setRoutingState(newRouting);
       updateRouteLayer(mapRef.current, newRouting.routes, newRouting.bestRouteId);
       
-      // 如果成功找到路線，自動縮小面板；如果被清空，自動展開
+      // 如果成功找到路線，自動縮小面板並隱藏站點的 Popup；如果被清空，自動展開
       if (newRouting.bestRouteId) {
         setIsRoutingPanelMinimized(true);
+        if (popupRef.current) {
+          popupRef.current.remove();
+          popupRef.current = null;
+        }
       } else if (!newRouting.startLocation && !newRouting.endLocation) {
         setIsRoutingPanelMinimized(false);
       }
@@ -117,7 +122,8 @@ export function App() {
           </div>
         `;
 
-        new maplibregl.Popup({ offset: 15, closeButton: false })
+        if (popupRef.current) popupRef.current.remove();
+        popupRef.current = new maplibregl.Popup({ offset: 15, closeButton: false })
           .setLngLat(coords as [number, number])
           .setHTML(html)
           .addTo(map);
@@ -256,6 +262,12 @@ export function App() {
 
               {!routingState.isLoading && routingState.bestRouteId && (() => {
                 const bestRoute = routingState.routes.find(r => r.id === routingState.bestRouteId);
+                const startLoc = routingState.startLocation;
+                const endLoc = routingState.endLocation;
+                const navUrl = (startLoc && endLoc) 
+                  ? `https://www.google.com/maps/dir/?api=1&origin=${startLoc.coord[1]},${startLoc.coord[0]}&destination=${endLoc.coord[1]},${endLoc.coord[0]}&travelmode=bicycling`
+                  : '#';
+                  
                 return (
                   <div style={{ background: 'rgba(2, 132, 199, 0.08)', border: '1px solid rgba(2, 132, 199, 0.3)', borderRadius: '8px', padding: '12px', marginBottom: '12px' }}>
                     <div style={{ color: '#0369a1', fontWeight: 'bold', marginBottom: '6px', fontSize: '15px' }}>❄️ 冰藍色特效路線已就緒！</div>
@@ -263,10 +275,19 @@ export function App() {
                       <span>陰影覆蓋率：</span>
                       <span style={{ fontWeight: '900', fontSize: '15px' }}>{Math.round((bestRoute?.shadeScore || 0) * 100)}%</span>
                     </div>
-                    <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '13px', color: '#0c4a6e' }}>
+                    <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '13px', color: '#0c4a6e', marginBottom: '12px' }}>
                       <span>預估騎乘時間：</span>
                       <span style={{ fontWeight: 'bold' }}>{Math.round((bestRoute?.duration || 0) / 60)} 分鐘</span>
                     </div>
+                    
+                    <a 
+                      href={navUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      style={{ display: 'block', textAlign: 'center', width: '100%', padding: '10px', background: '#0284c7', color: 'white', fontWeight: 'bold', borderRadius: '8px', textDecoration: 'none', cursor: 'pointer', boxSizing: 'border-box' }}
+                    >
+                      🚀 開始導航 (Google Maps)
+                    </a>
                   </div>
                 );
               })()}
