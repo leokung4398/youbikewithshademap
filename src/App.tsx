@@ -33,8 +33,23 @@ export function App() {
   const [routingState, setRoutingState] = useState(store.getState().routing);
   const [isRoutingPanelMinimized, setIsRoutingPanelMinimized] = useState(false);
 
+  const [showNavConfirm, setShowNavConfirm] = useState(false);
+  const prevBestRouteId = useRef<string | null>(null);
+
   useEffect(() => {
     (window as any).setRoutePoint = (type: 'start'|'end', id: string, lng: number, lat: number, name: string) => {
+      const state = store.getState().routing;
+      
+      // 1. 起點與終點不能設定為同一個站
+      if (type === 'start' && state.endLocation?.id === id) {
+        alert('起點與終點不能設定為同一個站點！');
+        return;
+      }
+      if (type === 'end' && state.startLocation?.id === id) {
+        alert('起點與終點不能設定為同一個站點！');
+        return;
+      }
+
       const loc = { type: 'station' as const, id, coord: [lng, lat] as [number, number], name };
       if (type === 'start') store.setRoutingStart(loc);
       else store.setRoutingEnd(loc);
@@ -52,15 +67,29 @@ export function App() {
       setRoutingState(newRouting);
       updateRouteLayer(mapRef.current, newRouting.routes, newRouting.bestRouteId);
       
-      // 如果成功找到路線，自動縮小面板並隱藏站點的 Popup；如果被清空，自動展開
+      // 如果成功找到路線，自動縮小面板並隱藏站點的 Popup
       if (newRouting.bestRouteId) {
+        if (newRouting.bestRouteId !== prevBestRouteId.current) {
+          setShowNavConfirm(true); // 新路線規劃完成，彈出詢問導航
+        }
+        prevBestRouteId.current = newRouting.bestRouteId;
+        
         setIsRoutingPanelMinimized(true);
         if (popupRef.current) {
           popupRef.current.remove();
           popupRef.current = null;
         }
+      } else if (newRouting.startLocation && !newRouting.endLocation) {
+        // 2. 設定完起始點後視窗先隱藏，讓地圖保持乾淨以便點擊下一個點
+        setIsRoutingPanelMinimized(true);
+        if (popupRef.current) {
+          popupRef.current.remove();
+          popupRef.current = null;
+        }
+        prevBestRouteId.current = null;
       } else if (!newRouting.startLocation && !newRouting.endLocation) {
         setIsRoutingPanelMinimized(false);
+        prevBestRouteId.current = null;
       }
     });
   }, [store]);
@@ -304,6 +333,47 @@ export function App() {
           )}
         </div>
       )}
+
+      {/* 3. 導航確認彈跳視窗 (Modal) */}
+      {showNavConfirm && routingState.bestRouteId && (() => {
+        const startCoord = routingState.startLocation?.coord;
+        const endCoord = routingState.endLocation?.coord;
+        const navUrl = (startCoord && endCoord) 
+          ? `https://www.google.com/maps/dir/?api=1&origin=${startCoord[1]},${startCoord[0]}&destination=${endCoord[1]},${endCoord[0]}&travelmode=bicycling`
+          : '#';
+
+        return (
+          <div style={{
+            position: 'absolute', top: 0, left: 0, right: 0, bottom: 0,
+            backgroundColor: 'rgba(0,0,0,0.5)', zIndex: 100,
+            display: 'flex', justifyContent: 'center', alignItems: 'center',
+            backdropFilter: 'blur(4px)', WebkitBackdropFilter: 'blur(4px)'
+          }}>
+            <div style={{ background: 'white', padding: '24px', borderRadius: '16px', width: '300px', textAlign: 'center', boxShadow: '0 10px 25px rgba(0,0,0,0.2)', fontFamily: 'sans-serif' }}>
+              <div style={{ fontSize: '36px', marginBottom: '8px' }}>❄️</div>
+              <h3 style={{ margin: '0 0 10px 0', color: '#0369a1' }}>避暑路線已就緒！</h3>
+              <p style={{ fontSize: '14px', color: '#4b5563', marginBottom: '24px', lineHeight: '1.5' }}>我們已為您規劃出目前最陰涼的騎乘路徑。<br/>是否要立即開啟 Google Maps 開始導航？</p>
+              <div style={{ display: 'flex', gap: '12px' }}>
+                <button 
+                  onClick={() => setShowNavConfirm(false)} 
+                  style={{ flex: 1, padding: '12px', background: '#f3f4f6', color: '#4b5563', border: 'none', borderRadius: '8px', cursor: 'pointer', fontWeight: 'bold' }}
+                >
+                  稍後再說
+                </button>
+                <a 
+                  href={navUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  onClick={() => setShowNavConfirm(false)}
+                  style={{ flex: 1, padding: '12px', background: '#0ea5e9', color: 'white', textDecoration: 'none', border: 'none', borderRadius: '8px', cursor: 'pointer', fontWeight: 'bold', display: 'block', boxSizing: 'border-box' }}
+                >
+                  開始導航
+                </a>
+              </div>
+            </div>
+          </div>
+        );
+      })()}
 
       {isMobile && !showLegend && (
         <button
