@@ -15,7 +15,7 @@ import { ShadeGridSpatialIndex } from '../core/spatialIndex';
 import { ShadowLRUCache } from './ShadowLRUCache';
 
 /** Pub/Sub 頻道型別 */
-type Channel = 'stations' | 'shade' | 'viewmodels' | 'routing' | `station:${string}`;
+type Channel = 'stations' | 'shade' | 'viewmodels' | 'routing' | 'weather' | `station:${string}`;
 type Listener = () => void;
 
 export class AppStore {
@@ -113,6 +113,13 @@ export class AppStore {
     this.emit('routing');
   }
 
+  // ═══════════ 天氣與微氣候 ═══════════
+
+  setWeather(weather: AppState['weather']): void {
+    this.state = { ...this.state, weather };
+    this.emit('weather');
+  }
+
   // ═══════════ 合併 + Diff + 精準通知 ═══════════
 
   isPointInShadow(position: readonly [number, number]): boolean {
@@ -204,6 +211,12 @@ function createInitialState(): AppState {
       routes: [],
       bestRouteId: null,
       isLoading: false,
+    },
+    weather: {
+      temperature: 28,
+      feelsLike: 30,
+      uvIndex: 4,
+      isDanger: false,
     },
     sync: {
       lastBikeFetch: 0,

@@ -5,8 +5,8 @@ import 'maplibre-gl/dist/maplibre-gl.css';
 import { AppStore } from './store/AppStore';
 import { useDataScheduler } from './hooks/useDataScheduler';
 import { useMapSync } from './hooks/useMapSync';
-import { initMapLayers, updateRouteLayer } from './map/mapLayers';
 import { fetchShadeRoutes } from './services/routingService';
+import { updateWeatherByHour } from './services/weatherService';
 
 const MAP_STYLE = 'https://basemaps.cartocdn.com/gl/positron-gl-style/style.json';
 
@@ -32,9 +32,16 @@ export function App() {
   const store = useMemo(() => new AppStore(), []);
   const [routingState, setRoutingState] = useState(store.getState().routing);
   const [isRoutingPanelMinimized, setIsRoutingPanelMinimized] = useState(false);
+  const [weatherState, setWeatherState] = useState(store.getState().weather);
 
   const [showNavConfirm, setShowNavConfirm] = useState(false);
   const prevBestRouteId = useRef<string | null>(null);
+
+  useEffect(() => {
+    return store.subscribe('weather', () => {
+      setWeatherState(store.getState().weather);
+    });
+  }, [store]);
 
   useEffect(() => {
     (window as any).setRoutePoint = (type: 'start'|'end', id: string, lng: number, lat: number, name: string) => {
@@ -110,6 +117,7 @@ export function App() {
     map.on('load', () => {
       initMapLayers(map, store.getState().stations, store.getState().viewModels, store.getState().activeShade);
       fetchShadeByHour(10);
+      updateWeatherByHour(store, 10);
       
       map.on('click', 'station-points', (e) => {
         if (!e.features || e.features.length === 0) return;
@@ -126,12 +134,19 @@ export function App() {
         }
 
         const stationName = props.name ? String(props.name).replace('YouBike2.0_', '') : '未知站點';
+        const currentWeather = store.getState().weather;
+        const warningHtml = currentWeather.isDanger ? `
+          <div style="background: rgba(239, 68, 68, 0.1); color: #ef4444; padding: 6px; border-radius: 6px; font-size: 12px; font-weight: bold; margin-bottom: 10px; text-align: center; border: 1px solid rgba(239,68,68,0.3);">
+            🔥 紫外線危險！建議配戴防曬裝備
+          </div>
+        ` : '';
         
         const html = `
           <div style="padding: 2px; font-family: sans-serif; min-width: 170px;">
             <div style="font-size: 15px; font-weight: bold; color: #1f2937; margin-bottom: 10px; border-bottom: 1px solid #f3f4f6; padding-bottom: 8px;">
               🚲 ${stationName}
             </div>
+            ${warningHtml}
             <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
               <span style="font-size: 13px; color: #6b7280;">2.0 可借數量</span>
               <span style="font-size: 15px; font-weight: 800; color: #f59e0b;">${props.availableBikes ?? 0}</span>
@@ -195,6 +210,7 @@ export function App() {
     const newHour = parseInt(e.target.value, 10);
     setSliderHour(newHour);
     fetchShadeByHour(newHour);
+    updateWeatherByHour(store, newHour);
   };
 
   return (
@@ -374,6 +390,58 @@ export function App() {
           </div>
         );
       })()}
+
+      {/* 4. 微氣候與紫外線資訊面板 (左側) */}
+      <div style={{
+        position: 'absolute', top: isMobile ? 80 : 30, left: isMobile ? 16 : 30,
+        backgroundColor: 'rgba(255, 255, 255, 0.85)', backdropFilter: 'blur(16px)', WebkitBackdropFilter: 'blur(16px)',
+        padding: '12px 16px', borderRadius: '16px', boxShadow: '0 8px 32px rgba(0,0,0,0.12)',
+        border: '1px solid rgba(255, 255, 255, 0.5)', zIndex: 10,
+        fontFamily: 'sans-serif', display: 'flex', flexDirection: 'column', gap: '8px',
+        minWidth: '120px'
+      }}>
+        <div style={{ display: 'flex', justifyContent: 'space-between', gap: '20px', alignItems: 'center' }}>
+          <span style={{ fontSize: '13px', color: '#6b7280', fontWeight: 'bold' }}>🌡️ 氣溫</span>
+          <span style={{ fontSize: '16px', fontWeight: 'bold', color: '#111' }}>{weatherState.temperature}°C</span>
+        </div>
+        <div style={{ display: 'flex', justifyContent: 'space-between', gap: '20px', alignItems: 'center' }}>
+          <span style={{ fontSize: '13px', color: '#6b7280', fontWeight: 'bold' }}>☀️ UV</span>
+          <span style={{ fontSize: '16px', fontWeight: 'bold', color: weatherState.isDanger ? '#ef4444' : '#f59e0b' }}>
+            {weatherState.uvIndex}
+          </span>
+        </div>
+      </div>
+
+      {/* 5. 紫外線危險警報 (Pulsing Card) */}
+      {weatherState.isDanger && (
+        <div style={{
+          position: 'absolute', top: isMobile ? 160 : 120, left: isMobile ? 16 : 30,
+          backgroundColor: 'rgba(239, 68, 68, 0.95)', backdropFilter: 'blur(8px)',
+          padding: '16px 20px', borderRadius: '16px',
+          boxShadow: '0 4px 20px rgba(239, 68, 68, 0.4)',
+          border: '1px solid rgba(255, 255, 255, 0.3)', zIndex: 15,
+          fontFamily: 'sans-serif', color: 'white', maxWidth: '300px',
+          animation: 'pulseDanger 2s infinite'
+        }}>
+          <style>
+            {`
+              @keyframes pulseDanger {
+                0% { box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.7); }
+                70% { box-shadow: 0 0 0 15px rgba(239, 68, 68, 0); }
+                100% { box-shadow: 0 0 0 0 rgba(239, 68, 68, 0); }
+              }
+            `}
+          </style>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '10px', marginBottom: '6px' }}>
+            <span style={{ fontSize: '24px' }}>⚠️</span>
+            <h4 style={{ margin: 0, fontSize: '16px', fontWeight: 'bold' }}>紫外線危險警報</h4>
+          </div>
+          <p style={{ margin: 0, fontSize: '13px', lineHeight: '1.4', opacity: 0.9 }}>
+            紫外線指數高達 <b>{weatherState.uvIndex}</b>，體感 <b>{weatherState.feelsLike}°C</b>。<br/>
+            強烈建議調度員開啟「智慧避暑導航」！
+          </p>
+        </div>
+      )}
 
       {isMobile && !showLegend && (
         <button

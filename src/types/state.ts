@@ -23,6 +23,14 @@ export interface RoutingState {
   readonly isLoading: boolean;
 }
 
+/** 微氣候與紫外線狀態 */
+export interface WeatherState {
+  readonly temperature: number; // 氣溫
+  readonly feelsLike: number; // 體感溫度
+  readonly uvIndex: number; // 紫外線指數
+  readonly isDanger: boolean; // 是否為危險級 (警報)
+}
+
 /** 站點 × 陰影 合併後的視圖模型 */
 export type ShadeStatus = 'sun' | 'shade' | 'unknown';
 
@@ -76,6 +84,7 @@ export interface AppState {
   readonly viewport: MapViewport;
   readonly timeSlider: { readonly currentTime: number; readonly isPlaying: boolean };
   readonly routing: RoutingState;
+  readonly weather: WeatherState;
 
   // ── 系統 ──
   readonly visibility: VisibilityState;
