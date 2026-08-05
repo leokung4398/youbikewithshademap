@@ -8,6 +8,8 @@ const SLOT_MINUTES = 15;
 
 /** 將 Unix ms 對齊到最近的 15 分鐘 floor */
 export function timestampToSlotKey(_timestamp: number): ShadeSlotKey {
+  // 為了避免 GitHub 伺服器 (UTC) 與本地瀏覽器 (UTC+8) 的時區差異導致找不到檔案，
+  // 我們暫時強制讀取已存在的預設檔案 'taipei_1000'
   return `taipei_1000`;
 }
 

@@ -8,14 +8,14 @@
 
 import type { YouBikeStationRaw, Station } from '../types/station';
 import type { ShadeSnapshot } from '../types/shadow';
-import type { AppState, StationMarkerViewModel } from '../types/state';
+import type { AppState, StationMarkerViewModel, RoutingState, ShadeRoute } from '../types/state';
 import { normalizeStation } from '../types/station';
 import { mergeStationShade } from '../core/mergeStationShade';
 import { ShadeGridSpatialIndex } from '../core/spatialIndex';
 import { ShadowLRUCache } from './ShadowLRUCache';
 
 /** Pub/Sub 頻道型別 */
-type Channel = 'stations' | 'shade' | 'viewmodels' | `station:${string}`;
+type Channel = 'stations' | 'shade' | 'viewmodels' | 'routing' | `station:${string}`;
 type Listener = () => void;
 
 export class AppStore {
@@ -83,7 +83,43 @@ export class AppStore {
     this.state = { ...this.state, selectedStation: id };
   }
 
+  // ═══════════ 導航 (Routing) ═══════════
+
+  setRoutingStart(location: RoutingState['startLocation']): void {
+    this.state = { ...this.state, routing: { ...this.state.routing, startLocation: location, routes: [], bestRouteId: null } };
+    this.emit('routing');
+  }
+
+  setRoutingEnd(location: RoutingState['endLocation']): void {
+    this.state = { ...this.state, routing: { ...this.state.routing, endLocation: location, routes: [], bestRouteId: null } };
+    this.emit('routing');
+  }
+
+  setRoutingLoading(isLoading: boolean): void {
+    this.state = { ...this.state, routing: { ...this.state.routing, isLoading } };
+    this.emit('routing');
+  }
+
+  setRoutingResult(routes: ShadeRoute[], bestRouteId: string | null): void {
+    this.state = { ...this.state, routing: { ...this.state.routing, routes, bestRouteId, isLoading: false } };
+    this.emit('routing');
+  }
+
+  clearRouting(): void {
+    this.state = { 
+      ...this.state, 
+      routing: { startLocation: null, endLocation: null, routes: [], bestRouteId: null, isLoading: false } 
+    };
+    this.emit('routing');
+  }
+
   // ═══════════ 合併 + Diff + 精準通知 ═══════════
+
+  isPointInShadow(position: readonly [number, number]): boolean {
+    if (!this.spatialIndex) return false;
+    const props = this.spatialIndex.query(position);
+    return props?.inShadow ?? false;
+  }
 
   private reconcile(): void {
     const { nextViewModels, changedIds } = mergeStationShade(
@@ -161,6 +197,13 @@ function createInitialState(): AppState {
     visibility: {
       isVisible: true,
       hiddenSince: null,
+    },
+    routing: {
+      startLocation: null,
+      endLocation: null,
+      routes: [],
+      bestRouteId: null,
+      isLoading: false,
     },
     sync: {
       lastBikeFetch: 0,

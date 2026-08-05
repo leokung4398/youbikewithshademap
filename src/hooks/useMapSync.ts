@@ -68,7 +68,6 @@ export function useMapSync(
 
     return unsub;
   }, [store, mapRef]);
-
   // ── 站點座標整批替換 (每 60 秒，因為 DEMO 資料會隨機飄移座標) ──
   useEffect(() => {
     const unsub = store.subscribe('stations', () => {

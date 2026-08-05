@@ -1,8 +1,3 @@
-// ═══════════════════════════════════════════════════════
-//  App.tsx — 行動裝置友善旗艦版 (點擊彈窗 + 松山區圖例)
-//  ✨ 修正 TypeScript 嚴格模式編譯錯誤 (終極 any 解法)
-// ═══════════════════════════════════════════════════════
-
 import React, { useEffect, useRef, useMemo, useState } from 'react';
 import maplibregl from 'maplibre-gl';
 import 'maplibre-gl/dist/maplibre-gl.css';
@@ -10,7 +5,8 @@ import 'maplibre-gl/dist/maplibre-gl.css';
 import { AppStore } from './store/AppStore';
 import { useDataScheduler } from './hooks/useDataScheduler';
 import { useMapSync } from './hooks/useMapSync';
-import { initMapLayers } from './map/mapLayers';
+import { initMapLayers, updateRouteLayer } from './map/mapLayers';
+import { fetchShadeRoutes } from './services/routingService';
 
 const MAP_STYLE = 'https://basemaps.cartocdn.com/gl/positron-gl-style/style.json';
 
@@ -33,6 +29,28 @@ export function App() {
   }, []);
 
   const store = useMemo(() => new AppStore(), []);
+  const [routingState, setRoutingState] = useState(store.getState().routing);
+
+  useEffect(() => {
+    (window as any).setRoutePoint = (type: 'start'|'end', id: string, lng: number, lat: number, name: string) => {
+      const loc = { type: 'station' as const, id, coord: [lng, lat] as [number, number], name };
+      if (type === 'start') store.setRoutingStart(loc);
+      else store.setRoutingEnd(loc);
+      
+      setTimeout(() => fetchShadeRoutes(store), 50);
+    };
+    return () => {
+      delete (window as any).setRoutePoint;
+    };
+  }, [store]);
+
+  useEffect(() => {
+    return store.subscribe('routing', () => {
+      const newRouting = store.getState().routing;
+      setRoutingState(newRouting);
+      updateRouteLayer(mapRef.current, newRouting.routes, newRouting.bestRouteId);
+    });
+  }, [store]);
 
   useEffect(() => {
     if (!mapContainerRef.current || mapRef.current) return;
@@ -54,7 +72,7 @@ export function App() {
       map.on('click', 'station-points', (e) => {
         if (!e.features || e.features.length === 0) return;
         
-        // 🚀 終極解法：強制轉為 any，完全跳過 TypeScript 龜毛的屬性檢查
+        // 終極解法：強制轉為 any，完全跳過 TypeScript 龜毛的屬性檢查
         const feature: any = e.features[0];
         if (!feature) return;
 
@@ -83,6 +101,10 @@ export function App() {
             <div style="display: flex; justify-content: space-between; align-items: center;">
               <span style="font-size: 13px; color: #6b7280;">可停車柱數量</span>
               <span style="font-size: 15px; font-weight: 800; color: #22c55e;">${props.emptySlots ?? 0}</span>
+            </div>
+            <div style="margin-top: 12px; display: flex; gap: 8px; padding-top: 10px; border-top: 1px solid #f3f4f6;">
+              <button onclick="window.setRoutePoint('start', '${props.stationId}', ${coords[0]}, ${coords[1]}, '${stationName}')" style="flex: 1; padding: 6px; border: none; border-radius: 6px; background: #f3f4f6; color: #374151; font-weight: bold; cursor: pointer; font-size: 13px; box-shadow: 0 1px 2px rgba(0,0,0,0.05);">設為起點</button>
+              <button onclick="window.setRoutePoint('end', '${props.stationId}', ${coords[0]}, ${coords[1]}, '${stationName}')" style="flex: 1; padding: 6px; border: none; border-radius: 6px; background: #0ea5e9; color: white; font-weight: bold; cursor: pointer; font-size: 13px; box-shadow: 0 1px 2px rgba(0,0,0,0.1);">設為終點</button>
             </div>
           </div>
         `;
@@ -163,14 +185,77 @@ export function App() {
         <div style={{ fontWeight: 'bold', fontSize: isMobile ? '14px' : '16px', color: '#333', whiteSpace: 'nowrap' }}>
           🕒 {sliderHour.toString().padStart(2, '0')}:00
         </div>
-        <input 
-          type="range" 
-          min="8" max="17" step="1"
-          value={sliderHour} 
-          onChange={handleTimeChange}
-          style={{ flex: 1, cursor: 'pointer', accentColor: '#22c55e' }}
         />
       </div>
+
+      {/* 導航狀態面板 */}
+      {(routingState.startLocation || routingState.endLocation) && (
+        <div style={{
+          position: 'absolute', top: isMobile ? 80 : 100, left: '50%', transform: 'translateX(-50%)',
+          backgroundColor: 'rgba(255, 255, 255, 0.95)', backdropFilter: 'blur(16px)',
+          padding: '16px', borderRadius: '16px', boxShadow: '0 8px 32px rgba(0,0,0,0.2)',
+          zIndex: 20, width: isMobile ? '90%' : '400px', border: '1px solid rgba(255,255,255,0.6)',
+          fontFamily: 'sans-serif'
+        }}>
+          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '12px' }}>
+            <h4 style={{ margin: 0, color: '#1f2937', fontWeight: 'bold' }}>🧭 智慧避暑導航</h4>
+            {routingState.isLoading && <span style={{ fontSize: '12px', color: '#0ea5e9', fontWeight: 'bold' }}>🔄 規劃中...</span>}
+          </div>
+          
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '8px', fontSize: '14px', marginBottom: '12px' }}>
+            <div style={{ display: 'flex', justifyContent: 'space-between', borderBottom: '1px solid #f3f4f6', paddingBottom: '6px' }}>
+              <span style={{ color: '#6b7280' }}>起點：</span>
+              <span style={{ fontWeight: 'bold', color: routingState.startLocation ? '#111' : '#9ca3af' }}>
+                {routingState.startLocation?.name || '請點擊地圖站點'}
+              </span>
+            </div>
+            <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+              <span style={{ color: '#6b7280' }}>終點：</span>
+              <span style={{ fontWeight: 'bold', color: routingState.endLocation ? '#111' : '#9ca3af' }}>
+                {routingState.endLocation?.name || '請點擊地圖站點'}
+              </span>
+            </div>
+          </div>
+          
+          {!routingState.startLocation && (
+            <button 
+              onClick={() => {
+                // 模擬抓取 GPS (松山區附近，民生社區)
+                const mockGps = { type: 'gps' as const, coord: [121.565, 25.058] as [number, number], name: '📍 目前位置 (GPS)' };
+                store.setRoutingStart(mockGps);
+                setTimeout(() => fetchShadeRoutes(store), 50);
+              }}
+              style={{ width: '100%', padding: '10px', background: '#f3f4f6', border: '1px solid #d1d5db', borderRadius: '8px', marginBottom: '12px', cursor: 'pointer', fontWeight: 'bold', color: '#4b5563' }}
+            >
+              從目前位置 (GPS) 出發
+            </button>
+          )}
+
+          {!routingState.isLoading && routingState.bestRouteId && (() => {
+            const bestRoute = routingState.routes.find(r => r.id === routingState.bestRouteId);
+            return (
+              <div style={{ background: 'rgba(2, 132, 199, 0.08)', border: '1px solid rgba(2, 132, 199, 0.3)', borderRadius: '8px', padding: '12px', marginBottom: '12px' }}>
+                <div style={{ color: '#0369a1', fontWeight: 'bold', marginBottom: '6px', fontSize: '15px' }}>❄️ 冰藍色特效路線已就緒！</div>
+                <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '13px', color: '#0c4a6e', marginBottom: '4px' }}>
+                  <span>陰影覆蓋率：</span>
+                  <span style={{ fontWeight: '900', fontSize: '15px' }}>{Math.round((bestRoute?.shadeScore || 0) * 100)}%</span>
+                </div>
+                <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '13px', color: '#0c4a6e' }}>
+                  <span>預估騎乘時間：</span>
+                  <span style={{ fontWeight: 'bold' }}>{Math.round((bestRoute?.duration || 0) / 60)} 分鐘</span>
+                </div>
+              </div>
+            );
+          })()}
+
+          <button 
+            onClick={() => store.clearRouting()}
+            style={{ width: '100%', padding: '10px', background: '#fee2e2', color: '#ef4444', fontWeight: 'bold', border: 'none', borderRadius: '8px', cursor: 'pointer' }}
+          >
+            結束導航
+          </button>
+        </div>
+      )}
 
       {isMobile && !showLegend && (
         <button

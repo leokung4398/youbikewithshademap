@@ -5,6 +5,24 @@
 import type { Station } from './station';
 import type { ShadeSnapshot, ShadowCacheWindow } from './shadow';
 
+/** 避暑導航路徑模型 */
+export interface ShadeRoute {
+  readonly id: string;
+  readonly geometry: GeoJSON.LineString;
+  readonly distance: number; // 距離 (公尺)
+  readonly duration: number; // 預估騎乘時間 (秒)
+  readonly shadeScore: number; // 陰影覆蓋率 (0~1)
+}
+
+/** 導航狀態 */
+export interface RoutingState {
+  readonly startLocation: { type: 'station' | 'gps'; id?: string; coord?: readonly [number, number]; name?: string } | null;
+  readonly endLocation: { type: 'station' | 'gps'; id?: string; coord?: readonly [number, number]; name?: string } | null;
+  readonly routes: readonly ShadeRoute[];
+  readonly bestRouteId: string | null;
+  readonly isLoading: boolean;
+}
+
 /** 站點 × 陰影 合併後的視圖模型 */
 export type ShadeStatus = 'sun' | 'shade' | 'unknown';
 
@@ -57,6 +75,7 @@ export interface AppState {
   readonly selectedStation: string | null;
   readonly viewport: MapViewport;
   readonly timeSlider: { readonly currentTime: number; readonly isPlaying: boolean };
+  readonly routing: RoutingState;
 
   // ── 系統 ──
   readonly visibility: VisibilityState;

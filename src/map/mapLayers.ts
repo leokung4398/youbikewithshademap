@@ -1,10 +1,19 @@
 // ═══════════════════════════════════════════════════════
 //  map/mapLayers.ts — MapLibre 圖層初始化
+//
+//  ADR #2: Day 1 啟用 cluster: true
+//  - Zoom ≤ 14: 顯示聚合泡泡 (區域總車輛數)
+//  - Zoom > 14: 渲染獨立站點 (🌞 / 🌲 顏色)
 // ═══════════════════════════════════════════════════════
 
 import type { Map as MaplibreMap } from 'maplibre-gl';
 import type { Station } from '../types/station';
 
+/**
+ * 初始化所有地圖圖層
+ *
+ * 調用時機：map 'load' 事件觸發後
+ */
 export function initMapLayers(
   map: MaplibreMap,
   stations: ReadonlyMap<string, Station>,
@@ -27,8 +36,8 @@ export function initMapLayers(
       'fill-color': [
         'case',
         ['boolean', ['get', 'inShadow'], false],
-        'rgba(34, 139, 34, 0.3)',    // 🌲 陰影區：綠色網格
-        'rgba(156, 163, 175, 0.3)',  // 🌞 陽光直射：灰色網格
+        'rgba(0, 0, 0, 0.4)',        // 🌑 半透明黑 (像真正的陰影)
+        'rgba(0, 0, 0, 0)',          // 日照：完全透明
       ],
       'fill-opacity': 0.6,
     },
@@ -42,17 +51,18 @@ export function initMapLayers(
   map.addSource('stations', {
     type: 'geojson',
     data: stationGeoJSON,
-    cluster: true,
+    cluster: true,                     // ⚡ ADR #2
     clusterRadius: 60,
-    clusterMaxZoom: 14,
+    clusterMaxZoom: 14,                // Zoom > 14 停止聚合
     clusterProperties: {
+      // 聚合時累加：區域總可借車輛數
       totalBikes: ['+', ['get', 'availableBikes']],
       totalEmpty: ['+', ['get', 'emptySlots']],
     },
-    promoteId: 'stationId',
+    promoteId: 'stationId',            // 啟用 setFeatureState
   });
 
-  // ── B1. 聚合泡泡 ──
+  // ── B1. 聚合泡泡 (Zoom ≤ 14) ──
   map.addLayer({
     id: 'clusters',
     type: 'circle',
@@ -62,9 +72,9 @@ export function initMapLayers(
       'circle-color': [
         'step',
         ['get', 'point_count'],
-        '#51bbd6',       
-        20, '#f1f075',   
-        50, '#f28cb1',   
+        '#51bbd6',       // < 20 站
+        20, '#f1f075',   // 20~50 站
+        50, '#f28cb1',   // > 50 站
       ],
       'circle-radius': [
         'step',
@@ -97,7 +107,7 @@ export function initMapLayers(
     },
   });
 
-  // ── B3. 獨立站點 ──
+  // ── B3. 獨立站點 (Zoom > 14) ──
   map.addLayer({
     id: 'station-points',
     type: 'circle',
@@ -143,8 +153,86 @@ export function initMapLayers(
       'text-halo-width': 1,
     },
   });
+
+  // ══════════════════════════════
+  //  C. 避暑導航路線圖層 (冰藍特效)
+  // ══════════════════════════════
+  map.addSource('routes', {
+    type: 'geojson',
+    data: { type: 'FeatureCollection', features: [] }
+  });
+
+  // 其他曝曬路線 (灰色虛線)
+  map.addLayer({
+    id: 'route-line-alt',
+    type: 'line',
+    source: 'routes',
+    filter: ['!=', ['get', 'isBest'], true],
+    layout: {
+      'line-join': 'round',
+      'line-cap': 'round'
+    },
+    paint: {
+      'line-color': '#9ca3af',
+      'line-width': 4,
+      'line-dasharray': [1, 2],
+      'line-opacity': 0.7
+    }
+  });
+
+  // 最佳路線 (冰藍色特效底層 - 散發出涼爽光暈)
+  map.addLayer({
+    id: 'route-line-best-glow',
+    type: 'line',
+    source: 'routes',
+    filter: ['==', ['get', 'isBest'], true],
+    layout: {
+      'line-join': 'round',
+      'line-cap': 'round'
+    },
+    paint: {
+      'line-color': '#7dd3fc', // 亮冰藍色
+      'line-width': 12,
+      'line-opacity': 0.8,
+      'line-blur': 6
+    }
+  });
+
+  // 最佳路線 (深海冰層主線)
+  map.addLayer({
+    id: 'route-line-best-main',
+    type: 'line',
+    source: 'routes',
+    filter: ['==', ['get', 'isBest'], true],
+    layout: {
+      'line-join': 'round',
+      'line-cap': 'round'
+    },
+    paint: {
+      'line-color': '#0369a1', // 深藍色勾勒
+      'line-width': 5
+    }
+  });
+
+  // 最佳路線 (雪白虛線點綴，營造冰冷前進感)
+  map.addLayer({
+    id: 'route-line-best-dash',
+    type: 'line',
+    source: 'routes',
+    filter: ['==', ['get', 'isBest'], true],
+    layout: {
+      'line-join': 'round',
+      'line-cap': 'round'
+    },
+    paint: {
+      'line-color': '#ffffff',
+      'line-width': 2,
+      'line-dasharray': [0.5, 2]
+    }
+  });
 }
 
+/** Station Map → GeoJSON FeatureCollection */
 export function stationsToFeatureCollection(
   stations: ReadonlyMap<string, Station>,
   viewModels: ReadonlyMap<string, any>,
@@ -170,3 +258,28 @@ export function stationsToFeatureCollection(
     })),
   };
 }
+
+/** 繪製或清除導航路線 */
+export function updateRouteLayer(
+  map: MaplibreMap | null,
+  routes: readonly any[],
+  bestRouteId: string | null
+): void {
+  if (!map) return;
+  const source = map.getSource('routes') as maplibregl.GeoJSONSource;
+  if (!source) return;
+
+  source.setData({
+    type: 'FeatureCollection',
+    features: routes.map(r => ({
+      type: 'Feature',
+      geometry: r.geometry,
+      properties: {
+        isBest: r.id === bestRouteId,
+        distance: r.distance,
+        shadeScore: r.shadeScore
+      }
+    }))
+  });
+}
+
