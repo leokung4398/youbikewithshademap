@@ -36,10 +36,10 @@ export function initMapLayers(
       'fill-color': [
         'case',
         ['boolean', ['get', 'inShadow'], false],
-        'rgba(0, 0, 0, 0.4)',        // 🌑 半透明黑 (像真正的陰影)
-        'rgba(0, 0, 0, 0)',          // 日照：完全透明
+        'rgba(34, 139, 34, 0.3)',    // 🌲 綠色網格 (高樓大廈陰影避暑區)
+        'rgba(156, 163, 175, 0.3)',  // 🌞 灰色網格 (陽光直射區)
       ],
-      'fill-opacity': 0.6,
+      'fill-opacity': 0.8,
     },
   });
 
