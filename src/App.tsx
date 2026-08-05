@@ -185,6 +185,12 @@ export function App() {
         <div style={{ fontWeight: 'bold', fontSize: isMobile ? '14px' : '16px', color: '#333', whiteSpace: 'nowrap' }}>
           🕒 {sliderHour.toString().padStart(2, '0')}:00
         </div>
+        <input 
+          type="range" 
+          min="8" max="17" step="1"
+          value={sliderHour} 
+          onChange={handleTimeChange}
+          style={{ flex: 1, cursor: 'pointer', accentColor: '#22c55e' }}
         />
       </div>
 
