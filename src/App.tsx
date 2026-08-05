@@ -262,10 +262,10 @@ export function App() {
 
               {!routingState.isLoading && routingState.bestRouteId && (() => {
                 const bestRoute = routingState.routes.find(r => r.id === routingState.bestRouteId);
-                const startLoc = routingState.startLocation;
-                const endLoc = routingState.endLocation;
-                const navUrl = (startLoc && endLoc) 
-                  ? `https://www.google.com/maps/dir/?api=1&origin=${startLoc.coord[1]},${startLoc.coord[0]}&destination=${endLoc.coord[1]},${endLoc.coord[0]}&travelmode=bicycling`
+                const startCoord = routingState.startLocation?.coord;
+                const endCoord = routingState.endLocation?.coord;
+                const navUrl = (startCoord && endCoord) 
+                  ? `https://www.google.com/maps/dir/?api=1&origin=${startCoord[1]},${startCoord[0]}&destination=${endCoord[1]},${endCoord[0]}&travelmode=bicycling`
                   : '#';
                   
                 return (
