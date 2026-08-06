@@ -5,6 +5,7 @@ import 'maplibre-gl/dist/maplibre-gl.css';
 import { AppStore } from './store/AppStore';
 import { useDataScheduler } from './hooks/useDataScheduler';
 import { useMapSync } from './hooks/useMapSync';
+import { initMapLayers, updateRouteLayer } from './map/mapLayers';
 import { fetchShadeRoutes } from './services/routingService';
 import { updateWeatherByHour } from './services/weatherService';
 
