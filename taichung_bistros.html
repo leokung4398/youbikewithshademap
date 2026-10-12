@@ -1,0 +1,2707 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>台中火車站周邊 10 大熱門高CP值餐酒館・居酒屋指南</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;700;900&family=Playfair+Display:ital,wght@0,600;0,700;1,600&display=swap');
+    body {
+      font-family: 'Noto Sans TC', sans-serif;
+      background-color: #0b1120;
+      color: #e2e8f0;
+    }
+    .font-serif-title {
+      font-family: 'Playfair Display', serif;
+    }
+    .glass-card {
+      background: rgba(30, 41, 59, 0.7);
+      backdrop-filter: blur(12px);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    .glass-card:hover {
+      transform: translateY(-4px);
+      border-color: rgba(212, 175, 55, 0.4);
+      box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.5), 0 8px 10px -6px rgba(212, 175, 55, 0.2);
+    }
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.25rem;
+      padding: 0.25rem 0.6rem;
+      border-radius: 9999px;
+      font-size: 0.75rem;
+      font-weight: 600;
+    }
+    /* 自訂滾動條 */
+    ::-webkit-scrollbar {
+      width: 8px;
+    }
+    ::-webkit-scrollbar-track {
+      background: #0b1120;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: #334155;
+      border-radius: 4px;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: #64748b;
+    }
+    .menu-modal.active {
+      display: flex !important;
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: scale(0.96); }
+      to { opacity: 1; transform: scale(1); }
+    }
+    .animate-fade-in {
+      animation: fadeIn 0.2s ease-out forwards;
+    }
+  </style>
+</head>
+<body class="min-h-screen">
+
+  <!-- 頂部導航 -->
+  <header class="sticky top-0 z-50 bg-[#0b1120]/80 backdrop-blur-md border-b border-slate-800">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+      <div class="flex items-center space-x-3">
+        <span class="text-2xl text-amber-400"><i class="fa-solid fa-martini-glass-citrus"></i></span>
+        <span class="text-xl font-bold tracking-wider text-slate-100">Taichung Station <span class="text-amber-400">Bistro Guide</span></span>
+      </div>
+      <div class="flex items-center gap-3 text-xs sm:text-sm">
+        <a href="#quick-filter" class="px-3 py-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-300 transition">快速篩選</a>
+        <a href="#comparison-table" class="px-3 py-1.5 rounded-lg bg-amber-500/10 border border-amber-500/30 text-amber-300 hover:bg-amber-500/20 transition">比對總表</a>
+      </div>
+    </div>
+  </header>
+
+  <!-- Hero 橫幅 -->
+  <section class="relative py-16 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto text-center overflow-hidden">
+    <div class="absolute -top-24 left-1/2 -translate-x-1/2 w-96 h-96 bg-amber-500/10 rounded-full blur-3xl pointer-events-none"></div>
+    <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-slate-800/80 border border-slate-700 text-amber-400 text-xs font-medium mb-4">
+      <i class="fa-solid fa-train-subway"></i> 步行直達・免酒駕風險・高CP值精選
+    </div>
+    <h1 class="text-3xl sm:text-5xl font-extrabold text-white tracking-tight mb-4">
+      台中火車站周邊 <span class="text-transparent bg-clip-text bg-gradient-to-r from-amber-400 via-yellow-200 to-amber-500 font-serif-title">10 大名氣平價餐酒館</span>
+    </h1>
+    <p class="text-slate-400 max-w-2xl mx-auto text-sm sm:text-base leading-relaxed mb-8">
+      出站步行 3~12 分鐘即抵達！精選中區、東區與舊城區最具人氣的特色餐酒館、老宅精釀吧與深夜小料理，附詳細菜單價格、低消規範與特色酒款全解析。
+    </p>
+
+    <!-- 快速分類標籤 -->
+    <div id="quick-filter" class="flex flex-wrap justify-center gap-2 max-w-4xl mx-auto">
+      <button onclick="filterCategory('all')" class="filter-btn active px-4 py-2 rounded-xl text-xs font-medium bg-amber-500 text-slate-950 transition font-bold" data-cat="all">全部 10 家</button>
+      <button onclick="filterCategory('creative')" class="filter-btn px-4 py-2 rounded-xl text-xs font-medium bg-slate-800 text-slate-300 hover:bg-slate-700 transition" data-cat="creative">🍸 沉浸調酒餐酒館</button>
+      <button onclick="filterCategory('izakaya')" class="filter-btn px-4 py-2 rounded-xl text-xs font-medium bg-slate-800 text-slate-300 hover:bg-slate-700 transition" data-cat="izakaya">🍢 昭和炭火與小料理</button>
+      <button onclick="filterCategory('beer')" class="filter-btn px-4 py-2 rounded-xl text-xs font-medium bg-slate-800 text-slate-300 hover:bg-slate-700 transition" data-cat="beer">🍺 精釀啤酒與老宅酒家</button>
+      <button onclick="filterCategory('party')" class="filter-btn px-4 py-2 rounded-xl text-xs font-medium bg-slate-800 text-slate-300 hover:bg-slate-700 transition" data-cat="party">🎤 聚會熱炒包廂 / 奇幻解謎</button>
+    </div>
+  </section>
+
+  <!-- 10 家餐廳精美詳細卡片區 -->
+  <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-16">
+    <div id="bistro-grid" class="grid grid-cols-1 md:grid-cols-2 gap-8">
+
+      <!-- 1. 醬好台式餐酒館 -->
+      <article class="bistro-card glass-card rounded-2xl p-6 flex flex-col justify-between" data-category="party">
+        <div>
+          <div class="flex items-start justify-between gap-4 mb-3">
+            <div>
+              <div class="flex items-center gap-2 mb-1">
+                <span class="text-xs font-bold text-amber-400 bg-amber-400/10 px-2.5 py-0.5 rounded-md border border-amber-400/20">NO. 1</span>
+                <span class="text-xs text-emerald-400 bg-emerald-400/10 px-2 py-0.5 rounded">走路 3 分鐘</span>
+                <span class="text-xs text-slate-400">聚會首選・後站立德街</span>
+              </div>
+              <h2 class="text-2xl font-bold text-white tracking-wide">醬好台式餐酒館</h2>
+            </div>
+            <div class="text-right shrink-0">
+              <span class="text-xs text-slate-400 block">人均預算</span>
+              <span class="text-lg font-bold text-amber-400">$350 - $600</span>
+            </div>
+          </div>
+
+          
+          <!-- 菜單圖預覽 / 招牌美食氛圍圖 -->
+        <div class="relative w-full h-44 sm:h-48 rounded-xl overflow-hidden mb-4 border border-slate-700/60 group cursor-pointer" onclick="openMenuModal('modal-bistro-1')">
+          <img src="https://images.unsplash.com/photo-1544025162-d76694265947?auto=format&fit=crop&w=800&q=80" alt="醬好台式餐酒館 菜單美食" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" loading="lazy">
+          <div class="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/40 to-transparent"></div>
+          <span class="absolute top-2.5 left-2.5 px-2.5 py-1 rounded-md text-[11px] font-bold bg-amber-500/90 text-slate-950 shadow-md backdrop-blur-sm">
+            <i class="fa-solid fa-book-open mr-1"></i> 店內菜單實景
+          </span>
+          <span class="absolute top-2.5 right-2.5 px-2 py-0.5 rounded text-[10px] bg-slate-900/80 text-slate-300 border border-slate-700 backdrop-blur-sm">
+            點擊查看完整圖文菜單
+          </span>
+          <div class="absolute bottom-2.5 left-3 right-3 flex items-end justify-between">
+            <div>
+              <div class="text-xs text-amber-300 font-semibold">南洋風味融合台式熱炒</div>
+              <div class="text-sm font-bold text-white tracking-wide flex items-center gap-1.5">
+                <i class="fa-solid fa-utensils text-xs text-amber-400"></i> 醬好台式餐酒館 實拍美饌
+              </div>
+            </div>
+            <button type="button" class="px-3 py-1 rounded-lg bg-amber-500 hover:bg-amber-400 text-slate-950 text-xs font-bold transition flex items-center gap-1 shadow-lg">
+              <i class="fa-solid fa-magnifying-glass-plus"></i> 開啟菜單
+            </button>
+          </div>
+        </div>
+
+          <p class="text-xs text-slate-300 mb-4 leading-relaxed bg-slate-900/60 p-3 rounded-xl border border-slate-800">
+            工業風設計，將台式熱炒結合南洋香料烤物，打破傳統熱炒嘈雜環境。二樓更設有附<strong>KTV歡唱機與飛鏢機</strong>的獨立包廂，是多人聚餐、慶生首選！
+          </p>
+
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs mb-4">
+            <div class="bg-slate-800/40 p-2.5 rounded-lg border border-slate-700/50">
+              <div class="text-slate-400 font-semibold mb-1"><i class="fa-solid fa-utensils text-amber-400 mr-1.5"></i>人氣招牌菜單</div>
+              <ul class="text-slate-200 space-y-0.5">
+                <li>• 峇里島南洋烤豬肋排 ($380)</li>
+                <li>• 金沙酥炸魷魚 ($220)</li>
+                <li>• 特製沙嗲雞肉串 ($180)</li>
+                <li>• 招牌鮮鱸魚米粉湯 ($320)</li>
+              </ul>
+            </div>
+            <div class="bg-slate-800/40 p-2.5 rounded-lg border border-slate-700/50">
+              <div class="text-slate-400 font-semibold mb-1"><i class="fa-solid fa-wine-glass text-amber-400 mr-1.5"></i>酒類與特色飲品</div>
+              <ul class="text-slate-200 space-y-0.5">
+                <li>• 台灣金牌/生啤酒塔 ($120~$450)</li>
+                <li>• 熱帶水果特調角嗨 ($160)</li>
+                <li>• 清爽沙瓦 / 特選精釀 ($150起)</li>
+                <li>• 無酒精冬瓜檸檬氣泡飲</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <div class="border-t border-slate-800 pt-3.5 mt-2 space-y-1.5 text-xs text-slate-300">
+          <div class="flex items-center justify-between">
+            <span><i class="fa-solid fa-coins text-amber-400 mr-1.5"></i><strong>低消價格：</strong>平價單點，無強制高額低消 (包廂約$5000起)</span>
+            <span class="text-slate-400">收 5%~7% 服務費</span>
+          </div>
+          <div class="flex items-center justify-between">
+            <span><i class="fa-solid fa-clock text-amber-400 mr-1.5"></i><strong>營業時間：</strong>17:30 – 00:30 (週一公休)</span>
+          </div>
+          <div class="flex items-center justify-between text-slate-400">
+            <span><i class="fa-solid fa-location-dot text-rose-400 mr-1.5"></i>台中市東區立德街24號 (大魯閣新時代旁)</span>
+            <span class="text-emerald-400 font-medium">距離車站 250m</span>
+          </div>
+          <div class="pt-2">
+            <a href="https://www.google.com/maps/search/?api=1&query=%E9%86%AC%E5%A5%BD%E5%8F%B0%E5%BC%8F%E9%A4%90%E9%85%92%E9%A4%A8%20%E5%8F%B0%E4%B8%AD%E5%B8%82%E6%9D%B1%E5%8D%80%E7%AB%8B%E5%BE%B7%E8%A1%9724%E8%99%9F" target="_blank" rel="noopener noreferrer" class="inline-flex items-center justify-center gap-2 w-full py-2 px-3 rounded-lg bg-emerald-500/10 hover:bg-emerald-500/20 text-emerald-400 border border-emerald-500/30 font-medium text-xs transition duration-200 shadow-sm group">
+              <i class="fa-solid fa-map-location-dot text-emerald-400 group-hover:scale-110 transition-transform"></i> 在 Google Maps 開啟地圖導航
+            </a>
+          </div>
+        </div>
+      </article>
+
+      <!-- 2. SHU Club By 栖.Habitatto -->
+      <article class="bistro-card glass-card rounded-2xl p-6 flex flex-col justify-between" data-category="creative">
+        <div>
+          <div class="flex items-start justify-between gap-4 mb-3">
+            <div>
+              <div class="flex items-center gap-2 mb-1">
+                <span class="text-xs font-bold text-amber-400 bg-amber-400/10 px-2.5 py-0.5 rounded-md border border-amber-400/20">NO. 2</span>
+                <span class="text-xs text-emerald-400 bg-emerald-400/10 px-2 py-0.5 rounded">走路 10 分鐘</span>
+                <span class="text-xs text-slate-400">神秘老宅・琴酒專賣</span>
+              </div>
+              <h2 class="text-2xl font-bold text-white tracking-wide">SHU Club</h2>
+            </div>
+            <div class="text-right shrink-0">
+              <span class="text-xs text-slate-400 block">人均預算</span>
+              <span class="text-lg font-bold text-amber-400">$600 - $900</span>
+            </div>
+          </div>
+
+
+          <!-- 菜單圖預覽 / 招牌美食氛圍圖 -->
+        <div class="relative w-full h-44 sm:h-48 rounded-xl overflow-hidden mb-4 border border-slate-700/60 group cursor-pointer" onclick="openMenuModal('modal-bistro-2')">
+          <img src="https://images.unsplash.com/photo-1514362545857-3bc16c4c7d1b?auto=format&fit=crop&w=800&q=80" alt="SHU Club 菜單美食" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" loading="lazy">
+          <div class="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/40 to-transparent"></div>
+          <span class="absolute top-2.5 left-2.5 px-2.5 py-1 rounded-md text-[11px] font-bold bg-amber-500/90 text-slate-950 shadow-md backdrop-blur-sm">
+            <i class="fa-solid fa-book-open mr-1"></i> 店內菜單實景
+          </span>
+          <span class="absolute top-2.5 right-2.5 px-2 py-0.5 rounded text-[10px] bg-slate-900/80 text-slate-300 border border-slate-700 backdrop-blur-sm">
+            點擊查看完整圖文菜單
+          </span>
+          <div class="absolute bottom-2.5 left-3 right-3 flex items-end justify-between">
+            <div>
+              <div class="text-xs text-amber-300 font-semibold">以琴酒為本・極簡編號風味調飲</div>
+              <div class="text-sm font-bold text-white tracking-wide flex items-center gap-1.5">
+                <i class="fa-solid fa-utensils text-xs text-amber-400"></i> SHU Club 實拍美饌
+              </div>
+            </div>
+            <button type="button" class="px-3 py-1 rounded-lg bg-amber-500 hover:bg-amber-400 text-slate-950 text-xs font-bold transition flex items-center gap-1 shadow-lg">
+              <i class="fa-solid fa-magnifying-glass-plus"></i> 開啟菜單
+            </button>
+          </div>
+        </div>
+
+          <p class="text-xs text-slate-300 mb-4 leading-relaxed bg-slate-900/60 p-3 rounded-xl border border-slate-800">
+            由名吧「栖.Habitatto」操刀，門口偽裝成 1960 年代復古電梯梯門，推開後猶如私人地下秘密會所！以精緻琴酒調酒聞名，店內極品滷肉飯更是必點。
+          </p>
+
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs mb-4">
+            <div class="bg-slate-800/40 p-2.5 rounded-lg border border-slate-700/50">
+              <div class="text-slate-400 font-semibold mb-1"><i class="fa-solid fa-utensils text-amber-400 mr-1.5"></i>人氣招牌菜單</div>
+              <ul class="text-slate-200 space-y-0.5">
+                <li>• 老饕特製滷肉飯附溫泉蛋 ($180)</li>
+                <li>• 海鮮炙燒竹輪燒 ($220)</li>
+                <li>• 香蒜炙烤嫩牛小排 ($380)</li>
+                <li>• 酥炸下酒綜合拼盤 ($260)</li>
+              </ul>
+            </div>
+            <div class="bg-slate-800/40 p-2.5 rounded-lg border border-slate-700/50">
+              <div class="text-slate-400 font-semibold mb-1"><i class="fa-solid fa-wine-glass text-amber-400 mr-1.5"></i>酒類與特色飲品</div>
+              <ul class="text-slate-200 space-y-0.5">
+                <li>• 經典數字系列琴酒特調 ($380~$420)</li>
+                <li>• 台中鳳梨酥風味茶酒調飲 ($400)</li>
+                <li>• 草本/花果層次清爽調酒 ($380)</li>
+                <li>• 專屬無酒精客製Mocktail ($300)</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <div class="border-t border-slate-800 pt-3.5 mt-2 space-y-1.5 text-xs text-slate-300">
+          <div class="flex items-center justify-between">
+            <span><i class="fa-solid fa-coins text-amber-400 mr-1.5"></i><strong>低消價格：</strong>每人 $500 元（限時 2 小時）</span>
+            <span class="text-amber-400 font-medium">建議線上預約</span>
+          </div>
+          <div class="flex items-center justify-between">
+            <span><i class="fa-solid fa-clock text-amber-400 mr-1.5"></i><strong>營業時間：</strong>21:00 – 03:00 (週二公休)</span>
+          </div>
+          <div class="flex items-center justify-between text-slate-400">
+            <span><i class="fa-solid fa-location-dot text-rose-400 mr-1.5"></i>台中市中區民族路202號 (近紅點文旅)</span>
+            <span class="text-emerald-400 font-medium">距離車站 850m</span>
+          </div>
+          <div class="pt-2">
+            <a href="https://www.google.com/maps/search/?api=1&query=SHU%20Club%20%E5%8F%B0%E4%B8%AD%E5%B8%82%E4%B8%AD%E5%8D%80%E6%B0%91%E6%97%8F%E8%B7%AF202%E8%99%9F" target="_blank" rel="noopener noreferrer" class="inline-flex items-center justify-center gap-2 w-full py-2 px-3 rounded-lg bg-emerald-500/10 hover:bg-emerald-500/20 text-emerald-400 border border-emerald-500/30 font-medium text-xs transition duration-200 shadow-sm group">
+              <i class="fa-solid fa-map-location-dot text-emerald-400 group-hover:scale-110 transition-transform"></i> 在 Google Maps 開啟地圖導航
+            </a>
+          </div>
+        </div>
+      </article>
+
+      <!-- 3. 春光閣 Springlightbar -->
+      <article class="bistro-card glass-card rounded-2xl p-6 flex flex-col justify-between" data-category="creative">
+        <div>
+          <div class="flex items-start justify-between gap-4 mb-3">
+            <div>
+              <div class="flex items-center gap-2 mb-1">
+                <span class="text-xs font-bold text-amber-400 bg-amber-400/10 px-2.5 py-0.5 rounded-md border border-amber-400/20">NO. 3</span>
+                <span class="text-xs text-emerald-400 bg-emerald-400/10 px-2 py-0.5 rounded">走路 4 分鐘</span>
+                <span class="text-xs text-slate-400">台味廟宇風・擲筊沉浸式</span>
+              </div>
+              <h2 class="text-2xl font-bold text-white tracking-wide">春光閣</h2>
+            </div>
+            <div class="text-right shrink-0">
+              <span class="text-xs text-slate-400 block">人均預算</span>
+              <span class="text-lg font-bold text-amber-400">$600 - $900</span>
+            </div>
+          </div>
+
+
+          <!-- 菜單圖預覽 / 招牌美食氛圍圖 -->
+        <div class="relative w-full h-44 sm:h-48 rounded-xl overflow-hidden mb-4 border border-slate-700/60 group cursor-pointer" onclick="openMenuModal('modal-bistro-3')">
+          <img src="https://images.unsplash.com/photo-1551024709-8f23befc6f87?auto=format&fit=crop&w=800&q=80" alt="春光閣 菜單美食" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" loading="lazy">
+          <div class="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/40 to-transparent"></div>
+          <span class="absolute top-2.5 left-2.5 px-2.5 py-1 rounded-md text-[11px] font-bold bg-amber-500/90 text-slate-950 shadow-md backdrop-blur-sm">
+            <i class="fa-solid fa-book-open mr-1"></i> 店內菜單實景
+          </span>
+          <span class="absolute top-2.5 right-2.5 px-2 py-0.5 rounded text-[10px] bg-slate-900/80 text-slate-300 border border-slate-700 backdrop-blur-sm">
+            點擊查看完整圖文菜單
+          </span>
+          <div class="absolute bottom-2.5 left-3 right-3 flex items-end justify-between">
+            <div>
+              <div class="text-xs text-amber-300 font-semibold">中式廟宇擲筊 × 沉浸式台灣在地酒廠特調</div>
+              <div class="text-sm font-bold text-white tracking-wide flex items-center gap-1.5">
+                <i class="fa-solid fa-utensils text-xs text-amber-400"></i> 春光閣 實拍美饌
+              </div>
+            </div>
+            <button type="button" class="px-3 py-1 rounded-lg bg-amber-500 hover:bg-amber-400 text-slate-950 text-xs font-bold transition flex items-center gap-1 shadow-lg">
+              <i class="fa-solid fa-magnifying-glass-plus"></i> 開啟菜單
+            </button>
+          </div>
+        </div>
+
+          <p class="text-xs text-slate-300 mb-4 leading-relaxed bg-slate-900/60 p-3 rounded-xl border border-slate-800">
+            台中話題度最高的中式餐酒館！一樓為「傳統廟宇風」（入座前需擲筊），二樓為「沉浸式森林投影風」。酒單設計成開廟門籤筒，台味下酒菜極度開胃。
+          </p>
+
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs mb-4">
+            <div class="bg-slate-800/40 p-2.5 rounded-lg border border-slate-700/50">
+              <div class="text-slate-400 font-semibold mb-1"><i class="fa-solid fa-utensils text-amber-400 mr-1.5"></i>人氣招牌菜單</div>
+              <ul class="text-slate-200 space-y-0.5">
+                <li>• 飛天干貝XO拌麵 ($260)</li>
+                <li>• 椒麻去骨香檸鳳爪 ($200)</li>
+                <li>• 招牌地瓜酒煎香腸 ($220)</li>
+                <li>• 青龍椒炒松阪豬肉 ($280)</li>
+              </ul>
+            </div>
+            <div class="bg-slate-800/40 p-2.5 rounded-lg border border-slate-700/50">
+              <div class="text-slate-400 font-semibold mb-1"><i class="fa-solid fa-wine-glass text-amber-400 mr-1.5"></i>酒類與特色飲品</div>
+              <ul class="text-slate-200 space-y-0.5">
+                <li>• 一樓：神仙主題在地花果調酒 ($400)</li>
+                <li>• 二樓：台灣山林檜木烏龍特調 ($400)</li>
+                <li>• 桂花蜜釀烏龍琴酒 ($380)</li>
+                <li>• 洛神仙草無酒精香檳飲 ($250)</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <div class="border-t border-slate-800 pt-3.5 mt-2 space-y-1.5 text-xs text-slate-300">
+          <div class="flex items-center justify-between">
+            <span><i class="fa-solid fa-coins text-amber-400 mr-1.5"></i><strong>低消價格：</strong>一樓 $800/人；二樓 $600/人 (+10%)</span>
+            <span class="text-slate-400">雙樓層酒單獨立</span>
+          </div>
+          <div class="flex items-center justify-between">
+            <span><i class="fa-solid fa-clock text-amber-400 mr-1.5"></i><strong>營業時間：</strong>四/日 18:00–02:00；五/六 17:00–03:00 (一至三公休)</span>
+          </div>
+          <div class="flex items-center justify-between text-slate-400">
+            <span><i class="fa-solid fa-location-dot text-rose-400 mr-1.5"></i>台中市中區建國路103號 (李方艾美旁)</span>
+            <span class="text-emerald-400 font-medium">距離車站 300m</span>
+          </div>
+          <div class="pt-2">
+            <a href="https://www.google.com/maps/search/?api=1&query=%E6%98%A5%E5%85%89%E9%96%A3%20Springlightbar%20%E5%8F%B0%E4%B8%AD%E5%B8%82%E4%B8%AD%E5%8D%80%E5%BB%BA%E5%9C%8B%E8%B7%AF103%E8%99%9F" target="_blank" rel="noopener noreferrer" class="inline-flex items-center justify-center gap-2 w-full py-2 px-3 rounded-lg bg-emerald-500/10 hover:bg-emerald-500/20 text-emerald-400 border border-emerald-500/30 font-medium text-xs transition duration-200 shadow-sm group">
+              <i class="fa-solid fa-map-location-dot text-emerald-400 group-hover:scale-110 transition-transform"></i> 在 Google Maps 開啟地圖導航
+            </a>
+          </div>
+        </div>
+      </article>
+
+      <!-- 4. ChangeX Beer 南園酒家 -->
+      <article class="bistro-card glass-card rounded-2xl p-6 flex flex-col justify-between" data-category="beer">
+        <div>
+          <div class="flex items-start justify-between gap-4 mb-3">
+            <div>
+              <div class="flex items-center gap-2 mb-1">
+                <span class="text-xs font-bold text-amber-400 bg-amber-400/10 px-2.5 py-0.5 rounded-md border border-amber-400/20">NO. 4</span>
+                <span class="text-xs text-emerald-400 bg-emerald-400/10 px-2 py-0.5 rounded">走路 5 分鐘</span>
+                <span class="text-xs text-slate-400">歷史日治老洋樓・精釀重鎮</span>
+              </div>
+              <h2 class="text-2xl font-bold text-white tracking-wide">ChangeX Beer 南園酒家</h2>
+            </div>
+            <div class="text-right shrink-0">
+              <span class="text-xs text-slate-400 block">人均預算</span>
+              <span class="text-lg font-bold text-amber-400">$450 - $750</span>
+            </div>
+          </div>
+
+          
+          <!-- 菜單圖預覽 / 招牌美食氛圍圖 -->
+        <div class="relative w-full h-44 sm:h-48 rounded-xl overflow-hidden mb-4 border border-slate-700/60 group cursor-pointer" onclick="openMenuModal('modal-bistro-4')">
+          <img src="https://images.unsplash.com/photo-1575037614876-c38a4d44f5b8?auto=format&fit=crop&w=800&q=80" alt="ChangeX Beer 南園酒家 菜單美食" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" loading="lazy">
+          <div class="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/40 to-transparent"></div>
+          <span class="absolute top-2.5 left-2.5 px-2.5 py-1 rounded-md text-[11px] font-bold bg-amber-500/90 text-slate-950 shadow-md backdrop-blur-sm">
+            <i class="fa-solid fa-book-open mr-1"></i> 店內菜單實景
+          </span>
+          <span class="absolute top-2.5 right-2.5 px-2 py-0.5 rounded text-[10px] bg-slate-900/80 text-slate-300 border border-slate-700 backdrop-blur-sm">
+            點擊查看完整圖文菜單
+          </span>
+          <div class="absolute bottom-2.5 left-3 right-3 flex items-end justify-between">
+            <div>
+              <div class="text-xs text-amber-300 font-semibold">百年日治洋樓・精釀啤酒與手作烘焙</div>
+              <div class="text-sm font-bold text-white tracking-wide flex items-center gap-1.5">
+                <i class="fa-solid fa-utensils text-xs text-amber-400"></i> ChangeX Beer 南園酒家 實拍美饌
+              </div>
+            </div>
+            <button type="button" class="px-3 py-1 rounded-lg bg-amber-500 hover:bg-amber-400 text-slate-950 text-xs font-bold transition flex items-center gap-1 shadow-lg">
+              <i class="fa-solid fa-magnifying-glass-plus"></i> 開啟菜單
+            </button>
+          </div>
+        </div>
+
+          <p class="text-xs text-slate-300 mb-4 leading-relaxed bg-slate-900/60 p-3 rounded-xl border border-slate-800">
+            落腳於中區擁有近百年歷史的「南園大酒家」紅磚古蹟，店內常態供應數十款現拉台灣與各國精釀生啤。餐點份量足，大腸包小腸與手作披薩極受好評！
+          </p>
+
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs mb-4">
+            <div class="bg-slate-800/40 p-2.5 rounded-lg border border-slate-700/50">
+              <div class="text-slate-400 font-semibold mb-1"><i class="fa-solid fa-utensils text-amber-400 mr-1.5"></i>人氣招牌菜單</div>
+              <ul class="text-slate-200 space-y-0.5">
+                <li>• 創意大腸包小腸 (米腸拼德腸 $240)</li>
+                <li>• 義式經典辣味肉醬披薩 ($360)</li>
+                <li>• 獨門秘醃煙燻烤二節翅 ($220)</li>
+                <li>• 蒜辣培根義大利麵 ($280)</li>
+              </ul>
+            </div>
+            <div class="bg-slate-800/40 p-2.5 rounded-lg border border-slate-700/50">
+              <div class="text-slate-400 font-semibold mb-1"><i class="fa-solid fa-wine-glass text-amber-400 mr-1.5"></i>酒類與特色飲品</div>
+              <ul class="text-slate-200 space-y-0.5">
+                <li>• 20+ Tap 現拉鮮釀啤酒 ($200~$320)</li>
+                <li>• 台灣在地水果酸啤 / IPA ($220)</li>
+                <li>• 經典修道院黑啤酒 / 司陶特</li>
+                <li>• 精選紅白酒單杯 / 氣泡咖啡</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <div class="border-t border-slate-800 pt-3.5 mt-2 space-y-1.5 text-xs text-slate-300">
+          <div class="flex items-center justify-between">
+            <span><i class="fa-solid fa-coins text-amber-400 mr-1.5"></i><strong>低消價格：</strong>每人一杯飲品或 $250 元 (+10%)</span>
+            <span class="text-slate-400">寵物友善空間</span>
+          </div>
+          <div class="flex items-center justify-between">
+            <span><i class="fa-solid fa-clock text-amber-400 mr-1.5"></i><strong>營業時間：</strong>週三至週日 17:00 – 00:00 (週一、二公休)</span>
+          </div>
+          <div class="flex items-center justify-between text-slate-400">
+            <span><i class="fa-solid fa-location-dot text-rose-400 mr-1.5"></i>台中市中區民族路34號 (近綠川水岸)</span>
+            <span class="text-emerald-400 font-medium">距離車站 450m</span>
+          </div>
+          <div class="pt-2">
+            <a href="https://www.google.com/maps/search/?api=1&query=ChangeX%20Beer%20%E5%8D%97%E5%9C%92%E9%85%92%E5%AE%B6%20%E5%8F%B0%E4%B8%AD%E5%B8%82%E4%B8%AD%E5%8D%80%E6%B0%91%E6%97%8F%E8%B7%AF34%E8%99%9F" target="_blank" rel="noopener noreferrer" class="inline-flex items-center justify-center gap-2 w-full py-2 px-3 rounded-lg bg-emerald-500/10 hover:bg-emerald-500/20 text-emerald-400 border border-emerald-500/30 font-medium text-xs transition duration-200 shadow-sm group">
+              <i class="fa-solid fa-map-location-dot text-emerald-400 group-hover:scale-110 transition-transform"></i> 在 Google Maps 開啟地圖導航
+            </a>
+          </div>
+        </div>
+      </article>
+
+      <!-- 5. 夕嶼小料理 (Yu-Xiang) -->
+      <article class="bistro-card glass-card rounded-2xl p-6 flex flex-col justify-between" data-category="izakaya">
+        <div>
+          <div class="flex items-start justify-between gap-4 mb-3">
+            <div>
+              <div class="flex items-center gap-2 mb-1">
+                <span class="text-xs font-bold text-amber-400 bg-amber-400/10 px-2.5 py-0.5 rounded-md border border-amber-400/20">NO. 5</span>
+                <span class="text-xs text-emerald-400 bg-emerald-400/10 px-2 py-0.5 rounded">走路 6 分鐘</span>
+                <span class="text-xs text-slate-400">昭和老宅・炭火串燒深夜食堂</span>
+              </div>
+              <h2 class="text-2xl font-bold text-white tracking-wide">夕嶼小料理</h2>
+            </div>
+            <div class="text-right shrink-0">
+              <span class="text-xs text-slate-400 block">人均預算</span>
+              <span class="text-lg font-bold text-amber-400">$450 - $700</span>
+            </div>
+          </div>
+
+          
+          <!-- 菜單圖預覽 / 招牌美食氛圍圖 -->
+        <div class="relative w-full h-44 sm:h-48 rounded-xl overflow-hidden mb-4 border border-slate-700/60 group cursor-pointer" onclick="openMenuModal('modal-bistro-5')">
+          <img src="https://images.unsplash.com/photo-1555396273-367ea4eb4db5?auto=format&fit=crop&w=800&q=80" alt="夕嶼小料理 菜單美食" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" loading="lazy">
+          <div class="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/40 to-transparent"></div>
+          <span class="absolute top-2.5 left-2.5 px-2.5 py-1 rounded-md text-[11px] font-bold bg-amber-500/90 text-slate-950 shadow-md backdrop-blur-sm">
+            <i class="fa-solid fa-book-open mr-1"></i> 店內菜單實景
+          </span>
+          <span class="absolute top-2.5 right-2.5 px-2 py-0.5 rounded text-[10px] bg-slate-900/80 text-slate-300 border border-slate-700 backdrop-blur-sm">
+            點擊查看完整圖文菜單
+          </span>
+          <div class="absolute bottom-2.5 left-3 right-3 flex items-end justify-between">
+            <div>
+              <div class="text-xs text-amber-300 font-semibold">昭和復古板前・備長炭串燒與清甜關東煮</div>
+              <div class="text-sm font-bold text-white tracking-wide flex items-center gap-1.5">
+                <i class="fa-solid fa-utensils text-xs text-amber-400"></i> 夕嶼小料理 實拍美饌
+              </div>
+            </div>
+            <button type="button" class="px-3 py-1 rounded-lg bg-amber-500 hover:bg-amber-400 text-slate-950 text-xs font-bold transition flex items-center gap-1 shadow-lg">
+              <i class="fa-solid fa-magnifying-glass-plus"></i> 開啟菜單
+            </button>
+          </div>
+        </div>
+
+          <p class="text-xs text-slate-300 mb-4 leading-relaxed bg-slate-900/60 p-3 rounded-xl border border-slate-800">
+            隱身在東區巷弄的日式昭和小料理店，復古橘白招牌超吸睛！全店約12個溫馨吧台座，炭烤功力絕佳，搭配清爽日式關東煮與冰涼生啤，是療癒靈魂的去處。
+          </p>
+
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs mb-4">
+            <div class="bg-slate-800/40 p-2.5 rounded-lg border border-slate-700/50">
+              <div class="text-slate-400 font-semibold mb-1"><i class="fa-solid fa-utensils text-amber-400 mr-1.5"></i>人氣招牌菜單</div>
+              <ul class="text-slate-200 space-y-0.5">
+                <li>• 炭烤鹽蔥雞松阪肉串 ($120/本)</li>
+                <li>• 日式慢熬關東煮盛合 ($180)</li>
+                <li>• 秘醬燒豬肉丼飯 ($150)</li>
+                <li>• 西班牙明太子蒜香油漬蝦 ($240)</li>
+              </ul>
+            </div>
+            <div class="bg-slate-800/40 p-2.5 rounded-lg border border-slate-700/50">
+              <div class="text-slate-400 font-semibold mb-1"><i class="fa-solid fa-wine-glass text-amber-400 mr-1.5"></i>酒類與特色飲品</div>
+              <ul class="text-slate-200 space-y-0.5">
+                <li>• 日本Asahi現壓生啤酒 ($140)</li>
+                <li>• 季節鮮榨水果沙瓦 ($160)</li>
+                <li>• 單杯純米吟釀冷清酒 ($180)</li>
+                <li>• 焙茶梅酒 / 柚子酒 ($180)</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <div class="border-t border-slate-800 pt-3.5 mt-2 space-y-1.5 text-xs text-slate-300">
+          <div class="flex items-center justify-between">
+            <span><i class="fa-solid fa-coins text-amber-400 mr-1.5"></i><strong>低消價格：</strong>每人 $400 元（需含一杯酒水・免服務費）</span>
+            <span class="text-amber-400 font-medium">限時 120 分鐘・僅收現金</span>
+          </div>
+          <div class="flex items-center justify-between">
+            <span><i class="fa-solid fa-clock text-amber-400 mr-1.5"></i><strong>營業時間：</strong>17:00 – 23:00 (週一公休)</span>
+          </div>
+          <div class="flex items-center justify-between text-slate-400">
+            <span><i class="fa-solid fa-location-dot text-rose-400 mr-1.5"></i>台中市東區立德街67巷3號</span>
+            <span class="text-emerald-400 font-medium">距離車站 450m</span>
+          </div>
+          <div class="pt-2">
+            <a href="https://www.google.com/maps/search/?api=1&query=%E5%A4%95%E5%B6%BC%E5%B0%8F%E6%96%99%E7%90%86%20%E5%8F%B0%E4%B8%AD%E5%B8%82%E6%9D%B1%E5%8D%80%E7%AB%8B%E5%BE%B7%E8%A1%9767%E5%B7%B73%E8%99%9F" target="_blank" rel="noopener noreferrer" class="inline-flex items-center justify-center gap-2 w-full py-2 px-3 rounded-lg bg-emerald-500/10 hover:bg-emerald-500/20 text-emerald-400 border border-emerald-500/30 font-medium text-xs transition duration-200 shadow-sm group">
+              <i class="fa-solid fa-map-location-dot text-emerald-400 group-hover:scale-110 transition-transform"></i> 在 Google Maps 開啟地圖導航
+            </a>
+          </div>
+        </div>
+      </article>
+
+      <!-- 6. 入厝 Entry Coffee & Bistro -->
+      <article class="bistro-card glass-card rounded-2xl p-6 flex flex-col justify-between" data-category="creative">
+        <div>
+          <div class="flex items-start justify-between gap-4 mb-3">
+            <div>
+              <div class="flex items-center gap-2 mb-1">
+                <span class="text-xs font-bold text-amber-400 bg-amber-400/10 px-2.5 py-0.5 rounded-md border border-amber-400/20">NO. 6</span>
+                <span class="text-xs text-emerald-400 bg-emerald-400/10 px-2 py-0.5 rounded">走路 6 分鐘</span>
+                <span class="text-xs text-slate-400">日咖夜酒・東區老眷宅風格</span>
+              </div>
+              <h2 class="text-2xl font-bold text-white tracking-wide">入厝 Entry Bistro</h2>
+            </div>
+            <div class="text-right shrink-0">
+              <span class="text-xs text-slate-400 block">人均預算</span>
+              <span class="text-lg font-bold text-amber-400">$400 - $800</span>
+            </div>
+          </div>
+
+
+          <!-- 菜單圖預覽 / 招牌美食氛圍圖 -->
+        <div class="relative w-full h-44 sm:h-48 rounded-xl overflow-hidden mb-4 border border-slate-700/60 group cursor-pointer" onclick="openMenuModal('modal-bistro-6')">
+          <img src="https://images.unsplash.com/photo-1559339352-11d035aa65de?auto=format&fit=crop&w=800&q=80" alt="入厝 Entry Bistro 菜單美食" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" loading="lazy">
+          <div class="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/40 to-transparent"></div>
+          <span class="absolute top-2.5 left-2.5 px-2.5 py-1 rounded-md text-[11px] font-bold bg-amber-500/90 text-slate-950 shadow-md backdrop-blur-sm">
+            <i class="fa-solid fa-book-open mr-1"></i> 店內菜單實景
+          </span>
+          <span class="absolute top-2.5 right-2.5 px-2 py-0.5 rounded text-[10px] bg-slate-900/80 text-slate-300 border border-slate-700 backdrop-blur-sm">
+            點擊查看完整圖文菜單
+          </span>
+          <div class="absolute bottom-2.5 left-3 right-3 flex items-end justify-between">
+            <div>
+              <div class="text-xs text-amber-300 font-semibold">日咖夜酒・東區老眷宅私廚排餐</div>
+              <div class="text-sm font-bold text-white tracking-wide flex items-center gap-1.5">
+                <i class="fa-solid fa-utensils text-xs text-amber-400"></i> 入厝 Entry Bistro 實拍美饌
+              </div>
+            </div>
+            <button type="button" class="px-3 py-1 rounded-lg bg-amber-500 hover:bg-amber-400 text-slate-950 text-xs font-bold transition flex items-center gap-1 shadow-lg">
+              <i class="fa-solid fa-magnifying-glass-plus"></i> 開啟菜單
+            </button>
+          </div>
+        </div>
+
+          <p class="text-xs text-slate-300 mb-4 leading-relaxed bg-slate-900/60 p-3 rounded-xl border border-slate-800">
+            白天是文青咖啡早午餐，入夜轉型為氣氛昏暗優雅的私廚餐酒館。空間工業風又帶點溫馨感，寵物極度友善，夜間餐酒排餐精緻且價格合理。
+          </p>
+
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs mb-4">
+            <div class="bg-slate-800/40 p-2.5 rounded-lg border border-slate-700/50">
+              <div class="text-slate-400 font-semibold mb-1"><i class="fa-solid fa-utensils text-amber-400 mr-1.5"></i>人氣招牌菜單</div>
+              <ul class="text-slate-200 space-y-0.5">
+                <li>• 黑松露嫩煎牛排義大利麵 ($380)</li>
+                <li>• 台式雙拼香脆薄餅披薩 ($320)</li>
+                <li>• 布列塔尼酥炸多汁香草雞 ($240)</li>
+                <li>• 自製低卡香檸舒肥鴨胸 ($360)</li>
+              </ul>
+            </div>
+            <div class="bg-slate-800/40 p-2.5 rounded-lg border border-slate-700/50">
+              <div class="text-slate-400 font-semibold mb-1"><i class="fa-solid fa-wine-glass text-amber-400 mr-1.5"></i>酒類與特色飲品</div>
+              <ul class="text-slate-200 space-y-0.5">
+                <li>• 入厝特調花果香氣調酒 ($350)</li>
+                <li>• 咖啡琴酒威士忌特調 ($320)</li>
+                <li>• 莊園紅白酒單杯佐餐 ($220)</li>
+                <li>• 燕麥奶茶酒 / 氣泡無酒精飲品</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <div class="border-t border-slate-800 pt-3.5 mt-2 space-y-1.5 text-xs text-slate-300">
+          <div class="flex items-center justify-between">
+            <span><i class="fa-solid fa-coins text-amber-400 mr-1.5"></i><strong>低消價格：</strong>低消 $200~$300/人 (晚間私廚套餐需預訂)</span>
+            <span class="text-slate-400">寵物友善空間</span>
+          </div>
+          <div class="flex items-center justify-between">
+            <span><i class="fa-solid fa-clock text-amber-400 mr-1.5"></i><strong>營業時間：</strong>早午餐 10:00–17:30；晚間餐酒 18:00–22:30 (週二公休)</span>
+          </div>
+          <div class="flex items-center justify-between text-slate-400">
+            <span><i class="fa-solid fa-location-dot text-rose-400 mr-1.5"></i>台中市東區信義街85號</span>
+            <span class="text-emerald-400 font-medium">距離車站 500m</span>
+          </div>
+          <div class="pt-2">
+            <a href="https://www.google.com/maps/search/?api=1&query=%E5%85%A5%E5%8E%9D%20Entry%20Bistro%20%E5%8F%B0%E4%B8%AD%E5%B8%82%E6%9D%B1%E5%8D%80%E4%BF%A1%E7%BE%A9%E8%A1%9785%E8%99%9F" target="_blank" rel="noopener noreferrer" class="inline-flex items-center justify-center gap-2 w-full py-2 px-3 rounded-lg bg-emerald-500/10 hover:bg-emerald-500/20 text-emerald-400 border border-emerald-500/30 font-medium text-xs transition duration-200 shadow-sm group">
+              <i class="fa-solid fa-map-location-dot text-emerald-400 group-hover:scale-110 transition-transform"></i> 在 Google Maps 開啟地圖導航
+            </a>
+          </div>
+        </div>
+      </article>
+
+      <!-- 7. 豬肉榮小料理 -->
+      <article class="bistro-card glass-card rounded-2xl p-6 flex flex-col justify-between" data-category="izakaya">
+        <div>
+          <div class="flex items-start justify-between gap-4 mb-3">
+            <div>
+              <div class="flex items-center gap-2 mb-1">
+                <span class="text-xs font-bold text-amber-400 bg-amber-400/10 px-2.5 py-0.5 rounded-md border border-amber-400/20">NO. 7</span>
+                <span class="text-xs text-emerald-400 bg-emerald-400/10 px-2 py-0.5 rounded">走路 5 分鐘</span>
+                <span class="text-xs text-slate-400">米其林必比登推薦・富興工廠</span>
+              </div>
+              <h2 class="text-2xl font-bold text-white tracking-wide">豬肉榮小料理</h2>
+            </div>
+            <div class="text-right shrink-0">
+              <span class="text-xs text-slate-400 block">人均預算</span>
+              <span class="text-lg font-bold text-amber-400">$500 - $800</span>
+            </div>
+          </div>
+
+          
+          <!-- 菜單圖預覽 / 招牌美食氛圍圖 -->
+        <div class="relative w-full h-44 sm:h-48 rounded-xl overflow-hidden mb-4 border border-slate-700/60 group cursor-pointer" onclick="openMenuModal('modal-bistro-7')">
+          <img src="https://images.unsplash.com/photo-1600891964599-f61ba0e24092?auto=format&fit=crop&w=800&q=80" alt="豬肉榮小料理 菜單美食" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" loading="lazy">
+          <div class="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/40 to-transparent"></div>
+          <span class="absolute top-2.5 left-2.5 px-2.5 py-1 rounded-md text-[11px] font-bold bg-amber-500/90 text-slate-950 shadow-md backdrop-blur-sm">
+            <i class="fa-solid fa-book-open mr-1"></i> 店內菜單實景
+          </span>
+          <span class="absolute top-2.5 right-2.5 px-2 py-0.5 rounded text-[10px] bg-slate-900/80 text-slate-300 border border-slate-700 backdrop-blur-sm">
+            點擊查看完整圖文菜單
+          </span>
+          <div class="absolute bottom-2.5 left-3 right-3 flex items-end justify-between">
+            <div>
+              <div class="text-xs text-amber-300 font-semibold">米其林必比登推薦・富興工廠一人板前小料理</div>
+              <div class="text-sm font-bold text-white tracking-wide flex items-center gap-1.5">
+                <i class="fa-solid fa-utensils text-xs text-amber-400"></i> 豬肉榮小料理 實拍美饌
+              </div>
+            </div>
+            <button type="button" class="px-3 py-1 rounded-lg bg-amber-500 hover:bg-amber-400 text-slate-950 text-xs font-bold transition flex items-center gap-1 shadow-lg">
+              <i class="fa-solid fa-magnifying-glass-plus"></i> 開啟菜單
+            </button>
+          </div>
+        </div>
+
+          <p class="text-xs text-slate-300 mb-4 leading-relaxed bg-slate-900/60 p-3 rounded-xl border border-slate-800">
+            隱藏在老工廠聚落「富興工廠1962」內，榮獲米其林必比登推薦！主理人一人掌廚的12席吧台板前食堂，融入台、日、法細緻手藝，每道下酒菜都充滿驚喜。
+          </p>
+
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs mb-4">
+            <div class="bg-slate-800/40 p-2.5 rounded-lg border border-slate-700/50">
+              <div class="text-slate-400 font-semibold mb-1"><i class="fa-solid fa-utensils text-amber-400 mr-1.5"></i>人氣招牌菜單</div>
+              <ul class="text-slate-200 space-y-0.5">
+                <li>• 櫻花蝦滷肉飯 (必點靈魂 $120)</li>
+                <li>• 慢燉法式紅酒燴牛頰 ($380)</li>
+                <li>• 招牌焦糖風味佃煮白蘿蔔 ($100)</li>
+                <li>• 岩石煙燻脆口豬心 ($220)</li>
+              </ul>
+            </div>
+            <div class="bg-slate-800/40 p-2.5 rounded-lg border border-slate-700/50">
+              <div class="text-slate-400 font-semibold mb-1"><i class="fa-solid fa-wine-glass text-amber-400 mr-1.5"></i>酒類與特色飲品</div>
+              <ul class="text-slate-200 space-y-0.5">
+                <li>• 自然酒 / 橘酒單杯佐餐 ($250~$300)</li>
+                <li>• 嚴選日本地酒清酒 ($220起)</li>
+                <li>• 特選瓶裝精釀啤酒 ($180)</li>
+                <li>• 高知柚子汁氣泡飲 ($130)</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <div class="border-t border-slate-800 pt-3.5 mt-2 space-y-1.5 text-xs text-slate-300">
+          <div class="flex items-center justify-between">
+            <span><i class="fa-solid fa-coins text-amber-400 mr-1.5"></i><strong>低消價格：</strong>每人低消 $400 元 (僅收現金・無服務費)</span>
+            <span class="text-amber-400 font-medium">席位極搶手・務必提前訂位</span>
+          </div>
+          <div class="flex items-center justify-between">
+            <span><i class="fa-solid fa-clock text-amber-400 mr-1.5"></i><strong>營業時間：</strong>18:00 – 22:30 (週二、週三公休)</span>
+          </div>
+          <div class="flex items-center justify-between text-slate-400">
+            <span><i class="fa-solid fa-location-dot text-rose-400 mr-1.5"></i>台中市東區復興路四段17巷10之2號 (富興工廠)</span>
+            <span class="text-emerald-400 font-medium">距離車站 350m</span>
+          </div>
+          <div class="pt-2">
+            <a href="https://www.google.com/maps/search/?api=1&query=%E8%B1%AC%E8%82%89%E6%A6%AE%E5%B0%8F%E6%96%99%E7%90%86%20%E5%8F%B0%E4%B8%AD%E5%B8%82%E6%9D%B1%E5%8D%80%E5%BE%A9%E8%88%88%E8%B7%AF%E5%9B%9B%E6%AE%B517%E5%B7%B710%E4%B9%8B2%E8%99%9F" target="_blank" rel="noopener noreferrer" class="inline-flex items-center justify-center gap-2 w-full py-2 px-3 rounded-lg bg-emerald-500/10 hover:bg-emerald-500/20 text-emerald-400 border border-emerald-500/30 font-medium text-xs transition duration-200 shadow-sm group">
+              <i class="fa-solid fa-map-location-dot text-emerald-400 group-hover:scale-110 transition-transform"></i> 在 Google Maps 開啟地圖導航
+            </a>
+          </div>
+        </div>
+      </article>
+
+      <!-- 8. 繼光貳酒 (Jiguang 29) -->
+      <article class="bistro-card glass-card rounded-2xl p-6 flex flex-col justify-between" data-category="izakaya">
+        <div>
+          <div class="flex items-start justify-between gap-4 mb-3">
+            <div>
+              <div class="flex items-center gap-2 mb-1">
+                <span class="text-xs font-bold text-amber-400 bg-amber-400/10 px-2.5 py-0.5 rounded-md border border-amber-400/20">NO. 8</span>
+                <span class="text-xs text-emerald-400 bg-emerald-400/10 px-2 py-0.5 rounded">走路 4 分鐘</span>
+                <span class="text-xs text-slate-400">日治老診所改建・昭和居酒屋</span>
+              </div>
+              <h2 class="text-2xl font-bold text-white tracking-wide">繼光貳酒</h2>
+            </div>
+            <div class="text-right shrink-0">
+              <span class="text-xs text-slate-400 block">人均預算</span>
+              <span class="text-lg font-bold text-amber-400">$400 - $700</span>
+            </div>
+          </div>
+
+          
+          <!-- 菜單圖預覽 / 招牌美食氛圍圖 -->
+        <div class="relative w-full h-44 sm:h-48 rounded-xl overflow-hidden mb-4 border border-slate-700/60 group cursor-pointer" onclick="openMenuModal('modal-bistro-8')">
+          <img src="https://images.unsplash.com/photo-1574096079513-d8259312b785?auto=format&fit=crop&w=800&q=80" alt="繼光貳酒 菜單美食" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" loading="lazy">
+          <div class="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/40 to-transparent"></div>
+          <span class="absolute top-2.5 left-2.5 px-2.5 py-1 rounded-md text-[11px] font-bold bg-amber-500/90 text-slate-950 shadow-md backdrop-blur-sm">
+            <i class="fa-solid fa-book-open mr-1"></i> 店內菜單實景
+          </span>
+          <span class="absolute top-2.5 right-2.5 px-2 py-0.5 rounded text-[10px] bg-slate-900/80 text-slate-300 border border-slate-700 backdrop-blur-sm">
+            點擊查看完整圖文菜單
+          </span>
+          <div class="absolute bottom-2.5 left-3 right-3 flex items-end justify-between">
+            <div>
+              <div class="text-xs text-amber-300 font-semibold">百年老診所改建・專治五臟廟下酒良方</div>
+              <div class="text-sm font-bold text-white tracking-wide flex items-center gap-1.5">
+                <i class="fa-solid fa-utensils text-xs text-amber-400"></i> 繼光貳酒 實拍美饌
+              </div>
+            </div>
+            <button type="button" class="px-3 py-1 rounded-lg bg-amber-500 hover:bg-amber-400 text-slate-950 text-xs font-bold transition flex items-center gap-1 shadow-lg">
+              <i class="fa-solid fa-magnifying-glass-plus"></i> 開啟菜單
+            </button>
+          </div>
+        </div>
+
+          <p class="text-xs text-slate-300 mb-4 leading-relaxed bg-slate-900/60 p-3 rounded-xl border border-slate-800">
+            由繼光街百年舊診所改造，內部完整保留木作老藥櫃與懷舊塌榻米包廂！料理涵蓋無國界串燒、現烤海鮮與台式熱炒，更推出以「注射針筒與藥劑袋」盛裝的特色調飲。
+          </p>
+
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs mb-4">
+            <div class="bg-slate-800/40 p-2.5 rounded-lg border border-slate-700/50">
+              <div class="text-slate-400 font-semibold mb-1"><i class="fa-solid fa-utensils text-amber-400 mr-1.5"></i>人氣招牌菜單</div>
+              <ul class="text-slate-200 space-y-0.5">
+                <li>• 爆汁明太子雞肉串 ($130/串)</li>
+                <li>• 剝皮辣椒雪花牛五花卷 ($140/串)</li>
+                <li>• 鹽烤原味透抽 ($260)</li>
+                <li>• 招牌酒香蛤蜊燒 ($200)</li>
+              </ul>
+            </div>
+            <div class="bg-slate-800/40 p-2.5 rounded-lg border border-slate-700/50">
+              <div class="text-slate-400 font-semibold mb-1"><i class="fa-solid fa-wine-glass text-amber-400 mr-1.5"></i>酒類與特色飲品</div>
+              <ul class="text-slate-200 space-y-0.5">
+                <li>• 點滴袋/試管創意調酒系列 ($280)</li>
+                <li>• 冰鎮生啤酒現拉 ($130)</li>
+                <li>• 經典威士忌Highball ($160)</li>
+                <li>• 溫清酒壺裝 / 日本梅酒 ($200)</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <div class="border-t border-slate-800 pt-3.5 mt-2 space-y-1.5 text-xs text-slate-300">
+          <div class="flex items-center justify-between">
+            <span><i class="fa-solid fa-coins text-amber-400 mr-1.5"></i><strong>低消價格：</strong>每人 $300 元 (單點計費・包廂需洽詢)</span>
+            <span class="text-slate-400">營業至凌晨 03:30</span>
+          </div>
+          <div class="flex items-center justify-between">
+            <span><i class="fa-solid fa-clock text-amber-400 mr-1.5"></i><strong>營業時間：</strong>18:00 – 03:30 (週日公休)</span>
+          </div>
+          <div class="flex items-center justify-between text-slate-400">
+            <span><i class="fa-solid fa-location-dot text-rose-400 mr-1.5"></i>台中市中區繼光街29號</span>
+            <span class="text-emerald-400 font-medium">距離車站 300m</span>
+          </div>
+          <div class="pt-2">
+            <a href="https://www.google.com/maps/search/?api=1&query=%E7%B9%BC%E5%85%89%E8%B2%B3%E9%85%92%20%E5%8F%B0%E4%B8%AD%E5%B8%82%E4%B8%AD%E5%8D%80%E7%B9%BC%E5%85%89%E8%A1%9729%E8%99%9F" target="_blank" rel="noopener noreferrer" class="inline-flex items-center justify-center gap-2 w-full py-2 px-3 rounded-lg bg-emerald-500/10 hover:bg-emerald-500/20 text-emerald-400 border border-emerald-500/30 font-medium text-xs transition duration-200 shadow-sm group">
+              <i class="fa-solid fa-map-location-dot text-emerald-400 group-hover:scale-110 transition-transform"></i> 在 Google Maps 開啟地圖導航
+            </a>
+          </div>
+        </div>
+      </article>
+
+      <!-- 9. 港町十三番地 (中正店) -->
+      <article class="bistro-card glass-card rounded-2xl p-6 flex flex-col justify-between" data-category="izakaya">
+        <div>
+          <div class="flex items-start justify-between gap-4 mb-3">
+            <div>
+              <div class="flex items-center gap-2 mb-1">
+                <span class="text-xs font-bold text-amber-400 bg-amber-400/10 px-2.5 py-0.5 rounded-md border border-amber-400/20">NO. 9</span>
+                <span class="text-xs text-emerald-400 bg-emerald-400/10 px-2 py-0.5 rounded">走路 10 分鐘</span>
+                <span class="text-xs text-slate-400">老字號平價居酒屋・CP值爆表</span>
+              </div>
+              <h2 class="text-2xl font-bold text-white tracking-wide">港町十三番地</h2>
+            </div>
+            <div class="text-right shrink-0">
+              <span class="text-xs text-slate-400 block">人均預算</span>
+              <span class="text-lg font-bold text-amber-400">$300 - $550</span>
+            </div>
+          </div>
+
+
+          <!-- 菜單圖預覽 / 招牌美食氛圍圖 -->
+        <div class="relative w-full h-44 sm:h-48 rounded-xl overflow-hidden mb-4 border border-slate-700/60 group cursor-pointer" onclick="openMenuModal('modal-bistro-9')">
+          <img src="https://images.unsplash.com/photo-1579871494447-9811cf80d66c?auto=format&fit=crop&w=800&q=80" alt="港町十三番地 菜單美食" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" loading="lazy">
+          <div class="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/40 to-transparent"></div>
+          <span class="absolute top-2.5 left-2.5 px-2.5 py-1 rounded-md text-[11px] font-bold bg-amber-500/90 text-slate-950 shadow-md backdrop-blur-sm">
+            <i class="fa-solid fa-book-open mr-1"></i> 店內菜單實景
+          </span>
+          <span class="absolute top-2.5 right-2.5 px-2 py-0.5 rounded text-[10px] bg-slate-900/80 text-slate-300 border border-slate-700 backdrop-blur-sm">
+            點擊查看完整圖文菜單
+          </span>
+          <div class="absolute bottom-2.5 left-3 right-3 flex items-end justify-between">
+            <div>
+              <div class="text-xs text-amber-300 font-semibold">老字號平價居酒屋・百種生魚片串燒熱炒</div>
+              <div class="text-sm font-bold text-white tracking-wide flex items-center gap-1.5">
+                <i class="fa-solid fa-utensils text-xs text-amber-400"></i> 港町十三番地 實拍美饌
+              </div>
+            </div>
+            <button type="button" class="px-3 py-1 rounded-lg bg-amber-500 hover:bg-amber-400 text-slate-950 text-xs font-bold transition flex items-center gap-1 shadow-lg">
+              <i class="fa-solid fa-magnifying-glass-plus"></i> 開啟菜單
+            </button>
+          </div>
+        </div>
+
+          <p class="text-xs text-slate-300 mb-4 leading-relaxed bg-slate-900/60 p-3 rounded-xl border border-slate-800">
+            台中老字號平價居酒屋傳奇！菜單多達百種，生魚片、炭火烤肉串、熱炒、壽司到熱騰騰的日式火鍋一應俱全。價格實惠、熱鬧歡愉，聚餐續攤荷包完全無痛！
+          </p>
+
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs mb-4">
+            <div class="bg-slate-800/40 p-2.5 rounded-lg border border-slate-700/50">
+              <div class="text-slate-400 font-semibold mb-1"><i class="fa-solid fa-utensils text-amber-400 mr-1.5"></i>人氣招牌菜單</div>
+              <ul class="text-slate-200 space-y-0.5">
+                <li>• 綜合生魚片大盤 ($280)</li>
+                <li>• 醬烤肥腸/雞肉肉串 ($80~$120)</li>
+                <li>• 炒烏龍麵/鮭魚炒飯 ($120)</li>
+                <li>• 鮭魚海鮮石狩鍋 ($350)</li>
+              </ul>
+            </div>
+            <div class="bg-slate-800/40 p-2.5 rounded-lg border border-slate-700/50">
+              <div class="text-slate-400 font-semibold mb-1"><i class="fa-solid fa-wine-glass text-amber-400 mr-1.5"></i>酒類與特色飲品</div>
+              <ul class="text-slate-200 space-y-0.5">
+                <li>• 大杯現拉生啤酒 ($100~$120)</li>
+                <li>• 台啤金牌/18天生啤酒 ($80~$100)</li>
+                <li>• 壺裝溫清酒 / 冰清酒 ($150)</li>
+                <li>• 可爾必思沙瓦 / 無糖綠茶</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <div class="border-t border-slate-800 pt-3.5 mt-2 space-y-1.5 text-xs text-slate-300">
+          <div class="flex items-center justify-between">
+            <span><i class="fa-solid fa-coins text-amber-400 mr-1.5"></i><strong>低消價格：</strong>無特定嚴格低消限制（單點計價，平價親民）</span>
+            <span class="text-slate-400">營業至凌晨 01:30</span>
+          </div>
+          <div class="flex items-center justify-between">
+            <span><i class="fa-solid fa-clock text-amber-400 mr-1.5"></i><strong>營業時間：</strong>每天 17:30 – 01:30 (全年無休)</span>
+          </div>
+          <div class="flex items-center justify-between text-slate-400">
+            <span><i class="fa-solid fa-location-dot text-rose-400 mr-1.5"></i>台中市中區台灣大道一段405號 (近第二市場)</span>
+            <span class="text-emerald-400 font-medium">距離車站 850m</span>
+          </div>
+          <div class="pt-2">
+            <a href="https://www.google.com/maps/search/?api=1&query=%E6%B8%AF%E7%94%BA%E5%8D%81%E4%B8%89%E7%95%AA%E5%9C%B0%20%E4%B8%AD%E6%AD%A3%E5%BA%97%20%E5%8F%B0%E4%B8%AD%E5%B8%82%E4%B8%AD%E5%8D%80%E5%8F%B0%E7%81%A3%E5%A4%A7%E9%81%93%E4%B8%80%E6%AE%B5405%E8%99%9F" target="_blank" rel="noopener noreferrer" class="inline-flex items-center justify-center gap-2 w-full py-2 px-3 rounded-lg bg-emerald-500/10 hover:bg-emerald-500/20 text-emerald-400 border border-emerald-500/30 font-medium text-xs transition duration-200 shadow-sm group">
+              <i class="fa-solid fa-map-location-dot text-emerald-400 group-hover:scale-110 transition-transform"></i> 在 Google Maps 開啟地圖導航
+            </a>
+          </div>
+        </div>
+      </article>
+
+      <!-- 10. 金町深夜酒食居 -->
+      <article class="bistro-card glass-card rounded-2xl p-6 flex flex-col justify-between" data-category="izakaya">
+        <div>
+          <div class="flex items-start justify-between gap-4 mb-3">
+            <div>
+              <div class="flex items-center gap-2 mb-1">
+                <span class="text-xs font-bold text-amber-400 bg-amber-400/10 px-2.5 py-0.5 rounded-md border border-amber-400/20">NO. 10</span>
+                <span class="text-xs text-emerald-400 bg-emerald-400/10 px-2 py-0.5 rounded">走路 10 分鐘</span>
+                <span class="text-xs text-slate-400">第二市場對面・生蠔炭火深夜食堂</span>
+              </div>
+              <h2 class="text-2xl font-bold text-white tracking-wide">金町深夜酒食居</h2>
+            </div>
+            <div class="text-right shrink-0">
+              <span class="text-xs text-slate-400 block">人均預算</span>
+              <span class="text-lg font-bold text-amber-400">$450 - $750</span>
+            </div>
+          </div>
+
+          <!-- 菜單圖預覽 / 招牌美食氛圍圖 -->
+        <div class="relative w-full h-44 sm:h-48 rounded-xl overflow-hidden mb-4 border border-slate-700/60 group cursor-pointer" onclick="openMenuModal('modal-bistro-10')">
+          <img src="https://images.unsplash.com/photo-1534422298391-e4f8c172dddb?auto=format&fit=crop&w=800&q=80" alt="金町深夜酒食居 菜單美食" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" loading="lazy">
+          <div class="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/40 to-transparent"></div>
+          <span class="absolute top-2.5 left-2.5 px-2.5 py-1 rounded-md text-[11px] font-bold bg-amber-500/90 text-slate-950 shadow-md backdrop-blur-sm">
+            <i class="fa-solid fa-book-open mr-1"></i> 店內菜單實景
+          </span>
+          <span class="absolute top-2.5 right-2.5 px-2 py-0.5 rounded text-[10px] bg-slate-900/80 text-slate-300 border border-slate-700 backdrop-blur-sm">
+            點擊查看完整圖文菜單
+          </span>
+          <div class="absolute bottom-2.5 left-3 right-3 flex items-end justify-between">
+            <div>
+              <div class="text-xs text-amber-300 font-semibold">第二市場老宅・各國空運生蠔與純碳火串燒</div>
+              <div class="text-sm font-bold text-white tracking-wide flex items-center gap-1.5">
+                <i class="fa-solid fa-utensils text-xs text-amber-400"></i> 金町深夜酒食居 實拍美饌
+              </div>
+            </div>
+            <button type="button" class="px-3 py-1 rounded-lg bg-amber-500 hover:bg-amber-400 text-slate-950 text-xs font-bold transition flex items-center gap-1 shadow-lg">
+              <i class="fa-solid fa-magnifying-glass-plus"></i> 開啟菜單
+            </button>
+          </div>
+        </div>
+
+          <p class="text-xs text-slate-300 mb-4 leading-relaxed bg-slate-900/60 p-3 rounded-xl border border-slate-800">
+            由知名居酒屋「將軍府」團隊打造的深夜老宅居酒屋！正對第二市場，主打<strong>每日產地直送各國新鮮生蠔</strong>與<strong>純碳火現烤串燒</strong>。營業至凌晨 05:00，週四不打烊，夜貓子宵夜微醺頂級去處！
+          </p>
+
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs mb-4">
+            <div class="bg-slate-800/40 p-2.5 rounded-lg border border-slate-700/50">
+              <div class="text-slate-400 font-semibold mb-1"><i class="fa-solid fa-utensils text-amber-400 mr-1.5"></i>人氣招牌菜單</div>
+              <ul class="text-slate-200 space-y-0.5">
+                <li>• 產地直送頂級鮮生蠔 (時價/日法產地)</li>
+                <li>• 牛肉生蠔燒烤卷 ($180)</li>
+                <li>• 炭烤蒜香鮮生蠔盛合 ($240)</li>
+                <li>• 熔岩黑金唐揚雞 ($220)</li>
+              </ul>
+            </div>
+            <div class="bg-slate-800/40 p-2.5 rounded-lg border border-slate-700/50">
+              <div class="text-slate-400 font-semibold mb-1"><i class="fa-solid fa-wine-glass text-amber-400 mr-1.5"></i>酒類與特色飲品</div>
+              <ul class="text-slate-200 space-y-0.5">
+                <li>• 日本產地直送清酒單杯 ($180起)</li>
+                <li>• 冰鎮現拉生啤酒 ($130)</li>
+                <li>• 季節鮮果沙瓦 / 梅酒 ($150)</li>
+                <li>• 可爾必思蘇打 / 日式無糖冷茶</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <div class="border-t border-slate-800 pt-3.5 mt-2 space-y-1.5 text-xs text-slate-300">
+          <div class="flex items-center justify-between">
+            <span><i class="fa-solid fa-coins text-amber-400 mr-1.5"></i><strong>低消價格：</strong>每人低消 $400 元（免收服務費）</span>
+            <span class="text-emerald-400 font-medium">週四正常營業・開至凌晨5點</span>
+          </div>
+          <div class="flex items-center justify-between">
+            <span><i class="fa-solid fa-clock text-amber-400 mr-1.5"></i><strong>營業時間：</strong>每天 21:00 – 05:00 (天天營業・全年無休)</span>
+          </div>
+          <div class="flex items-center justify-between text-slate-400">
+            <span><i class="fa-solid fa-location-dot text-rose-400 mr-1.5"></i>台中市中區臺灣大道一段376號 (第二市場正對面)</span>
+            <span class="text-emerald-400 font-medium">距離車站 800m</span>
+          </div>
+          <div class="pt-2">
+            <a href="https://www.google.com/maps/search/?api=1&query=%E9%87%91%E7%94%BA%E6%B7%B1%E5%A4%9C%E9%85%92%E9%A3%9F%E5%B1%85%20%E5%8F%B0%E4%B8%AD%E5%B8%82%E4%B8%AD%E5%8D%80%E8%87%BA%E7%81%A3%E5%A4%A7%E9%81%93%E4%B8%80%E6%AE%B5376%E8%99%9F" target="_blank" rel="noopener noreferrer" class="inline-flex items-center justify-center gap-2 w-full py-2 px-3 rounded-lg bg-emerald-500/10 hover:bg-emerald-500/20 text-emerald-400 border border-emerald-500/30 font-medium text-xs transition duration-200 shadow-sm group">
+              <i class="fa-solid fa-map-location-dot text-emerald-400 group-hover:scale-110 transition-transform"></i> 在 Google Maps 開啟地圖導航
+            </a>
+          </div>
+        </div>
+      </article>
+
+    </div>
+
+    <!-- 綜合比較表格專區 -->
+    <section id="comparison-table" class="mt-16 pt-8 border-t border-slate-800">
+      <div class="text-center mb-8">
+        <h2 class="text-2xl sm:text-3xl font-bold text-white mb-2">📊 10 家火車站周邊餐酒館・居酒屋橫向評比</h2>
+        <p class="text-slate-400 text-sm">一目了然比對低消、距離、招牌特色，幫助您 3 秒做出聚餐選擇！</p>
+      </div>
+
+      <div class="overflow-x-auto rounded-2xl border border-slate-800 shadow-2xl">
+        <table class="w-full text-left border-collapse text-xs sm:text-sm bg-slate-900/70">
+          <thead>
+            <tr class="border-b border-slate-800 bg-slate-800/80 text-slate-200">
+              <th class="p-3.5 font-bold">店名</th>
+              <th class="p-3.5 font-bold">風格特色</th>
+              <th class="p-3.5 font-bold">步行距離</th>
+              <th class="p-3.5 font-bold">低消價格</th>
+              <th class="p-3.5 font-bold">營業時間</th>
+              <th class="p-3.5 font-bold">必點菜單 / 酒款</th>
+              <th class="p-3.5 font-bold text-center">地圖導航</th>
+            </tr>
+          </thead>
+          <tbody class="divide-y divide-slate-800/60 text-slate-300">
+            <tr class="hover:bg-slate-800/30 transition">
+              <td class="p-3.5 font-bold text-amber-300">醬好台式餐酒館</td>
+              <td class="p-3.5">南洋熱炒/附KTV飛鏢包廂</td>
+              <td class="p-3.5 text-emerald-400 font-semibold">3 分鐘 (250m)</td>
+              <td class="p-3.5">無強制 / 單點計費</td>
+              <td class="p-3.5">17:30–00:30 (週一休)</td>
+              <td class="p-3.5">峇里島豬肋排、啤酒塔</td>
+              <td class="p-3.5 text-center">
+                <a href="https://www.google.com/maps/search/?api=1&query=%E9%86%AC%E5%A5%BD%E5%8F%B0%E5%BC%8F%E9%A4%90%E9%85%92%E9%A4%A8%20%E5%8F%B0%E4%B8%AD%E5%B8%82%E6%9D%B1%E5%8D%80%E7%AB%8B%E5%BE%B7%E8%A1%9724%E8%99%9F" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-1 text-xs text-emerald-400 hover:text-emerald-300 font-medium px-2.5 py-1 rounded bg-emerald-500/10 hover:bg-emerald-500/20 border border-emerald-500/20 transition">
+                  <i class="fa-solid fa-location-arrow"></i> 導航
+                </a>
+              </td>
+            </tr>
+            <tr class="hover:bg-slate-800/30 transition">
+              <td class="p-3.5 font-bold text-amber-300">SHU Club</td>
+              <td class="p-3.5">復古電梯門/琴酒微醺酒吧</td>
+              <td class="p-3.5">10 分鐘 (850m)</td>
+              <td class="p-3.5 text-amber-400 font-semibold">$500 / 人</td>
+              <td class="p-3.5">21:00–03:00 (週二休)</td>
+              <td class="p-3.5">神級滷肉飯、在地風味琴酒</td>
+              <td class="p-3.5 text-center">
+                <a href="https://www.google.com/maps/search/?api=1&query=SHU%20Club%20%E5%8F%B0%E4%B8%AD%E5%B8%82%E4%B8%AD%E5%8D%80%E6%B0%91%E6%97%8F%E8%B7%AF202%E8%99%9F" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-1 text-xs text-emerald-400 hover:text-emerald-300 font-medium px-2.5 py-1 rounded bg-emerald-500/10 hover:bg-emerald-500/20 border border-emerald-500/20 transition">
+                  <i class="fa-solid fa-location-arrow"></i> 導航
+                </a>
+              </td>
+            </tr>
+            <tr class="hover:bg-slate-800/30 transition">
+              <td class="p-3.5 font-bold text-amber-300">春光閣</td>
+              <td class="p-3.5">廟宇擲筊/沉浸式森林投影</td>
+              <td class="p-3.5 text-emerald-400 font-semibold">4 分鐘 (300m)</td>
+              <td class="p-3.5">一樓$800 / 二樓$600</td>
+              <td class="p-3.5">18:00–02:00 (四~日)</td>
+              <td class="p-3.5">飛天干貝麵、台灣花果神仙調酒</td>
+              <td class="p-3.5 text-center">
+                <a href="https://www.google.com/maps/search/?api=1&query=%E6%98%A5%E5%85%89%E9%96%A3%20Springlightbar%20%E5%8F%B0%E4%B8%AD%E5%B8%82%E4%B8%AD%E5%8D%80%E5%BB%BA%E5%9C%8B%E8%B7%AF103%E8%99%9F" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-1 text-xs text-emerald-400 hover:text-emerald-300 font-medium px-2.5 py-1 rounded bg-emerald-500/10 hover:bg-emerald-500/20 border border-emerald-500/20 transition">
+                  <i class="fa-solid fa-location-arrow"></i> 導航
+                </a>
+              </td>
+            </tr>
+            <tr class="hover:bg-slate-800/30 transition">
+              <td class="p-3.5 font-bold text-amber-300">ChangeX Beer 南園酒家</td>
+              <td class="p-3.5">百年日治大酒家/精釀啤酒</td>
+              <td class="p-3.5 text-emerald-400 font-semibold">5 分鐘 (450m)</td>
+              <td class="p-3.5">一杯飲品 (約$250)</td>
+              <td class="p-3.5">17:00–00:00 (週一二休)</td>
+              <td class="p-3.5">大腸包小腸、20+Tap現拉精釀</td>
+              <td class="p-3.5 text-center">
+                <a href="https://www.google.com/maps/search/?api=1&query=ChangeX%20Beer%20%E5%8D%97%E5%9C%92%E9%85%92%E5%AE%B6%20%E5%8F%B0%E4%B8%AD%E5%B8%82%E4%B8%AD%E5%8D%80%E6%B0%91%E6%97%8F%E8%B7%AF34%E8%99%9F" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-1 text-xs text-emerald-400 hover:text-emerald-300 font-medium px-2.5 py-1 rounded bg-emerald-500/10 hover:bg-emerald-500/20 border border-emerald-500/20 transition">
+                  <i class="fa-solid fa-location-arrow"></i> 導航
+                </a>
+              </td>
+            </tr>
+            <tr class="hover:bg-slate-800/30 transition">
+              <td class="p-3.5 font-bold text-amber-300">夕嶼小料理</td>
+              <td class="p-3.5">昭和復古炭火串燒/關東煮</td>
+              <td class="p-3.5 text-emerald-400 font-semibold">6 分鐘 (450m)</td>
+              <td class="p-3.5 text-amber-400 font-semibold">$400 / 人 (含酒水)</td>
+              <td class="p-3.5">17:00–23:00 (週一休)</td>
+              <td class="p-3.5">雞松阪肉串、關東煮、沙瓦</td>
+              <td class="p-3.5 text-center">
+                <a href="https://www.google.com/maps/search/?api=1&query=%E5%A4%95%E5%B6%BC%E5%B0%8F%E6%96%99%E7%90%86%20%E5%8F%B0%E4%B8%AD%E5%B8%82%E6%9D%B1%E5%8D%80%E7%AB%8B%E5%BE%B7%E8%A1%9767%E5%B7%B73%E8%99%9F" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-1 text-xs text-emerald-400 hover:text-emerald-300 font-medium px-2.5 py-1 rounded bg-emerald-500/10 hover:bg-emerald-500/20 border border-emerald-500/20 transition">
+                  <i class="fa-solid fa-location-arrow"></i> 導航
+                </a>
+              </td>
+            </tr>
+            <tr class="hover:bg-slate-800/30 transition">
+              <td class="p-3.5 font-bold text-amber-300">入厝 Entry Bistro</td>
+              <td class="p-3.5">日咖夜酒/文青私廚排餐</td>
+              <td class="p-3.5 text-emerald-400 font-semibold">6 分鐘 (500m)</td>
+              <td class="p-3.5">$200 - $300 / 人</td>
+              <td class="p-3.5">夜間餐酒 18:00–22:30</td>
+              <td class="p-3.5">松露牛排麵、咖啡調酒</td>
+              <td class="p-3.5 text-center">
+                <a href="https://www.google.com/maps/search/?api=1&query=%E5%85%A5%E5%8E%9D%20Entry%20Bistro%20%E5%8F%B0%E4%B8%AD%E5%B8%82%E6%9D%B1%E5%8D%80%E4%BF%A1%E7%BE%A9%E8%A1%9785%E8%99%9F" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-1 text-xs text-emerald-400 hover:text-emerald-300 font-medium px-2.5 py-1 rounded bg-emerald-500/10 hover:bg-emerald-500/20 border border-emerald-500/20 transition">
+                  <i class="fa-solid fa-location-arrow"></i> 導航
+                </a>
+              </td>
+            </tr>
+            <tr class="hover:bg-slate-800/30 transition">
+              <td class="p-3.5 font-bold text-amber-300">豬肉榮小料理</td>
+              <td class="p-3.5">米其林必比登/老工廠板前</td>
+              <td class="p-3.5 text-emerald-400 font-semibold">5 分鐘 (350m)</td>
+              <td class="p-3.5 text-amber-400 font-semibold">$400 / 人 (現金)</td>
+              <td class="p-3.5">18:00–22:30 (週二三休)</td>
+              <td class="p-3.5">櫻花蝦滷肉飯、自然酒、白蘿蔔</td>
+              <td class="p-3.5 text-center">
+                <a href="https://www.google.com/maps/search/?api=1&query=%E8%B1%AC%E8%82%89%E6%A6%AE%E5%B0%8F%E6%96%99%E7%90%86%20%E5%8F%B0%E4%B8%AD%E5%B8%82%E6%9D%B1%E5%8D%80%E5%BE%A9%E8%88%88%E8%B7%AF%E5%9B%9B%E6%AE%B517%E5%B7%B710%E4%B9%8B2%E8%99%9F" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-1 text-xs text-emerald-400 hover:text-emerald-300 font-medium px-2.5 py-1 rounded bg-emerald-500/10 hover:bg-emerald-500/20 border border-emerald-500/20 transition">
+                  <i class="fa-solid fa-location-arrow"></i> 導航
+                </a>
+              </td>
+            </tr>
+            <tr class="hover:bg-slate-800/30 transition">
+              <td class="p-3.5 font-bold text-amber-300">繼光貳酒</td>
+              <td class="p-3.5">舊診所改造居酒屋/藥劑調飲</td>
+              <td class="p-3.5 text-emerald-400 font-semibold">4 分鐘 (300m)</td>
+              <td class="p-3.5">$300 / 人</td>
+              <td class="p-3.5">18:00–03:30 (週日休)</td>
+              <td class="p-3.5">明太子雞肉串、點滴袋調酒</td>
+              <td class="p-3.5 text-center">
+                <a href="https://www.google.com/maps/search/?api=1&query=%E7%B9%BC%E5%85%89%E8%B2%B3%E9%85%92%20%E5%8F%B0%E4%B8%AD%E5%B8%82%E4%B8%AD%E5%8D%80%E7%B9%BC%E5%85%89%E8%A1%9729%E8%99%9F" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-1 text-xs text-emerald-400 hover:text-emerald-300 font-medium px-2.5 py-1 rounded bg-emerald-500/10 hover:bg-emerald-500/20 border border-emerald-500/20 transition">
+                  <i class="fa-solid fa-location-arrow"></i> 導航
+                </a>
+              </td>
+            </tr>
+            <tr class="hover:bg-slate-800/30 transition">
+              <td class="p-3.5 font-bold text-amber-300">港町十三番地 中正店</td>
+              <td class="p-3.5">老字號百樣日料/生啤居酒屋</td>
+              <td class="p-3.5">10 分鐘 (850m)</td>
+              <td class="p-3.5 text-emerald-400 font-semibold">無特定低消 (極平價)</td>
+              <td class="p-3.5">17:30–01:30 (天天營業)</td>
+              <td class="p-3.5">生魚片、烤肥腸、現打生啤</td>
+              <td class="p-3.5 text-center">
+                <a href="https://www.google.com/maps/search/?api=1&query=%E6%B8%AF%E7%94%BA%E5%8D%81%E4%B8%89%E7%95%AA%E5%9C%B0%20%E4%B8%AD%E6%AD%A3%E5%BA%97%20%E5%8F%B0%E4%B8%AD%E5%B8%82%E4%B8%AD%E5%8D%80%E5%8F%B0%E7%81%A3%E5%A4%A7%E9%81%93%E4%B8%80%E6%AE%B5405%E8%99%9F" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-1 text-xs text-emerald-400 hover:text-emerald-300 font-medium px-2.5 py-1 rounded bg-emerald-500/10 hover:bg-emerald-500/20 border border-emerald-500/20 transition">
+                  <i class="fa-solid fa-location-arrow"></i> 導航
+                </a>
+              </td>
+            </tr>
+            <tr class="hover:bg-slate-800/30 transition">
+              <td class="p-3.5 font-bold text-amber-300">金町深夜酒食居</td>
+              <td class="p-3.5">各國產地生蠔/純碳火串燒深夜食堂</td>
+              <td class="p-3.5">10 分鐘 (800m)</td>
+              <td class="p-3.5">$400 / 人 (免服務費)</td>
+              <td class="p-3.5 text-emerald-400 font-semibold">21:00–05:00 (週四營業)</td>
+              <td class="p-3.5">鮮生蠔盛合、牛肉生蠔卷、熔岩唐揚雞</td>
+              <td class="p-3.5 text-center">
+                <a href="https://www.google.com/maps/search/?api=1&query=%E9%87%91%E7%94%BA%E6%B7%B1%E5%A4%9C%E9%85%92%E9%A3%9F%E5%B1%85%20%E5%8F%B0%E4%B8%AD%E5%B8%82%E4%B8%AD%E5%8D%80%E8%87%BA%E7%81%A3%E5%A4%A7%E9%81%93%E4%B8%80%E6%AE%B5376%E8%99%9F" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-1 text-xs text-emerald-400 hover:text-emerald-300 font-medium px-2.5 py-1 rounded bg-emerald-500/10 hover:bg-emerald-500/20 border border-emerald-500/20 transition">
+                  <i class="fa-solid fa-location-arrow"></i> 導航
+                </a>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- 貼心實用守則 -->
+    <div class="mt-12 p-6 rounded-2xl bg-amber-500/5 border border-amber-500/20 text-xs sm:text-sm text-slate-300 space-y-2">
+      <div class="font-bold text-amber-300 text-base mb-2 flex items-center gap-2">
+        <i class="fa-solid fa-lightbulb"></i> 玩樂小酒館實用指南
+      </div>
+      <p>1. <strong>提早訂位：</strong> 中區與東區老宅餐酒館座位通常在 12~20 席左右（如夕嶼、豬肉榮、SHU Club），週末極度熱門，強烈建議出發前透過 IG 或 Inline 訂位系統預約。</p>
+      <p>2. <strong>服務費與支付：</strong> 多數酒吧酌收 10% 服務費；部分老宅型店家（如夕嶼、豬肉榮）<strong>僅收現金</strong>，建議備齊現金前往。</p>
+      <p>3. <strong>理性飲酒・安全第一：</strong> 10 家皆在台中車站步行圈內，喝完酒直接步行回車站搭火車、公車或計程車最安全！未滿18歲禁止飲酒，酒後切勿開車。</p>
+    </div>
+  </main>
+
+  <footer class="border-t border-slate-800 py-8 text-center text-xs text-slate-500">
+    <p>Taichung Railway Station Bistro & Tavern Guide © 2026</p>
+    <p class="mt-1">飲酒過量，有礙健康・酒後不開車，安全有保障</p>
+  </footer>
+
+  <script>
+    function filterCategory(cat) {
+      const cards = document.querySelectorAll('.bistro-card');
+      const buttons = document.querySelectorAll('.filter-btn');
+
+      buttons.forEach(btn => {
+        if(btn.dataset.cat === cat) {
+          btn.classList.add('bg-amber-500', 'text-slate-950', 'font-bold');
+          btn.classList.remove('bg-slate-800', 'text-slate-300');
+        } else {
+          btn.classList.remove('bg-amber-500', 'text-slate-950', 'font-bold');
+          btn.classList.add('bg-slate-800', 'text-slate-300');
+        }
+      });
+
+      cards.forEach(card => {
+        if (cat === 'all' || card.dataset.category === cat) {
+          card.style.display = 'flex';
+        } else {
+          card.style.display = 'none';
+        }
+      });
+    }
+  
+    function openMenuModal(id) {
+      const modal = document.getElementById(id);
+      if (modal) {
+        modal.classList.add('active');
+        document.body.style.overflow = 'hidden';
+      }
+    }
+    function closeMenuModal(id) {
+      const modal = document.getElementById(id);
+      if (modal) {
+        modal.classList.remove('active');
+        document.body.style.overflow = 'auto';
+      }
+    }
+    // Close on click backdrop
+    window.addEventListener('click', function(e) {
+      if (e.target.classList.contains('menu-modal')) {
+        e.target.classList.remove('active');
+        document.body.style.overflow = 'auto';
+      }
+    });
+    
+  </script>
+
+<!-- BISTRO DETAILED MENU MODALS -->
+<!-- BISTRO DETAILED MENU MODALS (WITH ITEM PHOTOS) -->
+
+    <!-- Modal: 醬好台式餐酒館 菜單圖文 -->
+    <div id="modal-bistro-1" class="menu-modal fixed inset-0 z-50 hidden bg-slate-950/85 backdrop-blur-md flex items-center justify-center p-3 sm:p-6 overflow-y-auto">
+      <div class="bg-slate-900 border border-slate-700/80 rounded-2xl max-w-2xl w-full max-h-[92vh] flex flex-col shadow-2xl overflow-hidden animate-fade-in">
+        <!-- Modal Header -->
+        <div class="relative h-48 sm:h-56 w-full shrink-0 overflow-hidden">
+          <img src="https://images.unsplash.com/photo-1544025162-d76694265947?auto=format&fit=crop&w=1000&q=80" alt="醬好台式餐酒館" class="w-full h-full object-cover">
+          <div class="absolute inset-0 bg-gradient-to-t from-slate-900 via-slate-900/60 to-slate-900/10"></div>
+          <button onclick="closeMenuModal('modal-bistro-1')" class="absolute top-3.5 right-3.5 w-8 h-8 rounded-full bg-slate-900/90 text-slate-300 hover:text-white hover:bg-slate-800 border border-slate-700 flex items-center justify-center text-sm transition shadow-lg">
+            <i class="fa-solid fa-xmark"></i>
+          </button>
+          <div class="absolute bottom-3.5 left-4 right-4">
+            <span class="text-[11px] font-bold text-amber-400 bg-amber-400/15 px-2.5 py-0.5 rounded-md border border-amber-400/30 backdrop-blur-sm">南洋風味融合台式熱炒</span>
+            <h3 class="text-xl sm:text-2xl font-bold text-white mt-1.5 tracking-wide drop-shadow-md">醬好台式餐酒館 現場精選圖文菜單與酒單</h3>
+          </div>
+        </div>
+        
+        <!-- Modal Body: Detailed Menu Categories with item photos -->
+        <div class="p-3.5 sm:p-6 overflow-y-auto space-y-4">
+          <div class="p-2.5 rounded-xl bg-amber-500/10 border border-amber-500/20 text-xs text-amber-200 flex items-center gap-2">
+            <i class="fa-solid fa-circle-info text-amber-400 shrink-0"></i>
+            <span>本菜單附實物美饌圖與現場最新菜式、黑板公告及外送酒單實拍彙整，價格透明供參考。</span>
+          </div>
+          
+          <div class="mb-5 bg-slate-900/80 rounded-2xl p-3.5 sm:p-5 border border-slate-800/90 shadow-lg">
+            <h4 class="text-amber-300 font-bold text-xs sm:text-sm mb-3 pb-2 border-b border-amber-500/20 flex items-center justify-between">
+              <span class="flex items-center gap-1.5">🔥 招牌主廚私房料理</span>
+              <span class="text-[10px] text-slate-400 font-normal bg-slate-800/60 px-2 py-0.5 rounded">現場實體價位</span>
+            </h4>
+            <div class="space-y-1">
+              
+              <div class="flex items-center gap-3.5 py-3 border-b border-slate-800/80 last:border-0 hover:bg-slate-800/40 rounded-xl px-2.5 transition">
+                <div class="relative w-16 h-16 sm:w-20 sm:h-20 shrink-0 rounded-lg overflow-hidden border border-slate-700/80 shadow-md">
+                  <img src="https://images.unsplash.com/photo-1544025162-d76694265947?auto=format&fit=crop&w=400&q=80" alt="峇里島南洋慢火烤豬肋排 (大/小)" class="w-full h-full object-cover hover:scale-110 transition-transform duration-300" loading="lazy">
+                </div>
+                <div class="flex-1 min-w-0">
+                  <div class="flex items-start justify-between gap-2">
+                    <h5 class="font-bold text-slate-100 text-xs sm:text-sm tracking-wide truncate">峇里島南洋慢火烤豬肋排 (大/小)</h5>
+                    <span class="text-amber-400 font-extrabold text-xs sm:text-sm shrink-0">$380 / $580</span>
+                  </div>
+                  <p class="text-[11px] sm:text-xs text-slate-400 mt-1 leading-relaxed line-clamp-2">印尼烏布古法慢火燉烤，外層蜜汁甘甜、肉質軟嫩脫骨，大人小孩聚餐必點</p>
+                </div>
+              </div>
+                
+              <div class="flex items-center gap-3.5 py-3 border-b border-slate-800/80 last:border-0 hover:bg-slate-800/40 rounded-xl px-2.5 transition">
+                <div class="relative w-16 h-16 sm:w-20 sm:h-20 shrink-0 rounded-lg overflow-hidden border border-slate-700/80 shadow-md">
+                  <img src="https://images.unsplash.com/photo-1534422298391-e4f8c172dddb?auto=format&fit=crop&w=400&q=80" alt="酥炸南洋鮮辣椒鱸魚" class="w-full h-full object-cover hover:scale-110 transition-transform duration-300" loading="lazy">
+                </div>
+                <div class="flex-1 min-w-0">
+                  <div class="flex items-start justify-between gap-2">
+                    <h5 class="font-bold text-slate-100 text-xs sm:text-sm tracking-wide truncate">酥炸南洋鮮辣椒鱸魚</h5>
+                    <span class="text-amber-400 font-extrabold text-xs sm:text-sm shrink-0">$420</span>
+                  </div>
+                  <p class="text-[11px] sm:text-xs text-slate-400 mt-1 leading-relaxed line-clamp-2">整尾鮮鱸魚酥炸脆口，淋上特製酸辣南洋香茅辣椒醬，酸爽外酥內嫩</p>
+                </div>
+              </div>
+                
+              <div class="flex items-center gap-3.5 py-3 border-b border-slate-800/80 last:border-0 hover:bg-slate-800/40 rounded-xl px-2.5 transition">
+                <div class="relative w-16 h-16 sm:w-20 sm:h-20 shrink-0 rounded-lg overflow-hidden border border-slate-700/80 shadow-md">
+                  <img src="https://images.unsplash.com/photo-1569718212165-3a8278d5f624?auto=format&fit=crop&w=400&q=80" alt="招牌鮮鱸魚芋頭米粉湯" class="w-full h-full object-cover hover:scale-110 transition-transform duration-300" loading="lazy">
+                </div>
+                <div class="flex-1 min-w-0">
+                  <div class="flex items-start justify-between gap-2">
+                    <h5 class="font-bold text-slate-100 text-xs sm:text-sm tracking-wide truncate">招牌鮮鱸魚芋頭米粉湯</h5>
+                    <span class="text-amber-400 font-extrabold text-xs sm:text-sm shrink-0">$320</span>
+                  </div>
+                  <p class="text-[11px] sm:text-xs text-slate-400 mt-1 leading-relaxed line-clamp-2">豬骨慢熬濃白豚骨高湯，加入半煎炸鱸魚、文蛤與大甲芋頭熬煮，暖胃澎湃</p>
+                </div>
+              </div>
+                
+              <div class="flex items-center gap-3.5 py-3 border-b border-slate-800/80 last:border-0 hover:bg-slate-800/40 rounded-xl px-2.5 transition">
+                <div class="relative w-16 h-16 sm:w-20 sm:h-20 shrink-0 rounded-lg overflow-hidden border border-slate-700/80 shadow-md">
+                  <img src="https://images.unsplash.com/photo-1599488615731-7e5c2823ff28?auto=format&fit=crop&w=400&q=80" alt="金沙酥炸深海魷魚" class="w-full h-full object-cover hover:scale-110 transition-transform duration-300" loading="lazy">
+                </div>
+                <div class="flex-1 min-w-0">
+                  <div class="flex items-start justify-between gap-2">
+                    <h5 class="font-bold text-slate-100 text-xs sm:text-sm tracking-wide truncate">金沙酥炸深海魷魚</h5>
+                    <span class="text-amber-400 font-extrabold text-xs sm:text-sm shrink-0">$220</span>
+                  </div>
+                  <p class="text-[11px] sm:text-xs text-slate-400 mt-1 leading-relaxed line-clamp-2">現裹濃郁鹹蛋黃金沙醬大火快炒，鹹香酥脆極致下酒</p>
+                </div>
+              </div>
+                
+              <div class="flex items-center gap-3.5 py-3 border-b border-slate-800/80 last:border-0 hover:bg-slate-800/40 rounded-xl px-2.5 transition">
+                <div class="relative w-16 h-16 sm:w-20 sm:h-20 shrink-0 rounded-lg overflow-hidden border border-slate-700/80 shadow-md">
+                  <img src="https://images.unsplash.com/photo-1585032226651-759b368d7246?auto=format&fit=crop&w=400&q=80" alt="招牌特製豬肉炒撈麵" class="w-full h-full object-cover hover:scale-110 transition-transform duration-300" loading="lazy">
+                </div>
+                <div class="flex-1 min-w-0">
+                  <div class="flex items-start justify-between gap-2">
+                    <h5 class="font-bold text-slate-100 text-xs sm:text-sm tracking-wide truncate">招牌特製豬肉炒撈麵</h5>
+                    <span class="text-amber-400 font-extrabold text-xs sm:text-sm shrink-0">$160</span>
+                  </div>
+                  <p class="text-[11px] sm:text-xs text-slate-400 mt-1 leading-relaxed line-clamp-2">秘製醬汁大火爆炒，吸附滿滿青蔥與肉末，香氣四溢鑊氣十足</p>
+                </div>
+              </div>
+                
+            </div>
+          </div>
+            
+          <div class="mb-5 bg-slate-900/80 rounded-2xl p-3.5 sm:p-5 border border-slate-800/90 shadow-lg">
+            <h4 class="text-amber-300 font-bold text-xs sm:text-sm mb-3 pb-2 border-b border-amber-500/20 flex items-center justify-between">
+              <span class="flex items-center gap-1.5">🍢 炭火烤物與派對炸物</span>
+              <span class="text-[10px] text-slate-400 font-normal bg-slate-800/60 px-2 py-0.5 rounded">現場實體價位</span>
+            </h4>
+            <div class="space-y-1">
+              
+              <div class="flex items-center gap-3.5 py-3 border-b border-slate-800/80 last:border-0 hover:bg-slate-800/40 rounded-xl px-2.5 transition">
+                <div class="relative w-16 h-16 sm:w-20 sm:h-20 shrink-0 rounded-lg overflow-hidden border border-slate-700/80 shadow-md">
+                  <img src="https://images.unsplash.com/photo-1555939594-58d7cb561ad1?auto=format&fit=crop&w=400&q=80" alt="特製南洋沙嗲雞肉串 (3本)" class="w-full h-full object-cover hover:scale-110 transition-transform duration-300" loading="lazy">
+                </div>
+                <div class="flex-1 min-w-0">
+                  <div class="flex items-start justify-between gap-2">
+                    <h5 class="font-bold text-slate-100 text-xs sm:text-sm tracking-wide truncate">特製南洋沙嗲雞肉串 (3本)</h5>
+                    <span class="text-amber-400 font-extrabold text-xs sm:text-sm shrink-0">$180</span>
+                  </div>
+                  <p class="text-[11px] sm:text-xs text-slate-400 mt-1 leading-relaxed line-clamp-2">特調花生香料沙嗲醬汁，肉質鮮嫩多汁，香氣撲鼻</p>
+                </div>
+              </div>
+                
+              <div class="flex items-center gap-3.5 py-3 border-b border-slate-800/80 last:border-0 hover:bg-slate-800/40 rounded-xl px-2.5 transition">
+                <div class="relative w-16 h-16 sm:w-20 sm:h-20 shrink-0 rounded-lg overflow-hidden border border-slate-700/80 shadow-md">
+                  <img src="https://images.unsplash.com/photo-1563245372-f21724e3856d?auto=format&fit=crop&w=400&q=80" alt="酥炸月亮蝦餅" class="w-full h-full object-cover hover:scale-110 transition-transform duration-300" loading="lazy">
+                </div>
+                <div class="flex-1 min-w-0">
+                  <div class="flex items-start justify-between gap-2">
+                    <h5 class="font-bold text-slate-100 text-xs sm:text-sm tracking-wide truncate">酥炸月亮蝦餅</h5>
+                    <span class="text-amber-400 font-extrabold text-xs sm:text-sm shrink-0">$200</span>
+                  </div>
+                  <p class="text-[11px] sm:text-xs text-slate-400 mt-1 leading-relaxed line-clamp-2">純手打厚實鮮蝦漿，金黃酥脆，隨附特調酸甜梅子醬</p>
+                </div>
+              </div>
+                
+            </div>
+          </div>
+            
+          <div class="mb-5 bg-slate-900/80 rounded-2xl p-3.5 sm:p-5 border border-slate-800/90 shadow-lg">
+            <h4 class="text-amber-300 font-bold text-xs sm:text-sm mb-3 pb-2 border-b border-amber-500/20 flex items-center justify-between">
+              <span class="flex items-center gap-1.5">🍺 酒類與派對啤酒柱</span>
+              <span class="text-[10px] text-slate-400 font-normal bg-slate-800/60 px-2 py-0.5 rounded">現場實體價位</span>
+            </h4>
+            <div class="space-y-1">
+              
+              <div class="flex items-center gap-3.5 py-3 border-b border-slate-800/80 last:border-0 hover:bg-slate-800/40 rounded-xl px-2.5 transition">
+                <div class="relative w-16 h-16 sm:w-20 sm:h-20 shrink-0 rounded-lg overflow-hidden border border-slate-700/80 shadow-md">
+                  <img src="https://images.unsplash.com/photo-1608270586620-248524c67de9?auto=format&fit=crop&w=400&q=80" alt="金牌/海尼根 派對生啤酒塔 (3L)" class="w-full h-full object-cover hover:scale-110 transition-transform duration-300" loading="lazy">
+                </div>
+                <div class="flex-1 min-w-0">
+                  <div class="flex items-start justify-between gap-2">
+                    <h5 class="font-bold text-slate-100 text-xs sm:text-sm tracking-wide truncate">金牌/海尼根 派對生啤酒塔 (3L)</h5>
+                    <span class="text-amber-400 font-extrabold text-xs sm:text-sm shrink-0">$680</span>
+                  </div>
+                  <p class="text-[11px] sm:text-xs text-slate-400 mt-1 leading-relaxed line-clamp-2">包廂慶生聚餐必備！超大容量冰鎮暢飲啤酒柱</p>
+                </div>
+              </div>
+                
+              <div class="flex items-center gap-3.5 py-3 border-b border-slate-800/80 last:border-0 hover:bg-slate-800/40 rounded-xl px-2.5 transition">
+                <div class="relative w-16 h-16 sm:w-20 sm:h-20 shrink-0 rounded-lg overflow-hidden border border-slate-700/80 shadow-md">
+                  <img src="https://images.unsplash.com/photo-1551024709-8f23befc6f87?auto=format&fit=crop&w=400&q=80" alt="熱帶水果角嗨 (Highball)" class="w-full h-full object-cover hover:scale-110 transition-transform duration-300" loading="lazy">
+                </div>
+                <div class="flex-1 min-w-0">
+                  <div class="flex items-start justify-between gap-2">
+                    <h5 class="font-bold text-slate-100 text-xs sm:text-sm tracking-wide truncate">熱帶水果角嗨 (Highball)</h5>
+                    <span class="text-amber-400 font-extrabold text-xs sm:text-sm shrink-0">$160</span>
+                  </div>
+                  <p class="text-[11px] sm:text-xs text-slate-400 mt-1 leading-relaxed line-clamp-2">百香果/芒果新鮮果香碰撞威士忌蘇打，清爽氣泡微醺</p>
+                </div>
+              </div>
+                
+            </div>
+          </div>
+            
+        </div>
+
+        <!-- Modal Footer -->
+        <div class="p-3 sm:p-4 border-t border-slate-800 bg-slate-950 flex items-center justify-between text-xs">
+          <span class="text-slate-400 flex items-center gap-1.5"><i class="fa-solid fa-kitchen-set text-amber-400"></i> 實際餐點與限量品項依店家現場供應為準</span>
+          <button onclick="closeMenuModal('modal-bistro-1')" class="px-4 py-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-200 font-medium transition border border-slate-700">
+            關閉菜單
+          </button>
+        </div>
+      </div>
+    </div>
+        
+
+    <!-- Modal: SHU Club 菜單圖文 -->
+    <div id="modal-bistro-2" class="menu-modal fixed inset-0 z-50 hidden bg-slate-950/85 backdrop-blur-md flex items-center justify-center p-3 sm:p-6 overflow-y-auto">
+      <div class="bg-slate-900 border border-slate-700/80 rounded-2xl max-w-2xl w-full max-h-[92vh] flex flex-col shadow-2xl overflow-hidden animate-fade-in">
+        <!-- Modal Header -->
+        <div class="relative h-48 sm:h-56 w-full shrink-0 overflow-hidden">
+          <img src="https://images.unsplash.com/photo-1514362545857-3bc16c4c7d1b?auto=format&fit=crop&w=1000&q=80" alt="SHU Club" class="w-full h-full object-cover">
+          <div class="absolute inset-0 bg-gradient-to-t from-slate-900 via-slate-900/60 to-slate-900/10"></div>
+          <button onclick="closeMenuModal('modal-bistro-2')" class="absolute top-3.5 right-3.5 w-8 h-8 rounded-full bg-slate-900/90 text-slate-300 hover:text-white hover:bg-slate-800 border border-slate-700 flex items-center justify-center text-sm transition shadow-lg">
+            <i class="fa-solid fa-xmark"></i>
+          </button>
+          <div class="absolute bottom-3.5 left-4 right-4">
+            <span class="text-[11px] font-bold text-amber-400 bg-amber-400/15 px-2.5 py-0.5 rounded-md border border-amber-400/30 backdrop-blur-sm">以琴酒為本・極簡編號風味調飲</span>
+            <h3 class="text-xl sm:text-2xl font-bold text-white mt-1.5 tracking-wide drop-shadow-md">SHU Club 琴酒編號酒單與深夜私廚料理</h3>
+          </div>
+        </div>
+        
+        <!-- Modal Body: Detailed Menu Categories with item photos -->
+        <div class="p-3.5 sm:p-6 overflow-y-auto space-y-4">
+          <div class="p-2.5 rounded-xl bg-amber-500/10 border border-amber-500/20 text-xs text-amber-200 flex items-center gap-2">
+            <i class="fa-solid fa-circle-info text-amber-400 shrink-0"></i>
+            <span>本菜單附實物美饌圖與現場最新菜式、黑板公告及外送酒單實拍彙整，價格透明供參考。</span>
+          </div>
+          
+          <div class="mb-5 bg-slate-900/80 rounded-2xl p-3.5 sm:p-5 border border-slate-800/90 shadow-lg">
+            <h4 class="text-amber-300 font-bold text-xs sm:text-sm mb-3 pb-2 border-b border-amber-500/20 flex items-center justify-between">
+              <span class="flex items-center gap-1.5">🍸 GIN FLAVOR SIGNATURES (特調均一價 $400)</span>
+              <span class="text-[10px] text-slate-400 font-normal bg-slate-800/60 px-2 py-0.5 rounded">現場實體價位</span>
+            </h4>
+            <div class="space-y-1">
+              
+              <div class="flex items-center gap-3.5 py-3 border-b border-slate-800/80 last:border-0 hover:bg-slate-800/40 rounded-xl px-2.5 transition">
+                <div class="relative w-16 h-16 sm:w-20 sm:h-20 shrink-0 rounded-lg overflow-hidden border border-slate-700/80 shadow-md">
+                  <img src="https://images.unsplash.com/photo-1514362545857-3bc16c4c7d1b?auto=format&fit=crop&w=400&q=80" alt="#2 (Jasmine / Guava / Sakura)" class="w-full h-full object-cover hover:scale-110 transition-transform duration-300" loading="lazy">
+                </div>
+                <div class="flex-1 min-w-0">
+                  <div class="flex items-start justify-between gap-2">
+                    <h5 class="font-bold text-slate-100 text-xs sm:text-sm tracking-wide truncate">#2 (Jasmine / Guava / Sakura)</h5>
+                    <span class="text-amber-400 font-extrabold text-xs sm:text-sm shrink-0">$400</span>
+                  </div>
+                  <p class="text-[11px] sm:text-xs text-slate-400 mt-1 leading-relaxed line-clamp-2">琴酒、茉莉花、芭樂、鹽漬櫻花、龍膽、通寧水 (草本果香、尾韻微鹹回甘)</p>
+                </div>
+              </div>
+                
+              <div class="flex items-center gap-3.5 py-3 border-b border-slate-800/80 last:border-0 hover:bg-slate-800/40 rounded-xl px-2.5 transition">
+                <div class="relative w-16 h-16 sm:w-20 sm:h-20 shrink-0 rounded-lg overflow-hidden border border-slate-700/80 shadow-md">
+                  <img src="https://images.unsplash.com/photo-1574096079513-d8259312b785?auto=format&fit=crop&w=400&q=80" alt="#6 (Sage / Calamansi / Roselle)" class="w-full h-full object-cover hover:scale-110 transition-transform duration-300" loading="lazy">
+                </div>
+                <div class="flex-1 min-w-0">
+                  <div class="flex items-start justify-between gap-2">
+                    <h5 class="font-bold text-slate-100 text-xs sm:text-sm tracking-wide truncate">#6 (Sage / Calamansi / Roselle)</h5>
+                    <span class="text-amber-400 font-extrabold text-xs sm:text-sm shrink-0">$400</span>
+                  </div>
+                  <p class="text-[11px] sm:text-xs text-slate-400 mt-1 leading-relaxed line-clamp-2">琴酒、鼠尾草、金桔、洛神、細緻蛋白泡沫 (酸甜綿密、粉嫩高雅)</p>
+                </div>
+              </div>
+                
+              <div class="flex items-center gap-3.5 py-3 border-b border-slate-800/80 last:border-0 hover:bg-slate-800/40 rounded-xl px-2.5 transition">
+                <div class="relative w-16 h-16 sm:w-20 sm:h-20 shrink-0 rounded-lg overflow-hidden border border-slate-700/80 shadow-md">
+                  <img src="https://images.unsplash.com/photo-1556679343-c7306c1976bc?auto=format&fit=crop&w=400&q=80" alt="#11 (Sencha / Fig / Mango)" class="w-full h-full object-cover hover:scale-110 transition-transform duration-300" loading="lazy">
+                </div>
+                <div class="flex-1 min-w-0">
+                  <div class="flex items-start justify-between gap-2">
+                    <h5 class="font-bold text-slate-100 text-xs sm:text-sm tracking-wide truncate">#11 (Sencha / Fig / Mango)</h5>
+                    <span class="text-amber-400 font-extrabold text-xs sm:text-sm shrink-0">$400</span>
+                  </div>
+                  <p class="text-[11px] sm:text-xs text-slate-400 mt-1 leading-relaxed line-clamp-2">琴酒、日式煎茶、無花果、芒果果泥 (果香茶韻交織沉穩)</p>
+                </div>
+              </div>
+                
+              <div class="flex items-center gap-3.5 py-3 border-b border-slate-800/80 last:border-0 hover:bg-slate-800/40 rounded-xl px-2.5 transition">
+                <div class="relative w-16 h-16 sm:w-20 sm:h-20 shrink-0 rounded-lg overflow-hidden border border-slate-700/80 shadow-md">
+                  <img src="https://images.unsplash.com/photo-1536935338788-846bb9981813?auto=format&fit=crop&w=400&q=80" alt="#23 (Makao / Sour Cabbage)" class="w-full h-full object-cover hover:scale-110 transition-transform duration-300" loading="lazy">
+                </div>
+                <div class="flex-1 min-w-0">
+                  <div class="flex items-start justify-between gap-2">
+                    <h5 class="font-bold text-slate-100 text-xs sm:text-sm tracking-wide truncate">#23 (Makao / Sour Cabbage)</h5>
+                    <span class="text-amber-400 font-extrabold text-xs sm:text-sm shrink-0">$400</span>
+                  </div>
+                  <p class="text-[11px] sm:text-xs text-slate-400 mt-1 leading-relaxed line-clamp-2">琴酒、原住民馬告、酸白菜、生薑、氣泡 (酸菜白肉鍋概念微醺特調)</p>
+                </div>
+              </div>
+                
+            </div>
+          </div>
+            
+          <div class="mb-5 bg-slate-900/80 rounded-2xl p-3.5 sm:p-5 border border-slate-800/90 shadow-lg">
+            <h4 class="text-amber-300 font-bold text-xs sm:text-sm mb-3 pb-2 border-b border-amber-500/20 flex items-center justify-between">
+              <span class="flex items-center gap-1.5">🍲 深夜主廚小料理 (FOOD)</span>
+              <span class="text-[10px] text-slate-400 font-normal bg-slate-800/60 px-2 py-0.5 rounded">現場實體價位</span>
+            </h4>
+            <div class="space-y-1">
+              
+              <div class="flex items-center gap-3.5 py-3 border-b border-slate-800/80 last:border-0 hover:bg-slate-800/40 rounded-xl px-2.5 transition">
+                <div class="relative w-16 h-16 sm:w-20 sm:h-20 shrink-0 rounded-lg overflow-hidden border border-slate-700/80 shadow-md">
+                  <img src="https://images.unsplash.com/photo-1563245372-f21724e3856d?auto=format&fit=crop&w=400&q=80" alt="老饕特製滷肉飯 (附松露漬蛋黃)" class="w-full h-full object-cover hover:scale-110 transition-transform duration-300" loading="lazy">
+                </div>
+                <div class="flex-1 min-w-0">
+                  <div class="flex items-start justify-between gap-2">
+                    <h5 class="font-bold text-slate-100 text-xs sm:text-sm tracking-wide truncate">老饕特製滷肉飯 (附松露漬蛋黃)</h5>
+                    <span class="text-amber-400 font-extrabold text-xs sm:text-sm shrink-0">$180</span>
+                  </div>
+                  <p class="text-[11px] sm:text-xs text-slate-400 mt-1 leading-relaxed line-clamp-2">老母雞與手切豬五花慢熬，松露生蛋黃拌飯香氣濃郁爆表，被譽為神級宵夜</p>
+                </div>
+              </div>
+                
+              <div class="flex items-center gap-3.5 py-3 border-b border-slate-800/80 last:border-0 hover:bg-slate-800/40 rounded-xl px-2.5 transition">
+                <div class="relative w-16 h-16 sm:w-20 sm:h-20 shrink-0 rounded-lg overflow-hidden border border-slate-700/80 shadow-md">
+                  <img src="https://images.unsplash.com/photo-1617093727343-374698b1b08d?auto=format&fit=crop&w=400&q=80" alt="海鮮炙燒竹輪燒" class="w-full h-full object-cover hover:scale-110 transition-transform duration-300" loading="lazy">
+                </div>
+                <div class="flex-1 min-w-0">
+                  <div class="flex items-start justify-between gap-2">
+                    <h5 class="font-bold text-slate-100 text-xs sm:text-sm tracking-wide truncate">海鮮炙燒竹輪燒</h5>
+                    <span class="text-amber-400 font-extrabold text-xs sm:text-sm shrink-0">$220</span>
+                  </div>
+                  <p class="text-[11px] sm:text-xs text-slate-400 mt-1 leading-relaxed line-clamp-2">手工竹輪鑲入飛魚卵與鮮蝦干貝漿，鮮脆多汁佐七味粉</p>
+                </div>
+              </div>
+                
+              <div class="flex items-center gap-3.5 py-3 border-b border-slate-800/80 last:border-0 hover:bg-slate-800/40 rounded-xl px-2.5 transition">
+                <div class="relative w-16 h-16 sm:w-20 sm:h-20 shrink-0 rounded-lg overflow-hidden border border-slate-700/80 shadow-md">
+                  <img src="https://images.unsplash.com/photo-1544025162-d76694265947?auto=format&fit=crop&w=400&q=80" alt="香蒜炙烤安格斯牛小排" class="w-full h-full object-cover hover:scale-110 transition-transform duration-300" loading="lazy">
+                </div>
+                <div class="flex-1 min-w-0">
+                  <div class="flex items-start justify-between gap-2">
+                    <h5 class="font-bold text-slate-100 text-xs sm:text-sm tracking-wide truncate">香蒜炙烤安格斯牛小排</h5>
+                    <span class="text-amber-400 font-extrabold text-xs sm:text-sm shrink-0">$380</span>
+                  </div>
+                  <p class="text-[11px] sm:text-xs text-slate-400 mt-1 leading-relaxed line-clamp-2">低溫烹調後炙燒至五分熟，佐海鹽與自製酥脆蒜片</p>
+                </div>
+              </div>
+                
+            </div>
+          </div>
+            
+        </div>
+
+        <!-- Modal Footer -->
+        <div class="p-3 sm:p-4 border-t border-slate-800 bg-slate-950 flex items-center justify-between text-xs">
+          <span class="text-slate-400 flex items-center gap-1.5"><i class="fa-solid fa-kitchen-set text-amber-400"></i> 實際餐點與限量品項依店家現場供應為準</span>
+          <button onclick="closeMenuModal('modal-bistro-2')" class="px-4 py-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-200 font-medium transition border border-slate-700">
+            關閉菜單
+          </button>
+        </div>
+      </div>
+    </div>
+        
+
+    <!-- Modal: 春光閣 菜單圖文 -->
+    <div id="modal-bistro-3" class="menu-modal fixed inset-0 z-50 hidden bg-slate-950/85 backdrop-blur-md flex items-center justify-center p-3 sm:p-6 overflow-y-auto">
+      <div class="bg-slate-900 border border-slate-700/80 rounded-2xl max-w-2xl w-full max-h-[92vh] flex flex-col shadow-2xl overflow-hidden animate-fade-in">
+        <!-- Modal Header -->
+        <div class="relative h-48 sm:h-56 w-full shrink-0 overflow-hidden">
+          <img src="https://images.unsplash.com/photo-1551024709-8f23befc6f87?auto=format&fit=crop&w=1000&q=80" alt="春光閣" class="w-full h-full object-cover">
+          <div class="absolute inset-0 bg-gradient-to-t from-slate-900 via-slate-900/60 to-slate-900/10"></div>
+          <button onclick="closeMenuModal('modal-bistro-3')" class="absolute top-3.5 right-3.5 w-8 h-8 rounded-full bg-slate-900/90 text-slate-300 hover:text-white hover:bg-slate-800 border border-slate-700 flex items-center justify-center text-sm transition shadow-lg">
+            <i class="fa-solid fa-xmark"></i>
+          </button>
+          <div class="absolute bottom-3.5 left-4 right-4">
+            <span class="text-[11px] font-bold text-amber-400 bg-amber-400/15 px-2.5 py-0.5 rounded-md border border-amber-400/30 backdrop-blur-sm">中式廟宇擲筊 × 沉浸式台灣在地酒廠特調</span>
+            <h3 class="text-xl sm:text-2xl font-bold text-white mt-1.5 tracking-wide drop-shadow-md">春光閣 封神榜酒單與台味小品菜單</h3>
+          </div>
+        </div>
+        
+        <!-- Modal Body: Detailed Menu Categories with item photos -->
+        <div class="p-3.5 sm:p-6 overflow-y-auto space-y-4">
+          <div class="p-2.5 rounded-xl bg-amber-500/10 border border-amber-500/20 text-xs text-amber-200 flex items-center gap-2">
+            <i class="fa-solid fa-circle-info text-amber-400 shrink-0"></i>
+            <span>本菜單附實物美饌圖與現場最新菜式、黑板公告及外送酒單實拍彙整，價格透明供參考。</span>
+          </div>
+          
+          <div class="mb-5 bg-slate-900/80 rounded-2xl p-3.5 sm:p-5 border border-slate-800/90 shadow-lg">
+            <h4 class="text-amber-300 font-bold text-xs sm:text-sm mb-3 pb-2 border-b border-amber-500/20 flex items-center justify-between">
+              <span class="flex items-center gap-1.5">🥢 招牌台式小品 (CASUAL FINE DINING)</span>
+              <span class="text-[10px] text-slate-400 font-normal bg-slate-800/60 px-2 py-0.5 rounded">現場實體價位</span>
+            </h4>
+            <div class="space-y-1">
+              
+              <div class="flex items-center gap-3.5 py-3 border-b border-slate-800/80 last:border-0 hover:bg-slate-800/40 rounded-xl px-2.5 transition">
+                <div class="relative w-16 h-16 sm:w-20 sm:h-20 shrink-0 rounded-lg overflow-hidden border border-slate-700/80 shadow-md">
+                  <img src="https://images.unsplash.com/photo-1569718212165-3a8278d5f624?auto=format&fit=crop&w=400&q=80" alt="招牌飛天干貝麵 (XO醬)" class="w-full h-full object-cover hover:scale-110 transition-transform duration-300" loading="lazy">
+                </div>
+                <div class="flex-1 min-w-0">
+                  <div class="flex items-start justify-between gap-2">
+                    <h5 class="font-bold text-slate-100 text-xs sm:text-sm tracking-wide truncate">招牌飛天干貝麵 (XO醬)</h5>
+                    <span class="text-amber-400 font-extrabold text-xs sm:text-sm shrink-0">$280</span>
+                  </div>
+                  <p class="text-[11px] sm:text-xs text-slate-400 mt-1 leading-relaxed line-clamp-2">生食級干貝炙烤，拌自製手炒小魚乾XO醬與Q彈手工寬麵，視覺與美味雙絕</p>
+                </div>
+              </div>
+                
+              <div class="flex items-center gap-3.5 py-3 border-b border-slate-800/80 last:border-0 hover:bg-slate-800/40 rounded-xl px-2.5 transition">
+                <div class="relative w-16 h-16 sm:w-20 sm:h-20 shrink-0 rounded-lg overflow-hidden border border-slate-700/80 shadow-md">
+                  <img src="https://images.unsplash.com/photo-1504674900247-0877df9cc836?auto=format&fit=crop&w=400&q=80" alt="春光冷滷大盛合 (適合多人)" class="w-full h-full object-cover hover:scale-110 transition-transform duration-300" loading="lazy">
+                </div>
+                <div class="flex-1 min-w-0">
+                  <div class="flex items-start justify-between gap-2">
+                    <h5 class="font-bold text-slate-100 text-xs sm:text-sm tracking-wide truncate">春光冷滷大盛合 (適合多人)</h5>
+                    <span class="text-amber-400 font-extrabold text-xs sm:text-sm shrink-0">$580</span>
+                  </div>
+                  <p class="text-[11px] sm:text-xs text-slate-400 mt-1 leading-relaxed line-clamp-2">牛舌、牛腱、蜂巢牛肚、去骨雞翅，陳年藥膳冷滷入味，佐私房香麻油</p>
+                </div>
+              </div>
+                
+              <div class="flex items-center gap-3.5 py-3 border-b border-slate-800/80 last:border-0 hover:bg-slate-800/40 rounded-xl px-2.5 transition">
+                <div class="relative w-16 h-16 sm:w-20 sm:h-20 shrink-0 rounded-lg overflow-hidden border border-slate-700/80 shadow-md">
+                  <img src="https://images.unsplash.com/photo-1600891964599-f61ba0e24092?auto=format&fit=crop&w=400&q=80" alt="青龍豬頰肉" class="w-full h-full object-cover hover:scale-110 transition-transform duration-300" loading="lazy">
+                </div>
+                <div class="flex-1 min-w-0">
+                  <div class="flex items-start justify-between gap-2">
+                    <h5 class="font-bold text-slate-100 text-xs sm:text-sm tracking-wide truncate">青龍豬頰肉</h5>
+                    <span class="text-amber-400 font-extrabold text-xs sm:text-sm shrink-0">$360</span>
+                  </div>
+                  <p class="text-[11px] sm:text-xs text-slate-400 mt-1 leading-relaxed line-clamp-2">爽脆青龍椒搭配爆炒豬頰松阪肉，大火鑊氣蒜香濃郁</p>
+                </div>
+              </div>
+                
+              <div class="flex items-center gap-3.5 py-3 border-b border-slate-800/80 last:border-0 hover:bg-slate-800/40 rounded-xl px-2.5 transition">
+                <div class="relative w-16 h-16 sm:w-20 sm:h-20 shrink-0 rounded-lg overflow-hidden border border-slate-700/80 shadow-md">
+                  <img src="https://images.unsplash.com/photo-1544025162-d76694265947?auto=format&fit=crop&w=400&q=80" alt="臭豆腐豬舌" class="w-full h-full object-cover hover:scale-110 transition-transform duration-300" loading="lazy">
+                </div>
+                <div class="flex-1 min-w-0">
+                  <div class="flex items-start justify-between gap-2">
+                    <h5 class="font-bold text-slate-100 text-xs sm:text-sm tracking-wide truncate">臭豆腐豬舌</h5>
+                    <span class="text-amber-400 font-extrabold text-xs sm:text-sm shrink-0">$320</span>
+                  </div>
+                  <p class="text-[11px] sm:text-xs text-slate-400 mt-1 leading-relaxed line-clamp-2">獨門發酵臭豆腐香氣醬汁快炒嫩彈台灣豬舌，饕客驚艷</p>
+                </div>
+              </div>
+                
+              <div class="flex items-center gap-3.5 py-3 border-b border-slate-800/80 last:border-0 hover:bg-slate-800/40 rounded-xl px-2.5 transition">
+                <div class="relative w-16 h-16 sm:w-20 sm:h-20 shrink-0 rounded-lg overflow-hidden border border-slate-700/80 shadow-md">
+                  <img src="https://images.unsplash.com/photo-1546069901-ba9599a7e63c?auto=format&fit=crop&w=400&q=80" alt="椒麻皮蛋豆腐" class="w-full h-full object-cover hover:scale-110 transition-transform duration-300" loading="lazy">
+                </div>
+                <div class="flex-1 min-w-0">
+                  <div class="flex items-start justify-between gap-2">
+                    <h5 class="font-bold text-slate-100 text-xs sm:text-sm tracking-wide truncate">椒麻皮蛋豆腐</h5>
+                    <span class="text-amber-400 font-extrabold text-xs sm:text-sm shrink-0">$160</span>
+                  </div>
+                  <p class="text-[11px] sm:text-xs text-slate-400 mt-1 leading-relaxed line-clamp-2">自製大紅袍花椒辣油與脆口老油條碎，滑嫩辛香下酒</p>
+                </div>
+              </div>
+                
+            </div>
+          </div>
+            
+          <div class="mb-5 bg-slate-900/80 rounded-2xl p-3.5 sm:p-5 border border-slate-800/90 shadow-lg">
+            <h4 class="text-amber-300 font-bold text-xs sm:text-sm mb-3 pb-2 border-b border-amber-500/20 flex items-center justify-between">
+              <span class="flex items-center gap-1.5">🍶 封神榜創意特調 (COCKTAILS)</span>
+              <span class="text-[10px] text-slate-400 font-normal bg-slate-800/60 px-2 py-0.5 rounded">現場實體價位</span>
+            </h4>
+            <div class="space-y-1">
+              
+              <div class="flex items-center gap-3.5 py-3 border-b border-slate-800/80 last:border-0 hover:bg-slate-800/40 rounded-xl px-2.5 transition">
+                <div class="relative w-16 h-16 sm:w-20 sm:h-20 shrink-0 rounded-lg overflow-hidden border border-slate-700/80 shadow-md">
+                  <img src="https://images.unsplash.com/photo-1551024709-8f23befc6f87?auto=format&fit=crop&w=400&q=80" alt="一樓神祇特調系列" class="w-full h-full object-cover hover:scale-110 transition-transform duration-300" loading="lazy">
+                </div>
+                <div class="flex-1 min-w-0">
+                  <div class="flex items-start justify-between gap-2">
+                    <h5 class="font-bold text-slate-100 text-xs sm:text-sm tracking-wide truncate">一樓神祇特調系列</h5>
+                    <span class="text-amber-400 font-extrabold text-xs sm:text-sm shrink-0">$380 - $420</span>
+                  </div>
+                  <p class="text-[11px] sm:text-xs text-slate-400 mt-1 leading-relaxed line-clamp-2">全面使用台灣地酒廠基酒，以玉皇大帝、媽祖等神明風味意象命名</p>
+                </div>
+              </div>
+                
+              <div class="flex items-center gap-3.5 py-3 border-b border-slate-800/80 last:border-0 hover:bg-slate-800/40 rounded-xl px-2.5 transition">
+                <div class="relative w-16 h-16 sm:w-20 sm:h-20 shrink-0 rounded-lg overflow-hidden border border-slate-700/80 shadow-md">
+                  <img src="https://images.unsplash.com/photo-1536935338788-846bb9981813?auto=format&fit=crop&w=400&q=80" alt="二樓森林系山林特調" class="w-full h-full object-cover hover:scale-110 transition-transform duration-300" loading="lazy">
+                </div>
+                <div class="flex-1 min-w-0">
+                  <div class="flex items-start justify-between gap-2">
+                    <h5 class="font-bold text-slate-100 text-xs sm:text-sm tracking-wide truncate">二樓森林系山林特調</h5>
+                    <span class="text-amber-400 font-extrabold text-xs sm:text-sm shrink-0">$350 - $400</span>
+                  </div>
+                  <p class="text-[11px] sm:text-xs text-slate-400 mt-1 leading-relaxed line-clamp-2">搭配全景林相投影，以台灣刺蔥、野薑花、金萱茶入酒</p>
+                </div>
+              </div>
+                
+            </div>
+          </div>
+            
+        </div>
+
+        <!-- Modal Footer -->
+        <div class="p-3 sm:p-4 border-t border-slate-800 bg-slate-950 flex items-center justify-between text-xs">
+          <span class="text-slate-400 flex items-center gap-1.5"><i class="fa-solid fa-kitchen-set text-amber-400"></i> 實際餐點與限量品項依店家現場供應為準</span>
+          <button onclick="closeMenuModal('modal-bistro-3')" class="px-4 py-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-200 font-medium transition border border-slate-700">
+            關閉菜單
+          </button>
+        </div>
+      </div>
+    </div>
+        
+
+    <!-- Modal: ChangeX Beer 南園酒家 菜單圖文 -->
+    <div id="modal-bistro-4" class="menu-modal fixed inset-0 z-50 hidden bg-slate-950/85 backdrop-blur-md flex items-center justify-center p-3 sm:p-6 overflow-y-auto">
+      <div class="bg-slate-900 border border-slate-700/80 rounded-2xl max-w-2xl w-full max-h-[92vh] flex flex-col shadow-2xl overflow-hidden animate-fade-in">
+        <!-- Modal Header -->
+        <div class="relative h-48 sm:h-56 w-full shrink-0 overflow-hidden">
+          <img src="https://images.unsplash.com/photo-1575037614876-c38a4d44f5b8?auto=format&fit=crop&w=1000&q=80" alt="ChangeX Beer 南園酒家" class="w-full h-full object-cover">
+          <div class="absolute inset-0 bg-gradient-to-t from-slate-900 via-slate-900/60 to-slate-900/10"></div>
+          <button onclick="closeMenuModal('modal-bistro-4')" class="absolute top-3.5 right-3.5 w-8 h-8 rounded-full bg-slate-900/90 text-slate-300 hover:text-white hover:bg-slate-800 border border-slate-700 flex items-center justify-center text-sm transition shadow-lg">
+            <i class="fa-solid fa-xmark"></i>
+          </button>
+          <div class="absolute bottom-3.5 left-4 right-4">
+            <span class="text-[11px] font-bold text-amber-400 bg-amber-400/15 px-2.5 py-0.5 rounded-md border border-amber-400/30 backdrop-blur-sm">百年日治洋樓・精釀啤酒與手作烘焙</span>
+            <h3 class="text-xl sm:text-2xl font-bold text-white mt-1.5 tracking-wide drop-shadow-md">ChangeX Beer 20+Tap 現拉生啤與酵容滿麵披薩單</h3>
+          </div>
+        </div>
+        
+        <!-- Modal Body: Detailed Menu Categories with item photos -->
+        <div class="p-3.5 sm:p-6 overflow-y-auto space-y-4">
+          <div class="p-2.5 rounded-xl bg-amber-500/10 border border-amber-500/20 text-xs text-amber-200 flex items-center gap-2">
+            <i class="fa-solid fa-circle-info text-amber-400 shrink-0"></i>
+            <span>本菜單附實物美饌圖與現場最新菜式、黑板公告及外送酒單實拍彙整，價格透明供參考。</span>
+          </div>
+          
+          <div class="mb-5 bg-slate-900/80 rounded-2xl p-3.5 sm:p-5 border border-slate-800/90 shadow-lg">
+            <h4 class="text-amber-300 font-bold text-xs sm:text-sm mb-3 pb-2 border-b border-amber-500/20 flex items-center justify-between">
+              <span class="flex items-center gap-1.5">🍺 自釀妖怪釀造生啤酒 (20+ TAP DRAFT)</span>
+              <span class="text-[10px] text-slate-400 font-normal bg-slate-800/60 px-2 py-0.5 rounded">現場實體價位</span>
+            </h4>
+            <div class="space-y-1">
+              
+              <div class="flex items-center gap-3.5 py-3 border-b border-slate-800/80 last:border-0 hover:bg-slate-800/40 rounded-xl px-2.5 transition">
+                <div class="relative w-16 h-16 sm:w-20 sm:h-20 shrink-0 rounded-lg overflow-hidden border border-slate-700/80 shadow-md">
+                  <img src="https://images.unsplash.com/photo-1535958636474-b021ee887b13?auto=format&fit=crop&w=400&q=80" alt="應龍 茉莉花比利時小麥 (Jasmine Wit)" class="w-full h-full object-cover hover:scale-110 transition-transform duration-300" loading="lazy">
+                </div>
+                <div class="flex-1 min-w-0">
+                  <div class="flex items-start justify-between gap-2">
+                    <h5 class="font-bold text-slate-100 text-xs sm:text-sm tracking-wide truncate">應龍 茉莉花比利時小麥 (Jasmine Wit)</h5>
+                    <span class="text-amber-400 font-extrabold text-xs sm:text-sm shrink-0">$240</span>
+                  </div>
+                  <p class="text-[11px] sm:text-xs text-slate-400 mt-1 leading-relaxed line-clamp-2">台灣茉莉花入酒，花香悠揚，口感清涼微濁</p>
+                </div>
+              </div>
+                
+              <div class="flex items-center gap-3.5 py-3 border-b border-slate-800/80 last:border-0 hover:bg-slate-800/40 rounded-xl px-2.5 transition">
+                <div class="relative w-16 h-16 sm:w-20 sm:h-20 shrink-0 rounded-lg overflow-hidden border border-slate-700/80 shadow-md">
+                  <img src="https://images.unsplash.com/photo-1566633806327-68e152aaf26d?auto=format&fit=crop&w=400&q=80" alt="刑天 柚子小麥 (Yuzu Gose)" class="w-full h-full object-cover hover:scale-110 transition-transform duration-300" loading="lazy">
+                </div>
+                <div class="flex-1 min-w-0">
+                  <div class="flex items-start justify-between gap-2">
+                    <h5 class="font-bold text-slate-100 text-xs sm:text-sm tracking-wide truncate">刑天 柚子小麥 (Yuzu Gose)</h5>
+                    <span class="text-amber-400 font-extrabold text-xs sm:text-sm shrink-0">$250</span>
+                  </div>
+                  <p class="text-[11px] sm:text-xs text-slate-400 mt-1 leading-relaxed line-clamp-2">天然柚子純汁古法釀造，帶有清新微酸果香與微鹹礦物感</p>
+                </div>
+              </div>
+                
+              <div class="flex items-center gap-3.5 py-3 border-b border-slate-800/80 last:border-0 hover:bg-slate-800/40 rounded-xl px-2.5 transition">
+                <div class="relative w-16 h-16 sm:w-20 sm:h-20 shrink-0 rounded-lg overflow-hidden border border-slate-700/80 shadow-md">
+                  <img src="https://images.unsplash.com/photo-1575037614876-c38a4d44f5b8?auto=format&fit=crop&w=400&q=80" alt="長右 雙重冷泡酒花 (DDH IPA)" class="w-full h-full object-cover hover:scale-110 transition-transform duration-300" loading="lazy">
+                </div>
+                <div class="flex-1 min-w-0">
+                  <div class="flex items-start justify-between gap-2">
+                    <h5 class="font-bold text-slate-100 text-xs sm:text-sm tracking-wide truncate">長右 雙重冷泡酒花 (DDH IPA)</h5>
+                    <span class="text-amber-400 font-extrabold text-xs sm:text-sm shrink-0">$260</span>
+                  </div>
+                  <p class="text-[11px] sm:text-xs text-slate-400 mt-1 leading-relaxed line-clamp-2">重度啤酒花愛好者首選！滿滿百香果與葡萄柚松針芬芳</p>
+                </div>
+              </div>
+                
+            </div>
+          </div>
+            
+          <div class="mb-5 bg-slate-900/80 rounded-2xl p-3.5 sm:p-5 border border-slate-800/90 shadow-lg">
+            <h4 class="text-amber-300 font-bold text-xs sm:text-sm mb-3 pb-2 border-b border-amber-500/20 flex items-center justify-between">
+              <span class="flex items-center gap-1.5">🍕 手工老麵發酵披薩 (搭配酵容滿麵餅皮)</span>
+              <span class="text-[10px] text-slate-400 font-normal bg-slate-800/60 px-2 py-0.5 rounded">現場實體價位</span>
+            </h4>
+            <div class="space-y-1">
+              
+              <div class="flex items-center gap-3.5 py-3 border-b border-slate-800/80 last:border-0 hover:bg-slate-800/40 rounded-xl px-2.5 transition">
+                <div class="relative w-16 h-16 sm:w-20 sm:h-20 shrink-0 rounded-lg overflow-hidden border border-slate-700/80 shadow-md">
+                  <img src="https://images.unsplash.com/photo-1513104890138-7c749659a591?auto=format&fit=crop&w=400&q=80" alt="嗆辣金沙深海魷魚披薩" class="w-full h-full object-cover hover:scale-110 transition-transform duration-300" loading="lazy">
+                </div>
+                <div class="flex-1 min-w-0">
+                  <div class="flex items-start justify-between gap-2">
+                    <h5 class="font-bold text-slate-100 text-xs sm:text-sm tracking-wide truncate">嗆辣金沙深海魷魚披薩</h5>
+                    <span class="text-amber-400 font-extrabold text-xs sm:text-sm shrink-0">$360</span>
+                  </div>
+                  <p class="text-[11px] sm:text-xs text-slate-400 mt-1 leading-relaxed line-clamp-2">鹹蛋黃金沙、鮮魷魚、哇沙比微辣提香，餅皮外脆內Q</p>
+                </div>
+              </div>
+                
+              <div class="flex items-center gap-3.5 py-3 border-b border-slate-800/80 last:border-0 hover:bg-slate-800/40 rounded-xl px-2.5 transition">
+                <div class="relative w-16 h-16 sm:w-20 sm:h-20 shrink-0 rounded-lg overflow-hidden border border-slate-700/80 shadow-md">
+                  <img src="https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?auto=format&fit=crop&w=400&q=80" alt="酒漬剝皮辣椒嫩雞披薩" class="w-full h-full object-cover hover:scale-110 transition-transform duration-300" loading="lazy">
+                </div>
+                <div class="flex-1 min-w-0">
+                  <div class="flex items-start justify-between gap-2">
+                    <h5 class="font-bold text-slate-100 text-xs sm:text-sm tracking-wide truncate">酒漬剝皮辣椒嫩雞披薩</h5>
+                    <span class="text-amber-400 font-extrabold text-xs sm:text-sm shrink-0">$350</span>
+                  </div>
+                  <p class="text-[11px] sm:text-xs text-slate-400 mt-1 leading-relaxed line-clamp-2">花蓮剝皮辣椒浸潤麥酒，辣中帶甘甜，起司牽絲濃郁</p>
+                </div>
+              </div>
+                
+              <div class="flex items-center gap-3.5 py-3 border-b border-slate-800/80 last:border-0 hover:bg-slate-800/40 rounded-xl px-2.5 transition">
+                <div class="relative w-16 h-16 sm:w-20 sm:h-20 shrink-0 rounded-lg overflow-hidden border border-slate-700/80 shadow-md">
+                  <img src="https://images.unsplash.com/photo-1509722747041-616f39b57569?auto=format&fit=crop&w=400&q=80" alt="下班後的日式炒麵麵包" class="w-full h-full object-cover hover:scale-110 transition-transform duration-300" loading="lazy">
+                </div>
+                <div class="flex-1 min-w-0">
+                  <div class="flex items-start justify-between gap-2">
+                    <h5 class="font-bold text-slate-100 text-xs sm:text-sm tracking-wide truncate">下班後的日式炒麵麵包</h5>
+                    <span class="text-amber-400 font-extrabold text-xs sm:text-sm shrink-0">$180</span>
+                  </div>
+                  <p class="text-[11px] sm:text-xs text-slate-400 mt-1 leading-relaxed line-clamp-2">自製超軟日式熱狗麵包夾入秘製醬汁炒麵與紅薑絲</p>
+                </div>
+              </div>
+                
+            </div>
+          </div>
+            
+        </div>
+
+        <!-- Modal Footer -->
+        <div class="p-3 sm:p-4 border-t border-slate-800 bg-slate-950 flex items-center justify-between text-xs">
+          <span class="text-slate-400 flex items-center gap-1.5"><i class="fa-solid fa-kitchen-set text-amber-400"></i> 實際餐點與限量品項依店家現場供應為準</span>
+          <button onclick="closeMenuModal('modal-bistro-4')" class="px-4 py-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-200 font-medium transition border border-slate-700">
+            關閉菜單
+          </button>
+        </div>
+      </div>
+    </div>
+        
+
+    <!-- Modal: 夕嶼小料理 菜單圖文 -->
+    <div id="modal-bistro-5" class="menu-modal fixed inset-0 z-50 hidden bg-slate-950/85 backdrop-blur-md flex items-center justify-center p-3 sm:p-6 overflow-y-auto">
+      <div class="bg-slate-900 border border-slate-700/80 rounded-2xl max-w-2xl w-full max-h-[92vh] flex flex-col shadow-2xl overflow-hidden animate-fade-in">
+        <!-- Modal Header -->
+        <div class="relative h-48 sm:h-56 w-full shrink-0 overflow-hidden">
+          <img src="https://images.unsplash.com/photo-1555396273-367ea4eb4db5?auto=format&fit=crop&w=1000&q=80" alt="夕嶼小料理" class="w-full h-full object-cover">
+          <div class="absolute inset-0 bg-gradient-to-t from-slate-900 via-slate-900/60 to-slate-900/10"></div>
+          <button onclick="closeMenuModal('modal-bistro-5')" class="absolute top-3.5 right-3.5 w-8 h-8 rounded-full bg-slate-900/90 text-slate-300 hover:text-white hover:bg-slate-800 border border-slate-700 flex items-center justify-center text-sm transition shadow-lg">
+            <i class="fa-solid fa-xmark"></i>
+          </button>
+          <div class="absolute bottom-3.5 left-4 right-4">
+            <span class="text-[11px] font-bold text-amber-400 bg-amber-400/15 px-2.5 py-0.5 rounded-md border border-amber-400/30 backdrop-blur-sm">昭和復古板前・備長炭串燒與清甜關東煮</span>
+            <h3 class="text-xl sm:text-2xl font-bold text-white mt-1.5 tracking-wide drop-shadow-md">夕嶼小料理 昭和炭火串燒與清甜關東煮菜單</h3>
+          </div>
+        </div>
+        
+        <!-- Modal Body: Detailed Menu Categories with item photos -->
+        <div class="p-3.5 sm:p-6 overflow-y-auto space-y-4">
+          <div class="p-2.5 rounded-xl bg-amber-500/10 border border-amber-500/20 text-xs text-amber-200 flex items-center gap-2">
+            <i class="fa-solid fa-circle-info text-amber-400 shrink-0"></i>
+            <span>本菜單附實物美饌圖與現場最新菜式、黑板公告及外送酒單實拍彙整，價格透明供參考。</span>
+          </div>
+          
+          <div class="mb-5 bg-slate-900/80 rounded-2xl p-3.5 sm:p-5 border border-slate-800/90 shadow-lg">
+            <h4 class="text-amber-300 font-bold text-xs sm:text-sm mb-3 pb-2 border-b border-amber-500/20 flex items-center justify-between">
+              <span class="flex items-center gap-1.5">🍢 備長炭火串燒 (YAKITORI)</span>
+              <span class="text-[10px] text-slate-400 font-normal bg-slate-800/60 px-2 py-0.5 rounded">現場實體價位</span>
+            </h4>
+            <div class="space-y-1">
+              
+              <div class="flex items-center gap-3.5 py-3 border-b border-slate-800/80 last:border-0 hover:bg-slate-800/40 rounded-xl px-2.5 transition">
+                <div class="relative w-16 h-16 sm:w-20 sm:h-20 shrink-0 rounded-lg overflow-hidden border border-slate-700/80 shadow-md">
+                  <img src="https://images.unsplash.com/photo-1555939594-58d7cb561ad1?auto=format&fit=crop&w=400&q=80" alt="炭烤鹽蔥雞松阪肉 (本)" class="w-full h-full object-cover hover:scale-110 transition-transform duration-300" loading="lazy">
+                </div>
+                <div class="flex-1 min-w-0">
+                  <div class="flex items-start justify-between gap-2">
+                    <h5 class="font-bold text-slate-100 text-xs sm:text-sm tracking-wide truncate">炭烤鹽蔥雞松阪肉 (本)</h5>
+                    <span class="text-amber-400 font-extrabold text-xs sm:text-sm shrink-0">$90</span>
+                  </div>
+                  <p class="text-[11px] sm:text-xs text-slate-400 mt-1 leading-relaxed line-clamp-2">雞頸肉珍稀部位，脆彈多汁，鋪滿手炒新鮮鹽蔥</p>
+                </div>
+              </div>
+                
+              <div class="flex items-center gap-3.5 py-3 border-b border-slate-800/80 last:border-0 hover:bg-slate-800/40 rounded-xl px-2.5 transition">
+                <div class="relative w-16 h-16 sm:w-20 sm:h-20 shrink-0 rounded-lg overflow-hidden border border-slate-700/80 shadow-md">
+                  <img src="https://images.unsplash.com/photo-1529193591184-b1d58069ecdd?auto=format&fit=crop&w=400&q=80" alt="醬燒去骨嫩雞腿肉串" class="w-full h-full object-cover hover:scale-110 transition-transform duration-300" loading="lazy">
+                </div>
+                <div class="flex-1 min-w-0">
+                  <div class="flex items-start justify-between gap-2">
+                    <h5 class="font-bold text-slate-100 text-xs sm:text-sm tracking-wide truncate">醬燒去骨嫩雞腿肉串</h5>
+                    <span class="text-amber-400 font-extrabold text-xs sm:text-sm shrink-0">$60</span>
+                  </div>
+                  <p class="text-[11px] sm:text-xs text-slate-400 mt-1 leading-relaxed line-clamp-2">特調日式鰻汁風味甘醇老醬炙烤，外焦香內嫩</p>
+                </div>
+              </div>
+                
+              <div class="flex items-center gap-3.5 py-3 border-b border-slate-800/80 last:border-0 hover:bg-slate-800/40 rounded-xl px-2.5 transition">
+                <div class="relative w-16 h-16 sm:w-20 sm:h-20 shrink-0 rounded-lg overflow-hidden border border-slate-700/80 shadow-md">
+                  <img src="https://images.unsplash.com/photo-1544025162-d76694265947?auto=format&fit=crop&w=400&q=80" alt="特選美國牛肋條串" class="w-full h-full object-cover hover:scale-110 transition-transform duration-300" loading="lazy">
+                </div>
+                <div class="flex-1 min-w-0">
+                  <div class="flex items-start justify-between gap-2">
+                    <h5 class="font-bold text-slate-100 text-xs sm:text-sm tracking-wide truncate">特選美國牛肋條串</h5>
+                    <span class="text-amber-400 font-extrabold text-xs sm:text-sm shrink-0">$120</span>
+                  </div>
+                  <p class="text-[11px] sm:text-xs text-slate-400 mt-1 leading-relaxed line-clamp-2">原汁原味備長炭烤，七分熟香濃油香爆棚</p>
+                </div>
+              </div>
+                
+            </div>
+          </div>
+            
+          <div class="mb-5 bg-slate-900/80 rounded-2xl p-3.5 sm:p-5 border border-slate-800/90 shadow-lg">
+            <h4 class="text-amber-300 font-bold text-xs sm:text-sm mb-3 pb-2 border-b border-amber-500/20 flex items-center justify-between">
+              <span class="flex items-center gap-1.5">🍢 慢熬日式關東煮 (ODEN)</span>
+              <span class="text-[10px] text-slate-400 font-normal bg-slate-800/60 px-2 py-0.5 rounded">現場實體價位</span>
+            </h4>
+            <div class="space-y-1">
+              
+              <div class="flex items-center gap-3.5 py-3 border-b border-slate-800/80 last:border-0 hover:bg-slate-800/40 rounded-xl px-2.5 transition">
+                <div class="relative w-16 h-16 sm:w-20 sm:h-20 shrink-0 rounded-lg overflow-hidden border border-slate-700/80 shadow-md">
+                  <img src="https://images.unsplash.com/photo-1569718212165-3a8278d5f624?auto=format&fit=crop&w=400&q=80" alt="關東煮經典四種盛合" class="w-full h-full object-cover hover:scale-110 transition-transform duration-300" loading="lazy">
+                </div>
+                <div class="flex-1 min-w-0">
+                  <div class="flex items-start justify-between gap-2">
+                    <h5 class="font-bold text-slate-100 text-xs sm:text-sm tracking-wide truncate">關東煮經典四種盛合</h5>
+                    <span class="text-amber-400 font-extrabold text-xs sm:text-sm shrink-0">$180</span>
+                  </div>
+                  <p class="text-[11px] sm:text-xs text-slate-400 mt-1 leading-relaxed line-clamp-2">慢燉清甜白蘿蔔、手工油豆腐、溏心蛋、鬆軟馬鈴薯</p>
+                </div>
+              </div>
+                
+              <div class="flex items-center gap-3.5 py-3 border-b border-slate-800/80 last:border-0 hover:bg-slate-800/40 rounded-xl px-2.5 transition">
+                <div class="relative w-16 h-16 sm:w-20 sm:h-20 shrink-0 rounded-lg overflow-hidden border border-slate-700/80 shadow-md">
+                  <img src="https://images.unsplash.com/photo-1546069901-ba9599a7e63c?auto=format&fit=crop&w=400&q=80" alt="手工高麗菜肉捲" class="w-full h-full object-cover hover:scale-110 transition-transform duration-300" loading="lazy">
+                </div>
+                <div class="flex-1 min-w-0">
+                  <div class="flex items-start justify-between gap-2">
+                    <h5 class="font-bold text-slate-100 text-xs sm:text-sm tracking-wide truncate">手工高麗菜肉捲</h5>
+                    <span class="text-amber-400 font-extrabold text-xs sm:text-sm shrink-0">$90</span>
+                  </div>
+                  <p class="text-[11px] sm:text-xs text-slate-400 mt-1 leading-relaxed line-clamp-2">甜美高麗菜緊緊包覆新鮮豬肉餡，吸飽昆布柴魚高湯</p>
+                </div>
+              </div>
+                
+            </div>
+          </div>
+            
+          <div class="mb-5 bg-slate-900/80 rounded-2xl p-3.5 sm:p-5 border border-slate-800/90 shadow-lg">
+            <h4 class="text-amber-300 font-bold text-xs sm:text-sm mb-3 pb-2 border-b border-amber-500/20 flex items-center justify-between">
+              <span class="flex items-center gap-1.5">🍶 一品料理與日式沙瓦</span>
+              <span class="text-[10px] text-slate-400 font-normal bg-slate-800/60 px-2 py-0.5 rounded">現場實體價位</span>
+            </h4>
+            <div class="space-y-1">
+              
+              <div class="flex items-center gap-3.5 py-3 border-b border-slate-800/80 last:border-0 hover:bg-slate-800/40 rounded-xl px-2.5 transition">
+                <div class="relative w-16 h-16 sm:w-20 sm:h-20 shrink-0 rounded-lg overflow-hidden border border-slate-700/80 shadow-md">
+                  <img src="https://images.unsplash.com/photo-1563245372-f21724e3856d?auto=format&fit=crop&w=400&q=80" alt="秘醬蔥絲燒豬飯" class="w-full h-full object-cover hover:scale-110 transition-transform duration-300" loading="lazy">
+                </div>
+                <div class="flex-1 min-w-0">
+                  <div class="flex items-start justify-between gap-2">
+                    <h5 class="font-bold text-slate-100 text-xs sm:text-sm tracking-wide truncate">秘醬蔥絲燒豬飯</h5>
+                    <span class="text-amber-400 font-extrabold text-xs sm:text-sm shrink-0">$180</span>
+                  </div>
+                  <p class="text-[11px] sm:text-xs text-slate-400 mt-1 leading-relaxed line-clamp-2">鋪滿炭烤豬五花與牛蒡絲，附溫泉生蛋黃拌飯神品</p>
+                </div>
+              </div>
+                
+              <div class="flex items-center gap-3.5 py-3 border-b border-slate-800/80 last:border-0 hover:bg-slate-800/40 rounded-xl px-2.5 transition">
+                <div class="relative w-16 h-16 sm:w-20 sm:h-20 shrink-0 rounded-lg overflow-hidden border border-slate-700/80 shadow-md">
+                  <img src="https://images.unsplash.com/photo-1551024709-8f23befc6f87?auto=format&fit=crop&w=400&q=80" alt="生搾季節水果沙瓦" class="w-full h-full object-cover hover:scale-110 transition-transform duration-300" loading="lazy">
+                </div>
+                <div class="flex-1 min-w-0">
+                  <div class="flex items-start justify-between gap-2">
+                    <h5 class="font-bold text-slate-100 text-xs sm:text-sm tracking-wide truncate">生搾季節水果沙瓦</h5>
+                    <span class="text-amber-400 font-extrabold text-xs sm:text-sm shrink-0">$160</span>
+                  </div>
+                  <p class="text-[11px] sm:text-xs text-slate-400 mt-1 leading-relaxed line-clamp-2">新鮮百香果/葡萄柚果肉搭配日本燒酎蘇打</p>
+                </div>
+              </div>
+                
+            </div>
+          </div>
+            
+        </div>
+
+        <!-- Modal Footer -->
+        <div class="p-3 sm:p-4 border-t border-slate-800 bg-slate-950 flex items-center justify-between text-xs">
+          <span class="text-slate-400 flex items-center gap-1.5"><i class="fa-solid fa-kitchen-set text-amber-400"></i> 實際餐點與限量品項依店家現場供應為準</span>
+          <button onclick="closeMenuModal('modal-bistro-5')" class="px-4 py-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-200 font-medium transition border border-slate-700">
+            關閉菜單
+          </button>
+        </div>
+      </div>
+    </div>
+        
+
+    <!-- Modal: 入厝 Entry Bistro 菜單圖文 -->
+    <div id="modal-bistro-6" class="menu-modal fixed inset-0 z-50 hidden bg-slate-950/85 backdrop-blur-md flex items-center justify-center p-3 sm:p-6 overflow-y-auto">
+      <div class="bg-slate-900 border border-slate-700/80 rounded-2xl max-w-2xl w-full max-h-[92vh] flex flex-col shadow-2xl overflow-hidden animate-fade-in">
+        <!-- Modal Header -->
+        <div class="relative h-48 sm:h-56 w-full shrink-0 overflow-hidden">
+          <img src="https://images.unsplash.com/photo-1559339352-11d035aa65de?auto=format&fit=crop&w=1000&q=80" alt="入厝 Entry Bistro" class="w-full h-full object-cover">
+          <div class="absolute inset-0 bg-gradient-to-t from-slate-900 via-slate-900/60 to-slate-900/10"></div>
+          <button onclick="closeMenuModal('modal-bistro-6')" class="absolute top-3.5 right-3.5 w-8 h-8 rounded-full bg-slate-900/90 text-slate-300 hover:text-white hover:bg-slate-800 border border-slate-700 flex items-center justify-center text-sm transition shadow-lg">
+            <i class="fa-solid fa-xmark"></i>
+          </button>
+          <div class="absolute bottom-3.5 left-4 right-4">
+            <span class="text-[11px] font-bold text-amber-400 bg-amber-400/15 px-2.5 py-0.5 rounded-md border border-amber-400/30 backdrop-blur-sm">日咖夜酒・東區老眷宅私廚排餐</span>
+            <h3 class="text-xl sm:text-2xl font-bold text-white mt-1.5 tracking-wide drop-shadow-md">入厝 Entry Bistro 晚間餐酒菜單與單杯選酒</h3>
+          </div>
+        </div>
+        
+        <!-- Modal Body: Detailed Menu Categories with item photos -->
+        <div class="p-3.5 sm:p-6 overflow-y-auto space-y-4">
+          <div class="p-2.5 rounded-xl bg-amber-500/10 border border-amber-500/20 text-xs text-amber-200 flex items-center gap-2">
+            <i class="fa-solid fa-circle-info text-amber-400 shrink-0"></i>
+            <span>本菜單附實物美饌圖與現場最新菜式、黑板公告及外送酒單實拍彙整，價格透明供參考。</span>
+          </div>
+          
+          <div class="mb-5 bg-slate-900/80 rounded-2xl p-3.5 sm:p-5 border border-slate-800/90 shadow-lg">
+            <h4 class="text-amber-300 font-bold text-xs sm:text-sm mb-3 pb-2 border-b border-amber-500/20 flex items-center justify-between">
+              <span class="flex items-center gap-1.5">🥩 夜間私廚招牌料理 (MAINS)</span>
+              <span class="text-[10px] text-slate-400 font-normal bg-slate-800/60 px-2 py-0.5 rounded">現場實體價位</span>
+            </h4>
+            <div class="space-y-1">
+              
+              <div class="flex items-center gap-3.5 py-3 border-b border-slate-800/80 last:border-0 hover:bg-slate-800/40 rounded-xl px-2.5 transition">
+                <div class="relative w-16 h-16 sm:w-20 sm:h-20 shrink-0 rounded-lg overflow-hidden border border-slate-700/80 shadow-md">
+                  <img src="https://images.unsplash.com/photo-1559339352-11d035aa65de?auto=format&fit=crop&w=400&q=80" alt="黑松露嫩煎板腱牛排義大利麵" class="w-full h-full object-cover hover:scale-110 transition-transform duration-300" loading="lazy">
+                </div>
+                <div class="flex-1 min-w-0">
+                  <div class="flex items-start justify-between gap-2">
+                    <h5 class="font-bold text-slate-100 text-xs sm:text-sm tracking-wide truncate">黑松露嫩煎板腱牛排義大利麵</h5>
+                    <span class="text-amber-400 font-extrabold text-xs sm:text-sm shrink-0">$380</span>
+                  </div>
+                  <p class="text-[11px] sm:text-xs text-slate-400 mt-1 leading-relaxed line-clamp-2">低溫舒肥板腱牛肉炙烤切片，裹滿黑松露奶油濃郁醬汁</p>
+                </div>
+              </div>
+                
+              <div class="flex items-center gap-3.5 py-3 border-b border-slate-800/80 last:border-0 hover:bg-slate-800/40 rounded-xl px-2.5 transition">
+                <div class="relative w-16 h-16 sm:w-20 sm:h-20 shrink-0 rounded-lg overflow-hidden border border-slate-700/80 shadow-md">
+                  <img src="https://images.unsplash.com/photo-1544025162-d76694265947?auto=format&fit=crop&w=400&q=80" alt="舒肥脆皮櫻桃鴨胸佐香檸酪梨醬" class="w-full h-full object-cover hover:scale-110 transition-transform duration-300" loading="lazy">
+                </div>
+                <div class="flex-1 min-w-0">
+                  <div class="flex items-start justify-between gap-2">
+                    <h5 class="font-bold text-slate-100 text-xs sm:text-sm tracking-wide truncate">舒肥脆皮櫻桃鴨胸佐香檸酪梨醬</h5>
+                    <span class="text-amber-400 font-extrabold text-xs sm:text-sm shrink-0">$360</span>
+                  </div>
+                  <p class="text-[11px] sm:text-xs text-slate-400 mt-1 leading-relaxed line-clamp-2">宜蘭櫻桃鴨皮脆肉粉嫩，特製果酸酪梨醬化解油膩</p>
+                </div>
+              </div>
+                
+              <div class="flex items-center gap-3.5 py-3 border-b border-slate-800/80 last:border-0 hover:bg-slate-800/40 rounded-xl px-2.5 transition">
+                <div class="relative w-16 h-16 sm:w-20 sm:h-20 shrink-0 rounded-lg overflow-hidden border border-slate-700/80 shadow-md">
+                  <img src="https://images.unsplash.com/photo-1562967914-608f82629710?auto=format&fit=crop&w=400&q=80" alt="布列塔尼墨魚黑金酥炸雞" class="w-full h-full object-cover hover:scale-110 transition-transform duration-300" loading="lazy">
+                </div>
+                <div class="flex-1 min-w-0">
+                  <div class="flex items-start justify-between gap-2">
+                    <h5 class="font-bold text-slate-100 text-xs sm:text-sm tracking-wide truncate">布列塔尼墨魚黑金酥炸雞</h5>
+                    <span class="text-amber-400 font-extrabold text-xs sm:text-sm shrink-0">$240</span>
+                  </div>
+                  <p class="text-[11px] sm:text-xs text-slate-400 mt-1 leading-relaxed line-clamp-2">墨魚汁特調炸粉，酥脆多汁，沾自製火龍果優格醬</p>
+                </div>
+              </div>
+                
+            </div>
+          </div>
+            
+          <div class="mb-5 bg-slate-900/80 rounded-2xl p-3.5 sm:p-5 border border-slate-800/90 shadow-lg">
+            <h4 class="text-amber-300 font-bold text-xs sm:text-sm mb-3 pb-2 border-b border-amber-500/20 flex items-center justify-between">
+              <span class="flex items-center gap-1.5">🍷 咖啡調酒與精選佐餐酒</span>
+              <span class="text-[10px] text-slate-400 font-normal bg-slate-800/60 px-2 py-0.5 rounded">現場實體價位</span>
+            </h4>
+            <div class="space-y-1">
+              
+              <div class="flex items-center gap-3.5 py-3 border-b border-slate-800/80 last:border-0 hover:bg-slate-800/40 rounded-xl px-2.5 transition">
+                <div class="relative w-16 h-16 sm:w-20 sm:h-20 shrink-0 rounded-lg overflow-hidden border border-slate-700/80 shadow-md">
+                  <img src="https://images.unsplash.com/photo-1514362545857-3bc16c4c7d1b?auto=format&fit=crop&w=400&q=80" alt="入厝招牌濃縮咖啡琴酒 (Espresso Gin)" class="w-full h-full object-cover hover:scale-110 transition-transform duration-300" loading="lazy">
+                </div>
+                <div class="flex-1 min-w-0">
+                  <div class="flex items-start justify-between gap-2">
+                    <h5 class="font-bold text-slate-100 text-xs sm:text-sm tracking-wide truncate">入厝招牌濃縮咖啡琴酒 (Espresso Gin)</h5>
+                    <span class="text-amber-400 font-extrabold text-xs sm:text-sm shrink-0">$320</span>
+                  </div>
+                  <p class="text-[11px] sm:text-xs text-slate-400 mt-1 leading-relaxed line-clamp-2">自家深焙濃縮咖啡萃取，碰撞頂級琴酒與氣泡通寧水</p>
+                </div>
+              </div>
+                
+              <div class="flex items-center gap-3.5 py-3 border-b border-slate-800/80 last:border-0 hover:bg-slate-800/40 rounded-xl px-2.5 transition">
+                <div class="relative w-16 h-16 sm:w-20 sm:h-20 shrink-0 rounded-lg overflow-hidden border border-slate-700/80 shadow-md">
+                  <img src="https://images.unsplash.com/photo-1510812431401-41d2bd2722f3?auto=format&fit=crop&w=400&q=80" alt="私廚五道式佐餐酒選 (3杯組合)" class="w-full h-full object-cover hover:scale-110 transition-transform duration-300" loading="lazy">
+                </div>
+                <div class="flex-1 min-w-0">
+                  <div class="flex items-start justify-between gap-2">
+                    <h5 class="font-bold text-slate-100 text-xs sm:text-sm tracking-wide truncate">私廚五道式佐餐酒選 (3杯組合)</h5>
+                    <span class="text-amber-400 font-extrabold text-xs sm:text-sm shrink-0">$600</span>
+                  </div>
+                  <p class="text-[11px] sm:text-xs text-slate-400 mt-1 leading-relaxed line-clamp-2">紅白酒與氣泡酒依當日主餐由專業侍酒師搭配</p>
+                </div>
+              </div>
+                
+            </div>
+          </div>
+            
+        </div>
+
+        <!-- Modal Footer -->
+        <div class="p-3 sm:p-4 border-t border-slate-800 bg-slate-950 flex items-center justify-between text-xs">
+          <span class="text-slate-400 flex items-center gap-1.5"><i class="fa-solid fa-kitchen-set text-amber-400"></i> 實際餐點與限量品項依店家現場供應為準</span>
+          <button onclick="closeMenuModal('modal-bistro-6')" class="px-4 py-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-200 font-medium transition border border-slate-700">
+            關閉菜單
+          </button>
+        </div>
+      </div>
+    </div>
+        
+
+    <!-- Modal: 豬肉榮小料理 菜單圖文 -->
+    <div id="modal-bistro-7" class="menu-modal fixed inset-0 z-50 hidden bg-slate-950/85 backdrop-blur-md flex items-center justify-center p-3 sm:p-6 overflow-y-auto">
+      <div class="bg-slate-900 border border-slate-700/80 rounded-2xl max-w-2xl w-full max-h-[92vh] flex flex-col shadow-2xl overflow-hidden animate-fade-in">
+        <!-- Modal Header -->
+        <div class="relative h-48 sm:h-56 w-full shrink-0 overflow-hidden">
+          <img src="https://images.unsplash.com/photo-1600891964599-f61ba0e24092?auto=format&fit=crop&w=1000&q=80" alt="豬肉榮小料理" class="w-full h-full object-cover">
+          <div class="absolute inset-0 bg-gradient-to-t from-slate-900 via-slate-900/60 to-slate-900/10"></div>
+          <button onclick="closeMenuModal('modal-bistro-7')" class="absolute top-3.5 right-3.5 w-8 h-8 rounded-full bg-slate-900/90 text-slate-300 hover:text-white hover:bg-slate-800 border border-slate-700 flex items-center justify-center text-sm transition shadow-lg">
+            <i class="fa-solid fa-xmark"></i>
+          </button>
+          <div class="absolute bottom-3.5 left-4 right-4">
+            <span class="text-[11px] font-bold text-amber-400 bg-amber-400/15 px-2.5 py-0.5 rounded-md border border-amber-400/30 backdrop-blur-sm">米其林必比登推薦・富興工廠一人板前小料理</span>
+            <h3 class="text-xl sm:text-2xl font-bold text-white mt-1.5 tracking-wide drop-shadow-md">豬肉榮小料理 每日板前黑板手寫菜單</h3>
+          </div>
+        </div>
+        
+        <!-- Modal Body: Detailed Menu Categories with item photos -->
+        <div class="p-3.5 sm:p-6 overflow-y-auto space-y-4">
+          <div class="p-2.5 rounded-xl bg-amber-500/10 border border-amber-500/20 text-xs text-amber-200 flex items-center gap-2">
+            <i class="fa-solid fa-circle-info text-amber-400 shrink-0"></i>
+            <span>本菜單附實物美饌圖與現場最新菜式、黑板公告及外送酒單實拍彙整，價格透明供參考。</span>
+          </div>
+          
+          <div class="mb-5 bg-slate-900/80 rounded-2xl p-3.5 sm:p-5 border border-slate-800/90 shadow-lg">
+            <h4 class="text-amber-300 font-bold text-xs sm:text-sm mb-3 pb-2 border-b border-amber-500/20 flex items-center justify-between">
+              <span class="flex items-center gap-1.5">🏆 必比登推介必刷菜色 (CHEF SPECIALS)</span>
+              <span class="text-[10px] text-slate-400 font-normal bg-slate-800/60 px-2 py-0.5 rounded">現場實體價位</span>
+            </h4>
+            <div class="space-y-1">
+              
+              <div class="flex items-center gap-3.5 py-3 border-b border-slate-800/80 last:border-0 hover:bg-slate-800/40 rounded-xl px-2.5 transition">
+                <div class="relative w-16 h-16 sm:w-20 sm:h-20 shrink-0 rounded-lg overflow-hidden border border-slate-700/80 shadow-md">
+                  <img src="https://images.unsplash.com/photo-1546069901-ba9599a7e63c?auto=format&fit=crop&w=400&q=80" alt="佃煮焦糖白蘿蔔 (佐鹽奶油)" class="w-full h-full object-cover hover:scale-110 transition-transform duration-300" loading="lazy">
+                </div>
+                <div class="flex-1 min-w-0">
+                  <div class="flex items-start justify-between gap-2">
+                    <h5 class="font-bold text-slate-100 text-xs sm:text-sm tracking-wide truncate">佃煮焦糖白蘿蔔 (佐鹽奶油)</h5>
+                    <span class="text-amber-400 font-extrabold text-xs sm:text-sm shrink-0">$100</span>
+                  </div>
+                  <p class="text-[11px] sm:text-xs text-slate-400 mt-1 leading-relaxed line-clamp-2">日式柴魚高湯燉至晶瑩剔透，表面覆蓋香脆焦糖與海鹽奶油，招牌必點</p>
+                </div>
+              </div>
+                
+              <div class="flex items-center gap-3.5 py-3 border-b border-slate-800/80 last:border-0 hover:bg-slate-800/40 rounded-xl px-2.5 transition">
+                <div class="relative w-16 h-16 sm:w-20 sm:h-20 shrink-0 rounded-lg overflow-hidden border border-slate-700/80 shadow-md">
+                  <img src="https://images.unsplash.com/photo-1563245372-f21724e3856d?auto=format&fit=crop&w=400&q=80" alt="東港櫻花蝦酥香滷肉飯" class="w-full h-full object-cover hover:scale-110 transition-transform duration-300" loading="lazy">
+                </div>
+                <div class="flex-1 min-w-0">
+                  <div class="flex items-start justify-between gap-2">
+                    <h5 class="font-bold text-slate-100 text-xs sm:text-sm tracking-wide truncate">東港櫻花蝦酥香滷肉飯</h5>
+                    <span class="text-amber-400 font-extrabold text-xs sm:text-sm shrink-0">$70</span>
+                  </div>
+                  <p class="text-[11px] sm:text-xs text-slate-400 mt-1 leading-relaxed line-clamp-2">手切膠質滿滿黑豬肉燥，鋪滿東港酥脆櫻花蝦，鹹香酥脆</p>
+                </div>
+              </div>
+                
+              <div class="flex items-center gap-3.5 py-3 border-b border-slate-800/80 last:border-0 hover:bg-slate-800/40 rounded-xl px-2.5 transition">
+                <div class="relative w-16 h-16 sm:w-20 sm:h-20 shrink-0 rounded-lg overflow-hidden border border-slate-700/80 shadow-md">
+                  <img src="https://images.unsplash.com/photo-1544025162-d76694265947?auto=format&fit=crop&w=400&q=80" alt="法式波爾多紅酒慢燴牛頰肉" class="w-full h-full object-cover hover:scale-110 transition-transform duration-300" loading="lazy">
+                </div>
+                <div class="flex-1 min-w-0">
+                  <div class="flex items-start justify-between gap-2">
+                    <h5 class="font-bold text-slate-100 text-xs sm:text-sm tracking-wide truncate">法式波爾多紅酒慢燴牛頰肉</h5>
+                    <span class="text-amber-400 font-extrabold text-xs sm:text-sm shrink-0">$280</span>
+                  </div>
+                  <p class="text-[11px] sm:text-xs text-slate-400 mt-1 leading-relaxed line-clamp-2">紅酒燉煮六小時，入口即化，醬汁濃郁極致適合沾麵包</p>
+                </div>
+              </div>
+                
+              <div class="flex items-center gap-3.5 py-3 border-b border-slate-800/80 last:border-0 hover:bg-slate-800/40 rounded-xl px-2.5 transition">
+                <div class="relative w-16 h-16 sm:w-20 sm:h-20 shrink-0 rounded-lg overflow-hidden border border-slate-700/80 shadow-md">
+                  <img src="https://images.unsplash.com/photo-1562967914-608f82629710?auto=format&fit=crop&w=400&q=80" alt="手打鮮蟹肉可樂餅 (2個)" class="w-full h-full object-cover hover:scale-110 transition-transform duration-300" loading="lazy">
+                </div>
+                <div class="flex-1 min-w-0">
+                  <div class="flex items-start justify-between gap-2">
+                    <h5 class="font-bold text-slate-100 text-xs sm:text-sm tracking-wide truncate">手打鮮蟹肉可樂餅 (2個)</h5>
+                    <span class="text-amber-400 font-extrabold text-xs sm:text-sm shrink-0">$220</span>
+                  </div>
+                  <p class="text-[11px] sm:text-xs text-slate-400 mt-1 leading-relaxed line-clamp-2">滿滿蟹肉鮮甜內餡，外層金黃香酥，咬下爆漿</p>
+                </div>
+              </div>
+                
+              <div class="flex items-center gap-3.5 py-3 border-b border-slate-800/80 last:border-0 hover:bg-slate-800/40 rounded-xl px-2.5 transition">
+                <div class="relative w-16 h-16 sm:w-20 sm:h-20 shrink-0 rounded-lg overflow-hidden border border-slate-700/80 shadow-md">
+                  <img src="https://images.unsplash.com/photo-1504674900247-0877df9cc836?auto=format&fit=crop&w=400&q=80" alt="岩石煙燻豬心佐紅心芭樂片" class="w-full h-full object-cover hover:scale-110 transition-transform duration-300" loading="lazy">
+                </div>
+                <div class="flex-1 min-w-0">
+                  <div class="flex items-start justify-between gap-2">
+                    <h5 class="font-bold text-slate-100 text-xs sm:text-sm tracking-wide truncate">岩石煙燻豬心佐紅心芭樂片</h5>
+                    <span class="text-amber-400 font-extrabold text-xs sm:text-sm shrink-0">$160</span>
+                  </div>
+                  <p class="text-[11px] sm:text-xs text-slate-400 mt-1 leading-relaxed line-clamp-2">甘甜軟嫩豬心搭配起司片與芭樂薄片，口感奇妙絕配</p>
+                </div>
+              </div>
+                
+            </div>
+          </div>
+            
+          <div class="mb-5 bg-slate-900/80 rounded-2xl p-3.5 sm:p-5 border border-slate-800/90 shadow-lg">
+            <h4 class="text-amber-300 font-bold text-xs sm:text-sm mb-3 pb-2 border-b border-amber-500/20 flex items-center justify-between">
+              <span class="flex items-center gap-1.5">🍶 自選自然酒與日本地酒</span>
+              <span class="text-[10px] text-slate-400 font-normal bg-slate-800/60 px-2 py-0.5 rounded">現場實體價位</span>
+            </h4>
+            <div class="space-y-1">
+              
+              <div class="flex items-center gap-3.5 py-3 border-b border-slate-800/80 last:border-0 hover:bg-slate-800/40 rounded-xl px-2.5 transition">
+                <div class="relative w-16 h-16 sm:w-20 sm:h-20 shrink-0 rounded-lg overflow-hidden border border-slate-700/80 shadow-md">
+                  <img src="https://images.unsplash.com/photo-1510812431401-41d2bd2722f3?auto=format&fit=crop&w=400&q=80" alt="單杯精選天然自然派葡萄酒 (橘酒/紅酒)" class="w-full h-full object-cover hover:scale-110 transition-transform duration-300" loading="lazy">
+                </div>
+                <div class="flex-1 min-w-0">
+                  <div class="flex items-start justify-between gap-2">
+                    <h5 class="font-bold text-slate-100 text-xs sm:text-sm tracking-wide truncate">單杯精選天然自然派葡萄酒 (橘酒/紅酒)</h5>
+                    <span class="text-amber-400 font-extrabold text-xs sm:text-sm shrink-0">$250 - $300</span>
+                  </div>
+                  <p class="text-[11px] sm:text-xs text-slate-400 mt-1 leading-relaxed line-clamp-2">無過濾低人工干預，純淨果酸風味，搭小料理絕妙</p>
+                </div>
+              </div>
+                
+            </div>
+          </div>
+            
+        </div>
+
+        <!-- Modal Footer -->
+        <div class="p-3 sm:p-4 border-t border-slate-800 bg-slate-950 flex items-center justify-between text-xs">
+          <span class="text-slate-400 flex items-center gap-1.5"><i class="fa-solid fa-kitchen-set text-amber-400"></i> 實際餐點與限量品項依店家現場供應為準</span>
+          <button onclick="closeMenuModal('modal-bistro-7')" class="px-4 py-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-200 font-medium transition border border-slate-700">
+            關閉菜單
+          </button>
+        </div>
+      </div>
+    </div>
+        
+
+    <!-- Modal: 繼光貳酒 菜單圖文 -->
+    <div id="modal-bistro-8" class="menu-modal fixed inset-0 z-50 hidden bg-slate-950/85 backdrop-blur-md flex items-center justify-center p-3 sm:p-6 overflow-y-auto">
+      <div class="bg-slate-900 border border-slate-700/80 rounded-2xl max-w-2xl w-full max-h-[92vh] flex flex-col shadow-2xl overflow-hidden animate-fade-in">
+        <!-- Modal Header -->
+        <div class="relative h-48 sm:h-56 w-full shrink-0 overflow-hidden">
+          <img src="https://images.unsplash.com/photo-1574096079513-d8259312b785?auto=format&fit=crop&w=1000&q=80" alt="繼光貳酒" class="w-full h-full object-cover">
+          <div class="absolute inset-0 bg-gradient-to-t from-slate-900 via-slate-900/60 to-slate-900/10"></div>
+          <button onclick="closeMenuModal('modal-bistro-8')" class="absolute top-3.5 right-3.5 w-8 h-8 rounded-full bg-slate-900/90 text-slate-300 hover:text-white hover:bg-slate-800 border border-slate-700 flex items-center justify-center text-sm transition shadow-lg">
+            <i class="fa-solid fa-xmark"></i>
+          </button>
+          <div class="absolute bottom-3.5 left-4 right-4">
+            <span class="text-[11px] font-bold text-amber-400 bg-amber-400/15 px-2.5 py-0.5 rounded-md border border-amber-400/30 backdrop-blur-sm">百年老診所改建・專治五臟廟下酒良方</span>
+            <h3 class="text-xl sm:text-2xl font-bold text-white mt-1.5 tracking-wide drop-shadow-md">繼光貳酒 老藥局診所菜單與輸液袋調飲</h3>
+          </div>
+        </div>
+        
+        <!-- Modal Body: Detailed Menu Categories with item photos -->
+        <div class="p-3.5 sm:p-6 overflow-y-auto space-y-4">
+          <div class="p-2.5 rounded-xl bg-amber-500/10 border border-amber-500/20 text-xs text-amber-200 flex items-center gap-2">
+            <i class="fa-solid fa-circle-info text-amber-400 shrink-0"></i>
+            <span>本菜單附實物美饌圖與現場最新菜式、黑板公告及外送酒單實拍彙整，價格透明供參考。</span>
+          </div>
+          
+          <div class="mb-5 bg-slate-900/80 rounded-2xl p-3.5 sm:p-5 border border-slate-800/90 shadow-lg">
+            <h4 class="text-amber-300 font-bold text-xs sm:text-sm mb-3 pb-2 border-b border-amber-500/20 flex items-center justify-between">
+              <span class="flex items-center gap-1.5">🍢 診所專治處方串燒 (一組兩入)</span>
+              <span class="text-[10px] text-slate-400 font-normal bg-slate-800/60 px-2 py-0.5 rounded">現場實體價位</span>
+            </h4>
+            <div class="space-y-1">
+              
+              <div class="flex items-center gap-3.5 py-3 border-b border-slate-800/80 last:border-0 hover:bg-slate-800/40 rounded-xl px-2.5 transition">
+                <div class="relative w-16 h-16 sm:w-20 sm:h-20 shrink-0 rounded-lg overflow-hidden border border-slate-700/80 shadow-md">
+                  <img src="https://images.unsplash.com/photo-1555939594-58d7cb561ad1?auto=format&fit=crop&w=400&q=80" alt="爆汁明太子厚醬雞腿肉串" class="w-full h-full object-cover hover:scale-110 transition-transform duration-300" loading="lazy">
+                </div>
+                <div class="flex-1 min-w-0">
+                  <div class="flex items-start justify-between gap-2">
+                    <h5 class="font-bold text-slate-100 text-xs sm:text-sm tracking-wide truncate">爆汁明太子厚醬雞腿肉串</h5>
+                    <span class="text-amber-400 font-extrabold text-xs sm:text-sm shrink-0">$130</span>
+                  </div>
+                  <p class="text-[11px] sm:text-xs text-slate-400 mt-1 leading-relaxed line-clamp-2">厚厚一層明太子美乃滋炙燒，香氣撲鼻，肉質多汁</p>
+                </div>
+              </div>
+                
+              <div class="flex items-center gap-3.5 py-3 border-b border-slate-800/80 last:border-0 hover:bg-slate-800/40 rounded-xl px-2.5 transition">
+                <div class="relative w-16 h-16 sm:w-20 sm:h-20 shrink-0 rounded-lg overflow-hidden border border-slate-700/80 shadow-md">
+                  <img src="https://images.unsplash.com/photo-1529193591184-b1d58069ecdd?auto=format&fit=crop&w=400&q=80" alt="花蓮剝皮辣椒雪花豬肉捲" class="w-full h-full object-cover hover:scale-110 transition-transform duration-300" loading="lazy">
+                </div>
+                <div class="flex-1 min-w-0">
+                  <div class="flex items-start justify-between gap-2">
+                    <h5 class="font-bold text-slate-100 text-xs sm:text-sm tracking-wide truncate">花蓮剝皮辣椒雪花豬肉捲</h5>
+                    <span class="text-amber-400 font-extrabold text-xs sm:text-sm shrink-0">$150</span>
+                  </div>
+                  <p class="text-[11px] sm:text-xs text-slate-400 mt-1 leading-relaxed line-clamp-2">微辣鹹香豬肉片包覆剝皮辣椒，解膩多汁</p>
+                </div>
+              </div>
+                
+              <div class="flex items-center gap-3.5 py-3 border-b border-slate-800/80 last:border-0 hover:bg-slate-800/40 rounded-xl px-2.5 transition">
+                <div class="relative w-16 h-16 sm:w-20 sm:h-20 shrink-0 rounded-lg overflow-hidden border border-slate-700/80 shadow-md">
+                  <img src="https://images.unsplash.com/photo-1546069901-ba9599a7e63c?auto=format&fit=crop&w=400&q=80" alt="黑松露起司蘑菇" class="w-full h-full object-cover hover:scale-110 transition-transform duration-300" loading="lazy">
+                </div>
+                <div class="flex-1 min-w-0">
+                  <div class="flex items-start justify-between gap-2">
+                    <h5 class="font-bold text-slate-100 text-xs sm:text-sm tracking-wide truncate">黑松露起司蘑菇</h5>
+                    <span class="text-amber-400 font-extrabold text-xs sm:text-sm shrink-0">$230</span>
+                  </div>
+                  <p class="text-[11px] sm:text-xs text-slate-400 mt-1 leading-relaxed line-clamp-2">爆汁巨大蘑菇填入頂級黑松露起司醬</p>
+                </div>
+              </div>
+                
+            </div>
+          </div>
+            
+          <div class="mb-5 bg-slate-900/80 rounded-2xl p-3.5 sm:p-5 border border-slate-800/90 shadow-lg">
+            <h4 class="text-amber-300 font-bold text-xs sm:text-sm mb-3 pb-2 border-b border-amber-500/20 flex items-center justify-between">
+              <span class="flex items-center gap-1.5">🍲 五臟廟主食與海鮮</span>
+              <span class="text-[10px] text-slate-400 font-normal bg-slate-800/60 px-2 py-0.5 rounded">現場實體價位</span>
+            </h4>
+            <div class="space-y-1">
+              
+              <div class="flex items-center gap-3.5 py-3 border-b border-slate-800/80 last:border-0 hover:bg-slate-800/40 rounded-xl px-2.5 transition">
+                <div class="relative w-16 h-16 sm:w-20 sm:h-20 shrink-0 rounded-lg overflow-hidden border border-slate-700/80 shadow-md">
+                  <img src="https://images.unsplash.com/photo-1585032226651-759b368d7246?auto=format&fit=crop&w=400&q=80" alt="專治五臟廟的日式秘醬炒烏龍" class="w-full h-full object-cover hover:scale-110 transition-transform duration-300" loading="lazy">
+                </div>
+                <div class="flex-1 min-w-0">
+                  <div class="flex items-start justify-between gap-2">
+                    <h5 class="font-bold text-slate-100 text-xs sm:text-sm tracking-wide truncate">專治五臟廟的日式秘醬炒烏龍</h5>
+                    <span class="text-amber-400 font-extrabold text-xs sm:text-sm shrink-0">$150</span>
+                  </div>
+                  <p class="text-[11px] sm:text-xs text-slate-400 mt-1 leading-relaxed line-clamp-2">彈牙讚岐烏龍麵拌炒時蔬與豬肉絲，柴魚片飛舞</p>
+                </div>
+              </div>
+                
+              <div class="flex items-center gap-3.5 py-3 border-b border-slate-800/80 last:border-0 hover:bg-slate-800/40 rounded-xl px-2.5 transition">
+                <div class="relative w-16 h-16 sm:w-20 sm:h-20 shrink-0 rounded-lg overflow-hidden border border-slate-700/80 shadow-md">
+                  <img src="https://images.unsplash.com/photo-1599488615731-7e5c2823ff28?auto=format&fit=crop&w=400&q=80" alt="整尾鹽烤澎湖鮮透抽" class="w-full h-full object-cover hover:scale-110 transition-transform duration-300" loading="lazy">
+                </div>
+                <div class="flex-1 min-w-0">
+                  <div class="flex items-start justify-between gap-2">
+                    <h5 class="font-bold text-slate-100 text-xs sm:text-sm tracking-wide truncate">整尾鹽烤澎湖鮮透抽</h5>
+                    <span class="text-amber-400 font-extrabold text-xs sm:text-sm shrink-0">$320</span>
+                  </div>
+                  <p class="text-[11px] sm:text-xs text-slate-400 mt-1 leading-relaxed line-clamp-2">肉質厚實彈牙，擠上新鮮檸檬汁與胡椒鹽</p>
+                </div>
+              </div>
+                
+            </div>
+          </div>
+            
+          <div class="mb-5 bg-slate-900/80 rounded-2xl p-3.5 sm:p-5 border border-slate-800/90 shadow-lg">
+            <h4 class="text-amber-300 font-bold text-xs sm:text-sm mb-3 pb-2 border-b border-amber-500/20 flex items-center justify-between">
+              <span class="flex items-center gap-1.5">💉 點滴袋與針筒創意調飲</span>
+              <span class="text-[10px] text-slate-400 font-normal bg-slate-800/60 px-2 py-0.5 rounded">現場實體價位</span>
+            </h4>
+            <div class="space-y-1">
+              
+              <div class="flex items-center gap-3.5 py-3 border-b border-slate-800/80 last:border-0 hover:bg-slate-800/40 rounded-xl px-2.5 transition">
+                <div class="relative w-16 h-16 sm:w-20 sm:h-20 shrink-0 rounded-lg overflow-hidden border border-slate-700/80 shadow-md">
+                  <img src="https://images.unsplash.com/photo-1551024709-8f23befc6f87?auto=format&fit=crop&w=400&q=80" alt="急救處方・輸液袋特調雞尾酒" class="w-full h-full object-cover hover:scale-110 transition-transform duration-300" loading="lazy">
+                </div>
+                <div class="flex-1 min-w-0">
+                  <div class="flex items-start justify-between gap-2">
+                    <h5 class="font-bold text-slate-100 text-xs sm:text-sm tracking-wide truncate">急救處方・輸液袋特調雞尾酒</h5>
+                    <span class="text-amber-400 font-extrabold text-xs sm:text-sm shrink-0">$280</span>
+                  </div>
+                  <p class="text-[11px] sm:text-xs text-slate-400 mt-1 leading-relaxed line-clamp-2">掛在點滴架上喝的調酒！伏特加與紅石榴蔓越莓風味</p>
+                </div>
+              </div>
+                
+              <div class="flex items-center gap-3.5 py-3 border-b border-slate-800/80 last:border-0 hover:bg-slate-800/40 rounded-xl px-2.5 transition">
+                <div class="relative w-16 h-16 sm:w-20 sm:h-20 shrink-0 rounded-lg overflow-hidden border border-slate-700/80 shadow-md">
+                  <img src="https://images.unsplash.com/photo-1608270586620-248524c67de9?auto=format&fit=crop&w=400&q=80" alt="沖繩 Orion 生啤酒現壓大杯" class="w-full h-full object-cover hover:scale-110 transition-transform duration-300" loading="lazy">
+                </div>
+                <div class="flex-1 min-w-0">
+                  <div class="flex items-start justify-between gap-2">
+                    <h5 class="font-bold text-slate-100 text-xs sm:text-sm tracking-wide truncate">沖繩 Orion 生啤酒現壓大杯</h5>
+                    <span class="text-amber-400 font-extrabold text-xs sm:text-sm shrink-0">$130</span>
+                  </div>
+                  <p class="text-[11px] sm:text-xs text-slate-400 mt-1 leading-relaxed line-clamp-2">極度冰涼爽口，居酒屋最佳拍檔</p>
+                </div>
+              </div>
+                
+            </div>
+          </div>
+            
+        </div>
+
+        <!-- Modal Footer -->
+        <div class="p-3 sm:p-4 border-t border-slate-800 bg-slate-950 flex items-center justify-between text-xs">
+          <span class="text-slate-400 flex items-center gap-1.5"><i class="fa-solid fa-kitchen-set text-amber-400"></i> 實際餐點與限量品項依店家現場供應為準</span>
+          <button onclick="closeMenuModal('modal-bistro-8')" class="px-4 py-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-200 font-medium transition border border-slate-700">
+            關閉菜單
+          </button>
+        </div>
+      </div>
+    </div>
+        
+
+    <!-- Modal: 港町十三番地 菜單圖文 -->
+    <div id="modal-bistro-9" class="menu-modal fixed inset-0 z-50 hidden bg-slate-950/85 backdrop-blur-md flex items-center justify-center p-3 sm:p-6 overflow-y-auto">
+      <div class="bg-slate-900 border border-slate-700/80 rounded-2xl max-w-2xl w-full max-h-[92vh] flex flex-col shadow-2xl overflow-hidden animate-fade-in">
+        <!-- Modal Header -->
+        <div class="relative h-48 sm:h-56 w-full shrink-0 overflow-hidden">
+          <img src="https://images.unsplash.com/photo-1579871494447-9811cf80d66c?auto=format&fit=crop&w=1000&q=80" alt="港町十三番地" class="w-full h-full object-cover">
+          <div class="absolute inset-0 bg-gradient-to-t from-slate-900 via-slate-900/60 to-slate-900/10"></div>
+          <button onclick="closeMenuModal('modal-bistro-9')" class="absolute top-3.5 right-3.5 w-8 h-8 rounded-full bg-slate-900/90 text-slate-300 hover:text-white hover:bg-slate-800 border border-slate-700 flex items-center justify-center text-sm transition shadow-lg">
+            <i class="fa-solid fa-xmark"></i>
+          </button>
+          <div class="absolute bottom-3.5 left-4 right-4">
+            <span class="text-[11px] font-bold text-amber-400 bg-amber-400/15 px-2.5 py-0.5 rounded-md border border-amber-400/30 backdrop-blur-sm">老字號平價居酒屋・百種生魚片串燒熱炒</span>
+            <h3 class="text-xl sm:text-2xl font-bold text-white mt-1.5 tracking-wide drop-shadow-md">港町十三番地 百樣超平價熱炒居酒屋菜單</h3>
+          </div>
+        </div>
+        
+        <!-- Modal Body: Detailed Menu Categories with item photos -->
+        <div class="p-3.5 sm:p-6 overflow-y-auto space-y-4">
+          <div class="p-2.5 rounded-xl bg-amber-500/10 border border-amber-500/20 text-xs text-amber-200 flex items-center gap-2">
+            <i class="fa-solid fa-circle-info text-amber-400 shrink-0"></i>
+            <span>本菜單附實物美饌圖與現場最新菜式、黑板公告及外送酒單實拍彙整，價格透明供參考。</span>
+          </div>
+          
+          <div class="mb-5 bg-slate-900/80 rounded-2xl p-3.5 sm:p-5 border border-slate-800/90 shadow-lg">
+            <h4 class="text-amber-300 font-bold text-xs sm:text-sm mb-3 pb-2 border-b border-amber-500/20 flex items-center justify-between">
+              <span class="flex items-center gap-1.5">🍣 生魚片、壽司與手卷</span>
+              <span class="text-[10px] text-slate-400 font-normal bg-slate-800/60 px-2 py-0.5 rounded">現場實體價位</span>
+            </h4>
+            <div class="space-y-1">
+              
+              <div class="flex items-center gap-3.5 py-3 border-b border-slate-800/80 last:border-0 hover:bg-slate-800/40 rounded-xl px-2.5 transition">
+                <div class="relative w-16 h-16 sm:w-20 sm:h-20 shrink-0 rounded-lg overflow-hidden border border-slate-700/80 shadow-md">
+                  <img src="https://images.unsplash.com/photo-1579871494447-9811cf80d66c?auto=format&fit=crop&w=400&q=80" alt="大份綜合生魚片盛合 (9厚片)" class="w-full h-full object-cover hover:scale-110 transition-transform duration-300" loading="lazy">
+                </div>
+                <div class="flex-1 min-w-0">
+                  <div class="flex items-start justify-between gap-2">
+                    <h5 class="font-bold text-slate-100 text-xs sm:text-sm tracking-wide truncate">大份綜合生魚片盛合 (9厚片)</h5>
+                    <span class="text-amber-400 font-extrabold text-xs sm:text-sm shrink-0">$380</span>
+                  </div>
+                  <p class="text-[11px] sm:text-xs text-slate-400 mt-1 leading-relaxed line-clamp-2">鮭魚、鮪魚、旗魚當日新鮮直送厚切，鮮甜油脂豐富</p>
+                </div>
+              </div>
+                
+              <div class="flex items-center gap-3.5 py-3 border-b border-slate-800/80 last:border-0 hover:bg-slate-800/40 rounded-xl px-2.5 transition">
+                <div class="relative w-16 h-16 sm:w-20 sm:h-20 shrink-0 rounded-lg overflow-hidden border border-slate-700/80 shadow-md">
+                  <img src="https://images.unsplash.com/photo-1611143669185-af224c5e3252?auto=format&fit=crop&w=400&q=80" alt="炙燒焦糖鮭魚肚握壽司 (2貫)" class="w-full h-full object-cover hover:scale-110 transition-transform duration-300" loading="lazy">
+                </div>
+                <div class="flex-1 min-w-0">
+                  <div class="flex items-start justify-between gap-2">
+                    <h5 class="font-bold text-slate-100 text-xs sm:text-sm tracking-wide truncate">炙燒焦糖鮭魚肚握壽司 (2貫)</h5>
+                    <span class="text-amber-400 font-extrabold text-xs sm:text-sm shrink-0">$140</span>
+                  </div>
+                  <p class="text-[11px] sm:text-xs text-slate-400 mt-1 leading-relaxed line-clamp-2">炙燒逼出豐富油脂，表層糖粒焦脆，入口即化</p>
+                </div>
+              </div>
+                
+            </div>
+          </div>
+            
+          <div class="mb-5 bg-slate-900/80 rounded-2xl p-3.5 sm:p-5 border border-slate-800/90 shadow-lg">
+            <h4 class="text-amber-300 font-bold text-xs sm:text-sm mb-3 pb-2 border-b border-amber-500/20 flex items-center justify-between">
+              <span class="flex items-center gap-1.5">🍢 炭烤串燒與熱炒主食</span>
+              <span class="text-[10px] text-slate-400 font-normal bg-slate-800/60 px-2 py-0.5 rounded">現場實體價位</span>
+            </h4>
+            <div class="space-y-1">
+              
+              <div class="flex items-center gap-3.5 py-3 border-b border-slate-800/80 last:border-0 hover:bg-slate-800/40 rounded-xl px-2.5 transition">
+                <div class="relative w-16 h-16 sm:w-20 sm:h-20 shrink-0 rounded-lg overflow-hidden border border-slate-700/80 shadow-md">
+                  <img src="https://images.unsplash.com/photo-1555939594-58d7cb561ad1?auto=format&fit=crop&w=400&q=80" alt="人氣炭烤綜合拼盤 (10本串燒)" class="w-full h-full object-cover hover:scale-110 transition-transform duration-300" loading="lazy">
+                </div>
+                <div class="flex-1 min-w-0">
+                  <div class="flex items-start justify-between gap-2">
+                    <h5 class="font-bold text-slate-100 text-xs sm:text-sm tracking-wide truncate">人氣炭烤綜合拼盤 (10本串燒)</h5>
+                    <span class="text-amber-400 font-extrabold text-xs sm:text-sm shrink-0">$280</span>
+                  </div>
+                  <p class="text-[11px] sm:text-xs text-slate-400 mt-1 leading-relaxed line-clamp-2">雞肉、豬肉、七里香、甜不辣、香菇等超值大盤</p>
+                </div>
+              </div>
+                
+              <div class="flex items-center gap-3.5 py-3 border-b border-slate-800/80 last:border-0 hover:bg-slate-800/40 rounded-xl px-2.5 transition">
+                <div class="relative w-16 h-16 sm:w-20 sm:h-20 shrink-0 rounded-lg overflow-hidden border border-slate-700/80 shadow-md">
+                  <img src="https://images.unsplash.com/photo-1544025162-d76694265947?auto=format&fit=crop&w=400&q=80" alt="招牌醬烤脆皮肥腸" class="w-full h-full object-cover hover:scale-110 transition-transform duration-300" loading="lazy">
+                </div>
+                <div class="flex-1 min-w-0">
+                  <div class="flex items-start justify-between gap-2">
+                    <h5 class="font-bold text-slate-100 text-xs sm:text-sm tracking-wide truncate">招牌醬烤脆皮肥腸</h5>
+                    <span class="text-amber-400 font-extrabold text-xs sm:text-sm shrink-0">$160</span>
+                  </div>
+                  <p class="text-[11px] sm:text-xs text-slate-400 mt-1 leading-relaxed line-clamp-2">外脆內嫩無腥味，沾椒鹽下酒極品</p>
+                </div>
+              </div>
+                
+              <div class="flex items-center gap-3.5 py-3 border-b border-slate-800/80 last:border-0 hover:bg-slate-800/40 rounded-xl px-2.5 transition">
+                <div class="relative w-16 h-16 sm:w-20 sm:h-20 shrink-0 rounded-lg overflow-hidden border border-slate-700/80 shadow-md">
+                  <img src="https://images.unsplash.com/photo-1563245372-f21724e3856d?auto=format&fit=crop&w=400&q=80" alt="鮭魚鬆炒飯 (大份量)" class="w-full h-full object-cover hover:scale-110 transition-transform duration-300" loading="lazy">
+                </div>
+                <div class="flex-1 min-w-0">
+                  <div class="flex items-start justify-between gap-2">
+                    <h5 class="font-bold text-slate-100 text-xs sm:text-sm tracking-wide truncate">鮭魚鬆炒飯 (大份量)</h5>
+                    <span class="text-amber-400 font-extrabold text-xs sm:text-sm shrink-0">$120</span>
+                  </div>
+                  <p class="text-[11px] sm:text-xs text-slate-400 mt-1 leading-relaxed line-clamp-2">粒粒分明鍋氣十足，大份量填飽肚皮最超值</p>
+                </div>
+              </div>
+                
+            </div>
+          </div>
+            
+          <div class="mb-5 bg-slate-900/80 rounded-2xl p-3.5 sm:p-5 border border-slate-800/90 shadow-lg">
+            <h4 class="text-amber-300 font-bold text-xs sm:text-sm mb-3 pb-2 border-b border-amber-500/20 flex items-center justify-between">
+              <span class="flex items-center gap-1.5">🍺 平價生啤與酒水</span>
+              <span class="text-[10px] text-slate-400 font-normal bg-slate-800/60 px-2 py-0.5 rounded">現場實體價位</span>
+            </h4>
+            <div class="space-y-1">
+              
+              <div class="flex items-center gap-3.5 py-3 border-b border-slate-800/80 last:border-0 hover:bg-slate-800/40 rounded-xl px-2.5 transition">
+                <div class="relative w-16 h-16 sm:w-20 sm:h-20 shrink-0 rounded-lg overflow-hidden border border-slate-700/80 shadow-md">
+                  <img src="https://images.unsplash.com/photo-1608270586620-248524c67de9?auto=format&fit=crop&w=400&q=80" alt="大杯現拉生啤酒 (500ml)" class="w-full h-full object-cover hover:scale-110 transition-transform duration-300" loading="lazy">
+                </div>
+                <div class="flex-1 min-w-0">
+                  <div class="flex items-start justify-between gap-2">
+                    <h5 class="font-bold text-slate-100 text-xs sm:text-sm tracking-wide truncate">大杯現拉生啤酒 (500ml)</h5>
+                    <span class="text-amber-400 font-extrabold text-xs sm:text-sm shrink-0">$100</span>
+                  </div>
+                  <p class="text-[11px] sm:text-xs text-slate-400 mt-1 leading-relaxed line-clamp-2">銅板價暢飲！泡沫綿密細緻清涼過癮</p>
+                </div>
+              </div>
+                
+            </div>
+          </div>
+            
+        </div>
+
+        <!-- Modal Footer -->
+        <div class="p-3 sm:p-4 border-t border-slate-800 bg-slate-950 flex items-center justify-between text-xs">
+          <span class="text-slate-400 flex items-center gap-1.5"><i class="fa-solid fa-kitchen-set text-amber-400"></i> 實際餐點與限量品項依店家現場供應為準</span>
+          <button onclick="closeMenuModal('modal-bistro-9')" class="px-4 py-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-200 font-medium transition border border-slate-700">
+            關閉菜單
+          </button>
+        </div>
+      </div>
+    </div>
+        
+
+    <!-- Modal: 金町深夜酒食居 菜單圖文 -->
+    <div id="modal-bistro-10" class="menu-modal fixed inset-0 z-50 hidden bg-slate-950/85 backdrop-blur-md flex items-center justify-center p-3 sm:p-6 overflow-y-auto">
+      <div class="bg-slate-900 border border-slate-700/80 rounded-2xl max-w-2xl w-full max-h-[92vh] flex flex-col shadow-2xl overflow-hidden animate-fade-in">
+        <!-- Modal Header -->
+        <div class="relative h-48 sm:h-56 w-full shrink-0 overflow-hidden">
+          <img src="https://images.unsplash.com/photo-1534422298391-e4f8c172dddb?auto=format&fit=crop&w=1000&q=80" alt="金町深夜酒食居" class="w-full h-full object-cover">
+          <div class="absolute inset-0 bg-gradient-to-t from-slate-900 via-slate-900/60 to-slate-900/10"></div>
+          <button onclick="closeMenuModal('modal-bistro-10')" class="absolute top-3.5 right-3.5 w-8 h-8 rounded-full bg-slate-900/90 text-slate-300 hover:text-white hover:bg-slate-800 border border-slate-700 flex items-center justify-center text-sm transition shadow-lg">
+            <i class="fa-solid fa-xmark"></i>
+          </button>
+          <div class="absolute bottom-3.5 left-4 right-4">
+            <span class="text-[11px] font-bold text-amber-400 bg-amber-400/15 px-2.5 py-0.5 rounded-md border border-amber-400/30 backdrop-blur-sm">第二市場老宅・各國空運生蠔與純碳火串燒</span>
+            <h3 class="text-xl sm:text-2xl font-bold text-white mt-1.5 tracking-wide drop-shadow-md">金町深夜酒食居 鮮生蠔盛合與炭火燒鳥菜單</h3>
+          </div>
+        </div>
+        
+        <!-- Modal Body: Detailed Menu Categories with item photos -->
+        <div class="p-3.5 sm:p-6 overflow-y-auto space-y-4">
+          <div class="p-2.5 rounded-xl bg-amber-500/10 border border-amber-500/20 text-xs text-amber-200 flex items-center gap-2">
+            <i class="fa-solid fa-circle-info text-amber-400 shrink-0"></i>
+            <span>由台中知名居酒屋「將軍府」團隊打造，週四正常營業至凌晨 05:00，現場免收服務費！</span>
+          </div>
+          
+          <div class="mb-5 bg-slate-900/80 rounded-2xl p-3.5 sm:p-5 border border-slate-800/90 shadow-lg">
+            <h4 class="text-amber-300 font-bold text-xs sm:text-sm mb-3 pb-2 border-b border-amber-500/20 flex items-center justify-between">
+              <span class="flex items-center gap-1.5">🦪 招牌頂級生蠔與海味盛合</span>
+              <span class="text-[10px] text-slate-400 font-normal bg-slate-800/60 px-2 py-0.5 rounded">現場實體價位</span>
+            </h4>
+            <div class="space-y-1">
+              
+              <div class="flex items-center gap-3.5 py-3 border-b border-slate-800/80 last:border-0 hover:bg-slate-800/40 rounded-xl px-2.5 transition">
+                <div class="relative w-16 h-16 sm:w-20 sm:h-20 shrink-0 rounded-lg overflow-hidden border border-slate-700/80 shadow-md">
+                  <img src="https://images.unsplash.com/photo-1534422298391-e4f8c172dddb?auto=format&fit=crop&w=400&q=80" alt="各國產地直送鮮生蠔 (日本/法國)" class="w-full h-full object-cover hover:scale-110 transition-transform duration-300" loading="lazy">
+                </div>
+                <div class="flex-1 min-w-0">
+                  <div class="flex items-start justify-between gap-2">
+                    <h5 class="font-bold text-slate-100 text-xs sm:text-sm tracking-wide truncate">各國產地直送鮮生蠔 (日本/法國)</h5>
+                    <span class="text-amber-400 font-extrabold text-xs sm:text-sm shrink-0">時價 / 顆</span>
+                  </div>
+                  <p class="text-[11px] sm:text-xs text-slate-400 mt-1 leading-relaxed line-clamp-2">每日限量空運，肥美多汁脆甜無腥味，擠檸檬汁與特調醬汁絕頂美味</p>
+                </div>
+              </div>
+                
+              <div class="flex items-center gap-3.5 py-3 border-b border-slate-800/80 last:border-0 hover:bg-slate-800/40 rounded-xl px-2.5 transition">
+                <div class="relative w-16 h-16 sm:w-20 sm:h-20 shrink-0 rounded-lg overflow-hidden border border-slate-700/80 shadow-md">
+                  <img src="https://images.unsplash.com/photo-1544025162-d76694265947?auto=format&fit=crop&w=400&q=80" alt="牛肉生蠔串燒卷 (2串)" class="w-full h-full object-cover hover:scale-110 transition-transform duration-300" loading="lazy">
+                </div>
+                <div class="flex-1 min-w-0">
+                  <div class="flex items-start justify-between gap-2">
+                    <h5 class="font-bold text-slate-100 text-xs sm:text-sm tracking-wide truncate">牛肉生蠔串燒卷 (2串)</h5>
+                    <span class="text-amber-400 font-extrabold text-xs sm:text-sm shrink-0">$180</span>
+                  </div>
+                  <p class="text-[11px] sm:text-xs text-slate-400 mt-1 leading-relaxed line-clamp-2">薄切牛五花包覆飽滿生蠔炭烤，海陸肉汁交融爆漿</p>
+                </div>
+              </div>
+                
+              <div class="flex items-center gap-3.5 py-3 border-b border-slate-800/80 last:border-0 hover:bg-slate-800/40 rounded-xl px-2.5 transition">
+                <div class="relative w-16 h-16 sm:w-20 sm:h-20 shrink-0 rounded-lg overflow-hidden border border-slate-700/80 shadow-md">
+                  <img src="https://images.unsplash.com/photo-1563245372-f21724e3856d?auto=format&fit=crop&w=400&q=80" alt="洋蔥醬酥炸廣島生蠔" class="w-full h-full object-cover hover:scale-110 transition-transform duration-300" loading="lazy">
+                </div>
+                <div class="flex-1 min-w-0">
+                  <div class="flex items-start justify-between gap-2">
+                    <h5 class="font-bold text-slate-100 text-xs sm:text-sm tracking-wide truncate">洋蔥醬酥炸廣島生蠔</h5>
+                    <span class="text-amber-400 font-extrabold text-xs sm:text-sm shrink-0">$220</span>
+                  </div>
+                  <p class="text-[11px] sm:text-xs text-slate-400 mt-1 leading-relaxed line-clamp-2">廣島牡蠣裹麵衣金黃酥脆，搭配自製紫洋蔥塔塔醬</p>
+                </div>
+              </div>
+                
+            </div>
+          </div>
+            
+          <div class="mb-5 bg-slate-900/80 rounded-2xl p-3.5 sm:p-5 border border-slate-800/90 shadow-lg">
+            <h4 class="text-amber-300 font-bold text-xs sm:text-sm mb-3 pb-2 border-b border-amber-500/20 flex items-center justify-between">
+              <span class="flex items-center gap-1.5">🍢 純碳火燒鳥與人氣宵夜</span>
+              <span class="text-[10px] text-slate-400 font-normal bg-slate-800/60 px-2 py-0.5 rounded">現場實體價位</span>
+            </h4>
+            <div class="space-y-1">
+              
+              <div class="flex items-center gap-3.5 py-3 border-b border-slate-800/80 last:border-0 hover:bg-slate-800/40 rounded-xl px-2.5 transition">
+                <div class="relative w-16 h-16 sm:w-20 sm:h-20 shrink-0 rounded-lg overflow-hidden border border-slate-700/80 shadow-md">
+                  <img src="https://images.unsplash.com/photo-1562967914-608f82629710?auto=format&fit=crop&w=400&q=80" alt="熔岩黑金唐揚雞 (墨魚汁)" class="w-full h-full object-cover hover:scale-110 transition-transform duration-300" loading="lazy">
+                </div>
+                <div class="flex-1 min-w-0">
+                  <div class="flex items-start justify-between gap-2">
+                    <h5 class="font-bold text-slate-100 text-xs sm:text-sm tracking-wide truncate">熔岩黑金唐揚雞 (墨魚汁)</h5>
+                    <span class="text-amber-400 font-extrabold text-xs sm:text-sm shrink-0">$220</span>
+                  </div>
+                  <p class="text-[11px] sm:text-xs text-slate-400 mt-1 leading-relaxed line-clamp-2">墨魚汁特製脆皮黑金外皮，雞肉鮮嫩多汁帶有淡淡蒜香</p>
+                </div>
+              </div>
+                
+              <div class="flex items-center gap-3.5 py-3 border-b border-slate-800/80 last:border-0 hover:bg-slate-800/40 rounded-xl px-2.5 transition">
+                <div class="relative w-16 h-16 sm:w-20 sm:h-20 shrink-0 rounded-lg overflow-hidden border border-slate-700/80 shadow-md">
+                  <img src="https://images.unsplash.com/photo-1555939594-58d7cb561ad1?auto=format&fit=crop&w=400&q=80" alt="炭烤雞牡蠣 / 鹽燒手羽先" class="w-full h-full object-cover hover:scale-110 transition-transform duration-300" loading="lazy">
+                </div>
+                <div class="flex-1 min-w-0">
+                  <div class="flex items-start justify-between gap-2">
+                    <h5 class="font-bold text-slate-100 text-xs sm:text-sm tracking-wide truncate">炭烤雞牡蠣 / 鹽燒手羽先</h5>
+                    <span class="text-amber-400 font-extrabold text-xs sm:text-sm shrink-0">$140</span>
+                  </div>
+                  <p class="text-[11px] sm:text-xs text-slate-400 mt-1 leading-relaxed line-clamp-2">純碳火高溫封鎖肉汁，外皮焦香酥脆、肉質Q彈滑嫩</p>
+                </div>
+              </div>
+                
+              <div class="flex items-center gap-3.5 py-3 border-b border-slate-800/80 last:border-0 hover:bg-slate-800/40 rounded-xl px-2.5 transition">
+                <div class="relative w-16 h-16 sm:w-20 sm:h-20 shrink-0 rounded-lg overflow-hidden border border-slate-700/80 shadow-md">
+                  <img src="https://images.unsplash.com/photo-1585032226651-759b368d7246?auto=format&fit=crop&w=400&q=80" alt="日式炒烏龍麵 / 烤鮭魚飯糰" class="w-full h-full object-cover hover:scale-110 transition-transform duration-300" loading="lazy">
+                </div>
+                <div class="flex-1 min-w-0">
+                  <div class="flex items-start justify-between gap-2">
+                    <h5 class="font-bold text-slate-100 text-xs sm:text-sm tracking-wide truncate">日式炒烏龍麵 / 烤鮭魚飯糰</h5>
+                    <span class="text-amber-400 font-extrabold text-xs sm:text-sm shrink-0">$120</span>
+                  </div>
+                  <p class="text-[11px] sm:text-xs text-slate-400 mt-1 leading-relaxed line-clamp-2">滿滿柴魚片與醬汁爆炒烏龍，宵夜暖胃必備</p>
+                </div>
+              </div>
+                
+            </div>
+          </div>
+            
+          <div class="mb-5 bg-slate-900/80 rounded-2xl p-3.5 sm:p-5 border border-slate-800/90 shadow-lg">
+            <h4 class="text-amber-300 font-bold text-xs sm:text-sm mb-3 pb-2 border-b border-amber-500/20 flex items-center justify-between">
+              <span class="flex items-center gap-1.5">🍶 日本地酒、生啤酒與沙瓦</span>
+              <span class="text-[10px] text-slate-400 font-normal bg-slate-800/60 px-2 py-0.5 rounded">現場實體價位</span>
+            </h4>
+            <div class="space-y-1">
+              
+              <div class="flex items-center gap-3.5 py-3 border-b border-slate-800/80 last:border-0 hover:bg-slate-800/40 rounded-xl px-2.5 transition">
+                <div class="relative w-16 h-16 sm:w-20 sm:h-20 shrink-0 rounded-lg overflow-hidden border border-slate-700/80 shadow-md">
+                  <img src="https://images.unsplash.com/photo-1510812431401-41d2bd2722f3?auto=format&fit=crop&w=400&q=80" alt="精選日本清酒 / 純米吟釀 (單杯/壺)" class="w-full h-full object-cover hover:scale-110 transition-transform duration-300" loading="lazy">
+                </div>
+                <div class="flex-1 min-w-0">
+                  <div class="flex items-start justify-between gap-2">
+                    <h5 class="font-bold text-slate-100 text-xs sm:text-sm tracking-wide truncate">精選日本清酒 / 純米吟釀 (單杯/壺)</h5>
+                    <span class="text-amber-400 font-extrabold text-xs sm:text-sm shrink-0">$180 / $350</span>
+                  </div>
+                  <p class="text-[11px] sm:text-xs text-slate-400 mt-1 leading-relaxed line-clamp-2">搭配生蠔與海鮮最頂級享受，清甜高雅</p>
+                </div>
+              </div>
+                
+              <div class="flex items-center gap-3.5 py-3 border-b border-slate-800/80 last:border-0 hover:bg-slate-800/40 rounded-xl px-2.5 transition">
+                <div class="relative w-16 h-16 sm:w-20 sm:h-20 shrink-0 rounded-lg overflow-hidden border border-slate-700/80 shadow-md">
+                  <img src="https://images.unsplash.com/photo-1608270586620-248524c67de9?auto=format&fit=crop&w=400&q=80" alt="現壓極冰生啤酒 (500ml)" class="w-full h-full object-cover hover:scale-110 transition-transform duration-300" loading="lazy">
+                </div>
+                <div class="flex-1 min-w-0">
+                  <div class="flex items-start justify-between gap-2">
+                    <h5 class="font-bold text-slate-100 text-xs sm:text-sm tracking-wide truncate">現壓極冰生啤酒 (500ml)</h5>
+                    <span class="text-amber-400 font-extrabold text-xs sm:text-sm shrink-0">$130</span>
+                  </div>
+                  <p class="text-[11px] sm:text-xs text-slate-400 mt-1 leading-relaxed line-clamp-2">下班小酌必點，泡沫細緻沁涼過癮</p>
+                </div>
+              </div>
+                
+            </div>
+          </div>
+            
+        </div>
+
+        <!-- Modal Footer -->
+        <div class="p-3 sm:p-4 border-t border-slate-800 bg-slate-950 flex items-center justify-between text-xs">
+          <span class="text-slate-400 flex items-center gap-1.5"><i class="fa-solid fa-kitchen-set text-amber-400"></i> 實際餐點與限量品項依店家現場供應為準</span>
+          <button onclick="closeMenuModal('modal-bistro-10')" class="px-4 py-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-200 font-medium transition border border-slate-700">
+            關閉菜單
+          </button>
+        </div>
+      </div>
+    </div>
+        
+
+</body>
+</html>
